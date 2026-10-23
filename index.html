@@ -6,75 +6,89 @@
     <title>منصة مارتن التعليمية - دراسات الصف السادس الابتدائي</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; user-select: none; }
-        body { background: linear-gradient(135deg, #0f172a, #1e3c72); color: #fff; min-height: 100vh; overflow-x: hidden; text-align: center; }
+        body { background: linear-gradient(135deg, #0f172a, #1e3c72); color: #fff; min-height: 100vh; overflow-x: hidden; text-align: center; padding-bottom: 20px; }
         
-        /* Start Screen Overlay */
-        #welcome-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; z-index: 300; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
-        .welcome-card { background: #1e293b; padding: 30px 20px; border-radius: 20px; border: 3px solid #38bdf8; max-width: 400px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .start-btn { background: #10b981; color: white; border: none; padding: 14px; border-radius: 12px; font-weight: bold; font-size: 1.1rem; width: 100%; cursor: pointer; margin-top: 15px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); }
+        /* Auth & Welcome Screen */
+        #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; z-index: 300; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+        .auth-card { background: #1e293b; padding: 25px; border-radius: 20px; border: 3px solid #38bdf8; max-width: 400px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: right; }
+        .auth-card h2 { color: #38bdf8; text-align: center; margin-bottom: 15px; }
+        .input-group { margin-bottom: 12px; }
+        .input-group label { display: block; font-size: 0.85rem; margin-bottom: 5px; color: #cbd5e1; }
+        .input-group input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: white; font-size: 0.95rem; }
+        .start-btn { background: #10b981; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; font-size: 1.05rem; width: 100%; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); }
 
-        /* Top Navigation Bar */
-        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-bottom: 2px solid rgba(255,255,255,0.1); position: sticky; top: 0; z-index: 100; }
-        .score-badge { background: #f59e0b; color: #fff; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 1rem; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4); }
-        .nav-btns { display: flex; gap: 8px; }
-        .shop-btn { background: #10b981; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.85rem; }
-        .lessons-btn { background: #3b82f6; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.85rem; }
+        /* Top Navigation Bar with 3 Buttons */
+        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-bottom: 2px solid rgba(255,255,255,0.1); position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 8px; }
+        .score-badge { background: #f59e0b; color: #fff; padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; }
+        .nav-btns { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+        .nav-btn { border: none; padding: 6px 12px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.8rem; color: white; }
+        .btn-lessons { background: #3b82f6; }
+        .btn-store { background: #10b981; }
+        .btn-vip { background: #8b5cf6; }
 
         /* Game Arena */
-        .game-container { position: relative; width: 100%; max-width: 550px; height: 440px; margin: 15px auto; background: url('https://img.freepik.com/free-vector/cartoon-desert-landscape-with-pyramids_107791-2365.jpg') center/cover; border-radius: 20px; border: 4px solid #38bdf8; overflow: hidden; touch-action: none; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        .question-box { position: absolute; top: 12px; left: 4%; width: 92%; background: rgba(15, 23, 42, 0.9); padding: 12px; border-radius: 12px; border: 2px solid #38bdf8; font-size: 0.95rem; font-weight: bold; color: #f8fafc; z-index: 10; backdrop-filter: blur(5px); }
+        .game-container { position: relative; width: 100%; max-width: 550px; height: 420px; margin: 15px auto; background: url('https://img.freepik.com/free-vector/cartoon-desert-landscape-with-pyramids_107791-2365.jpg') center/cover; border-radius: 20px; border: 4px solid #38bdf8; overflow: hidden; touch-action: none; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .question-box { position: absolute; top: 12px; left: 4%; width: 92%; background: rgba(15, 23, 42, 0.9); padding: 10px; border-radius: 12px; border: 2px solid #38bdf8; font-size: 0.9rem; font-weight: bold; color: #f8fafc; z-index: 10; }
 
-        /* Bouncing Choice Bubbles */
-        .falling-option { position: absolute; background: #3b82f6; color: white; padding: 8px 15px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0,0,0,0.4); border: 2px solid #fff; z-index: 5; text-align: center; max-width: 170px; }
+        .falling-option { position: absolute; background: #3b82f6; color: white; padding: 8px 14px; border-radius: 20px; font-weight: bold; font-size: 0.8rem; box-shadow: 0 4px 12px rgba(0,0,0,0.4); border: 2px solid #fff; z-index: 5; text-align: center; max-width: 160px; }
 
-        /* Catching Player Character */
-        .player-character { position: absolute; bottom: 10px; left: 40%; width: 85px; height: 105px; cursor: grab; z-index: 20; }
-        .box-container { width: 100%; height: 30px; background: #d97706; border: 2px solid #78350f; border-radius: 6px; position: absolute; top: 0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.4); text-align: center; font-size: 0.75rem; line-height: 26px; font-weight: bold; color: #fff; }
-        .kid-avatar { width: 65px; height: 70px; background: url('https://cdn-icons-png.flaticon.com/512/3408/3408455.png') center/contain no-repeat; position: absolute; bottom: 0; left: 10px; }
+        .player-character { position: absolute; bottom: 10px; left: 40%; width: 85px; height: 100px; cursor: grab; z-index: 20; }
+        .box-container { width: 100%; height: 26px; background: #d97706; border: 2px solid #78350f; border-radius: 6px; position: absolute; top: 0; text-align: center; font-size: 0.7rem; line-height: 22px; font-weight: bold; color: #fff; }
+        .kid-avatar { width: 60px; height: 65px; background: url('https://cdn-icons-png.flaticon.com/512/3408/3408455.png') center/contain no-repeat; position: absolute; bottom: 0; left: 12px; }
 
         /* Modals */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 200; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(5px); }
         .modal-content { background: #1e293b; padding: 20px; border-radius: 20px; max-width: 480px; width: 100%; border: 3px solid #38bdf8; position: relative; text-align: right; max-height: 85vh; overflow-y: auto; }
-        .modal-content h3 { color: #38bdf8; margin-bottom: 10px; font-size: 1.15rem; }
-        textarea { width: 100%; height: 75px; background: #0f172a; border: 1px solid #475569; color: white; padding: 10px; border-radius: 10px; margin: 8px 0; resize: none; font-size: 0.9rem; }
-        .btn-submit { background: #f59e0b; color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; cursor: pointer; font-size: 0.95rem; }
+        .modal-content h3 { color: #38bdf8; margin-bottom: 10px; font-size: 1.1rem; }
+        textarea { width: 100%; height: 70px; background: #0f172a; border: 1px solid #475569; color: white; padding: 10px; border-radius: 10px; margin: 8px 0; resize: none; font-size: 0.85rem; }
+        .btn-submit { background: #f59e0b; color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; cursor: pointer; font-size: 0.9rem; }
         
-        .explanation-box { margin-top: 10px; background: #334155; padding: 10px; border-radius: 10px; border-right: 4px solid #10b981; }
-        .audio-btn { background: #38bdf8; color: #0f172a; border: none; padding: 6px 10px; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 6px; display: inline-flex; align-items: center; gap: 5px; font-size: 0.8rem; }
-        .pdf-btn { background: #ef4444; color: white; border: none; padding: 8px 12px; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 6px; display: inline-flex; align-items: center; gap: 5px; font-size: 0.85rem; text-decoration: none; }
+        .explanation-box { margin-top: 10px; background: #334155; padding: 10px; border-radius: 10px; border-right: 4px solid #10b981; font-size: 0.85rem; }
+        .audio-btn { background: #38bdf8; color: #0f172a; border: none; padding: 6px 10px; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 6px; font-size: 0.8rem; }
+        .pdf-btn { background: #ef4444; color: white; border: none; padding: 8px 12px; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 8px; font-size: 0.85rem; width: 100%; }
 
-        /* Store & Lessons Grid */
-        .store-grid, .lessons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-        .store-item, .lesson-item { background: #334155; padding: 12px; border-radius: 10px; text-align: center; border: 1px solid #475569; }
-        .store-item h4, .lesson-item h4 { color: #f59e0b; margin-bottom: 4px; font-size: 0.9rem; }
-        .buy-btn, .read-btn { background: #10b981; border: none; color: white; padding: 5px 10px; border-radius: 6px; font-weight: bold; margin-top: 6px; cursor: pointer; width: 100%; font-size: 0.8rem; }
-        .read-btn { background: #3b82f6; }
-        .close-btn { position: absolute; top: 10px; left: 15px; background: #ef4444; color: white; border: none; border-radius: 50%; width: 26px; height: 26px; font-weight: bold; cursor: pointer; }
+        .lessons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+        .lesson-item { background: #334155; padding: 10px; border-radius: 10px; text-align: center; border: 1px solid #475569; }
+        .lesson-item h4 { color: #f59e0b; margin-bottom: 4px; font-size: 0.85rem; }
+        .read-btn { background: #3b82f6; border: none; color: white; padding: 5px 8px; border-radius: 6px; font-weight: bold; margin-top: 5px; cursor: pointer; width: 100%; font-size: 0.75rem; }
+        .close-btn { position: absolute; top: 10px; left: 15px; background: #ef4444; color: white; border: none; border-radius: 50%; width: 24px; height: 24px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <!-- Start Welcome Screen (الواجهة الترحيبية قبل بدء اللعبة) -->
-    <div id="welcome-screen">
-        <div class="welcome-card">
-            <h2 style="color:#38bdf8; margin-bottom:10px;">🎓 منصة مارتن التعليمية</h2>
-            <p style="font-size:0.95rem; color:#cbd5e1; line-height:1.5;">مرحباً بك يا بطل! استعد لمراجعة الدراسات الاجتماعية بأسلوب ممتع ومبسط جداً، واستكشف الشرح المريح ومذكرات المنهج.</p>
-            <button class="start-btn" onclick="startGame()">🚀 دخول المنصة وبدء اللعب</button>
+    <!-- Auth Screen (تسجيل الدخول بالاسم والبريد والباسورد) -->
+    <div id="auth-screen">
+        <div class="auth-card">
+            <h2>🎓 تسجيل دخول منصة مارتن</h2>
+            <div class="input-group">
+                <label>اسم الطالب:</label>
+                <input type="text" id="reg-name" placeholder="اكتب اسمك هنا...">
+            </div>
+            <div class="input-group">
+                <label>البريد الإلكتروني:</label>
+                <input type="email" id="reg-email" placeholder="example@gmail.com">
+            </div>
+            <div class="input-group">
+                <label>كلمة المرور (الباسورد):</label>
+                <input type="password" id="reg-pass" placeholder="••••••••">
+            </div>
+            <button class="start-btn" onclick="handleLogin()">دخول المنصة وبدء التحدي 🚀</button>
         </div>
     </div>
 
-    <!-- Top Bar -->
+    <!-- Top Bar with 3 Buttons & Score -->
     <div class="top-bar">
         <div class="score-badge">🏆 النقاط: <span id="user-score">0</span></div>
         <div class="nav-btns">
-            <button class="lessons-btn" onclick="openLessons()">📖 ملخصات الدروس</button>
-            <button class="shop-btn" onclick="openStore()">🛒 المتجر</button>
+            <button class="nav-btn btn-lessons" onclick="openLessons()">📖 شرح الدرس</button>
+            <button class="nav-btn btn-store" onclick="openStore()">🛒 المتجر</button>
+            <button class="nav-btn btn-vip" onclick="openVip()">👑 اشتراك VIP</button>
         </div>
     </div>
 
     <!-- Main Game Arena -->
     <div class="game-container" id="game-arena">
-        <div class="question-box" id="q-title">اضغط بدء اللعب من الشاشة الرئيسية للانطلاق...</div>
+        <div class="question-box" id="q-title">جاري تحميل الأسئلة يا بطل...</div>
         
         <div class="player-character" id="player">
             <div class="box-container">🎁 صندوق الكنز</div>
@@ -87,86 +101,353 @@
         <div class="modal-content">
             <button class="close-btn" onclick="closeModal('essay-modal')">✕</button>
             <h3 id="essay-title">سؤال مقالي (100 نقطة)</h3>
-            <p id="essay-question" style="font-size: 0.95rem; line-height: 1.4;"></p>
+            <p id="essay-question" style="font-size: 0.9rem; line-height: 1.4;"></p>
             <textarea id="essay-input" placeholder="اكتب إجابتك هنا يا بطل..."></textarea>
             <button class="btn-submit" onclick="submitEssay()">إرسال الإجابة ومعاينة النتيجة</button>
             
             <div id="essay-result" style="display: none;" class="explanation-box">
-                <p id="essay-explanation" style="font-size: 0.85rem;"></p>
+                <p id="essay-explanation" style="font-size: 0.8rem;"></p>
                 <button class="audio-btn" onclick="speakText(document.getElementById('essay-explanation').innerText)">🔊 استمع لشرح المعلم الآلي</button>
             </div>
         </div>
     </div>
 
-    <!-- Lessons Hub Modal (الملخصات المبسطة المريحة جداً) -->
+    <!-- Lessons Hub Modal (شرح الدرس ومذكرات الـ PDF المنظمة جداً) -->
     <div id="lessons-modal" class="modal">
         <div class="modal-content" style="max-width: 520px;">
             <button class="close-btn" onclick="closeModal('lessons-modal')">✕</button>
-            <h3>📖 ملخصات الدروس المبسطة ومذكرة الشرح</h3>
-            <p style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px;">اختر الدرس لقراءة الشرح المبسط (الذي يسهل المنهج تماماً) أو طباعته!</p>
+            <h3>📖 شرح الدروس المبسط (مخفف المنهج بنسبة 99%)</h3>
+            <p style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px;">اختر الدرس لقراءة الشرح المبسط أو فتح مذكرة الـ PDF المنسقة!</p>
             
             <div class="lessons-grid">
                 <div class="lesson-item">
                     <h4>الدرس 1: وطننا العربي</h4>
-                    <p style="font-size: 0.7rem;">الموقع والحدود والأهمية</p>
-                    <button class="read-btn" onclick="showLessonDetail(1)">قراءة الشرح المبسط 📄</button>
+                    <button class="read-btn" onclick="showLessonDetail(1)">قراءة وشرح PDF 📄</button>
                 </div>
                 <div class="lesson-item">
                     <h4>الدرس 2: تضاريس وطننا</h4>
-                    <p style="font-size: 0.7rem;">الجبال الهضاب والسهول</p>
-                    <button class="read-btn" onclick="showLessonDetail(2)">قراءة الشرح المبسط 📄</button>
+                    <button class="read-btn" onclick="showLessonDetail(2)">قراءة وشرح PDF 📄</button>
                 </div>
                 <div class="lesson-item">
                     <h4>الدرس 3: المناخ والنبات</h4>
-                    <p style="font-size: 0.7rem;">الأقاليم المناخية والتنوع</p>
-                    <button class="read-btn" onclick="showLessonDetail(3)">قراءة الشرح المبسط 📄</button>
+                    <button class="read-btn" onclick="showLessonDetail(3)">قراءة وشرح PDF 📄</button>
                 </div>
                 <div class="lesson-item">
                     <h4>الدرس 4: التحديات البيئية</h4>
-                    <p style="font-size: 0.7rem;">الجفاف والتصحر والمناخ</p>
-                    <button class="read-btn" onclick="showLessonDetail(4)">قراءة الشرح المبسط 📄</button>
+                    <button class="read-btn" onclick="showLessonDetail(4)">قراءة وشرح PDF 📄</button>
                 </div>
             </div>
             
-            <div id="lesson-reader-box" style="display:none; margin-top: 12px; background: #0f172a; padding: 12px; border-radius: 10px; border: 1px solid #38bdf8; text-align: right;">
-                <h4 id="reader-title" style="color: #38bdf8; margin-bottom: 6px;"></h4>
-                <p id="reader-text" style="font-size: 0.85rem; line-height: 1.6; margin-bottom: 8px;"></p>
-                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                    <button class="audio-btn" onclick="speakText(document.getElementById('reader-text').innerText)">🔊 استمع للشرح الصوتي</button>
-                    <button class="pdf-btn" onclick="openPdfViewer()">📥 فتح مذكرة الشرح (PDF جاهز للطباعة)</button>
-                </div>
+            <div id="lesson-reader-box" style="display:none; margin-top: 10px; background: #0f172a; padding: 10px; border-radius: 10px; border: 1px solid #38bdf8; text-align: right;">
+                <h4 id="reader-title" style="color: #38bdf8; margin-bottom: 4px; font-size: 0.9rem;"></h4>
+                <p id="reader-text" style="font-size: 0.8rem; line-height: 1.5; margin-bottom: 6px;"></p>
+                <button class="audio-btn" onclick="speakText(document.getElementById('reader-text').innerText)">🔊 استمع للشرح الصوتي</button>
+                <button class="pdf-btn" onclick="openPdfViewer()">📥 فتح مذكرة الـ PDF (الشرح الكامل بالخرائط والقرايب)</button>
             </div>
         </div>
     </div>
 
-    <!-- PDF Viewer Modal (نافذة مخصصة تعرض محتوى الـ PDF بشكل رائع ومريح) -->
+    <!-- PDF & Print Viewer Modal (مذكرة الـ PDF الاحترافية للطباعة والقرايب) -->
     <div id="pdf-modal" class="modal">
         <div class="modal-content" style="max-width: 550px; background: #fff; color: #1e293b; text-align: right;">
             <button class="close-btn" onclick="closeModal('pdf-modal')" style="background: #0f172a;">✕</button>
-            <h3 id="pdf-title" style="color: #0f172a; border-bottom: 2px solid #38bdf8; padding-bottom: 8px; margin-bottom: 12px;">مذكرة الدرس المبسطة</h3>
-            <div id="pdf-body" style="font-size: 0.9rem; line-height: 1.8; max-height: 50vh; overflow-y: auto; padding: 10px; background: #f8fafc; border-radius: 8px; border: 1px solid #cbd5e1;"></div>
-            <button class="btn-submit" style="margin-top: 15px; background: #3b82f6;" onclick="window.print()">🖨️ طباعة المذكرة أو حفظها PDF</button>
+            <h3 id="pdf-title" style="color: #1e293b; border-bottom: 2px solid #38bdf8; padding-bottom: 6px; margin-bottom: 10px; font-size: 1rem;">مذكرة الدرس والخرائط والقرايب</h3>
+            <div id="pdf-body" style="font-size: 0.85rem; line-height: 1.7; max-height: 45vh; overflow-y: auto; padding: 10px; background: #f8fafc; border-radius: 8px; border: 1px solid #cbd5e1;"></div>
+            <button class="btn-submit" style="margin-top: 12px; background: #3b82f6;" onclick="window.print()">🖨️ طباعة المذكرة أو حفظها PDF</button>
         </div>
     </div>
 
     <!-- Store Modal -->
     <div id="store-modal" class="modal">
-        <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-content" style="max-width: 450px;">
             <button class="close-btn" onclick="closeModal('store-modal')">✕</button>
-            <h3>🛒 متجر المكافآت العجيب</h3>
-            <p style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 10px;">اجمع النقاط واختر جائزتك المفضلة!</p>
-            
-            <div class="store-grid">
-                <div class="store-item">
-                    <h4>🎓 شهر مجاني</h4>
-                    <p style="font-size: 0.7rem;">اشتراك سماع شرح الدروس كاملاً</p>
-                    <button class="buy-btn" onclick="claimReward(1500, 'اشتراك الشهر المجاني لشرح الدروس')">1500 نقطة</button>
-                </div>
-                <div class="store-item">
+            <h3>🛒 المتجر وصندوق الحظ</h3>
+            <div class="lessons-grid" style="margin-top: 10px;">
+                <div class="lesson-item">
                     <h4>👨‍🔬 زي العالم</h4>
-                    <p style="font-size: 0.7rem;">مظهر جديد للطالب في اللعبة</p>
-                    <button class="buy-btn" onclick="claimReward(300, 'زي العالم الصغير')">300 نقطة</button>
+                    <p style="font-size: 0.65rem;">300 نقطة</p>
+                    <button class="read-btn" onclick="claimReward(300, 'زي العالم الصغير')">شراء</button>
                 </div>
-                <div class="store-item">
-                    <h4>🚀 ثيم الفضاء</h4>
-                    <p style="font-size: 0.7rem;">تغيير خلفية ساحة اللعب</p>
+                <div class="lesson-item">
+                    <h4>🎁 صندوق حظ</h4>
+                    <p style="font-size: 0.65rem;">100 نقطة</p>
+                    <button class="read-btn" style="background:#f59e0b;" onclick="openMysteryBox()">فتح</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIP Modal -->
+    <div id="vip-modal" class="modal">
+        <div class="modal-content" style="max-width: 450px; text-align: center;">
+            <button class="close-btn" onclick="closeModal('vip-modal')">✕</button>
+            <h3 style="color: #8b5cf6;">👑 قسم اشتراك VIP</h3>
+            <p style="font-size: 0.85rem; margin: 10px 0;">افتح كافة المزايا الخاصة، الشرح الصوتي المتقدم، وتخطي المستويات!</p>
+            <button class="btn-submit" style="background: #8b5cf6;" onclick="claimReward(1500, 'اشتراك VIP الشهري')">تفعيل VIP (1500 نقطة)</button>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let currentQIndex = 0;
+        let isDragging = false;
+        let dragStartX = 0;
+        let activeBubbles = [];
+        let animationFrameId = null;
+        let gameStarted = false;
+        let currentActiveLessonText = "";
+        let currentActiveLessonTitle = "";
+
+        const questions = [
+            {
+                type: 'mcq',
+                title: 'سؤال: ما هو أهم ممر مائي يربط بين البحر المتوسط والأحمر؟',
+                options: ['قناة السويس', 'مضيق هرمز', 'نهر النيل'],
+                correct: 0,
+                explanation: 'إجابة صحيحة يا بطل! قناة السويس هي شريان التجارة العالمي.'
+            },
+            {
+                type: 'essay',
+                title: 'سؤال مقالي: بما تفسر؟ الأهمية الاقتصادية لموقع الوطن العربي.',
+                explanation: 'الإجابة النموذجية: لإشرافه على بحار ومحيطات هامة وتحكمه في ممرات مائية عالمية مثل قناة السويس وباب المندب.'
+            },
+            {
+                type: 'mcq',
+                title: 'سؤال: أكبر دولة عربية من حيث المساحة هي:',
+                options: ['مصر', 'الجزائر', 'السعودية'],
+                correct: 1,
+                explanation: 'أحسنت يا بطل! الجزائر هي الأكبر مساحة في الوطن العربي.'
+            },
+            {
+                type: 'essay',
+                title: 'سؤال مقالي: ما النتائج المترتبة على تنوع المناخ في الوطن العربي؟',
+                explanation: 'الإجابة النموذجية: أدى ذلك إلى تنوع المحاصيل الزراعية وتكامل الدول العربية.'
+            }
+        ];
+
+        // مذكرات الشرح والخرائط والقرايب المفصلة جداً
+        const lessonsData = {
+            1: { 
+                title: "الدرس الأول: موقع وطننا العربي والخرائط", 
+                text: "📍 الموقع الجغرافي: يقع الوطن العربي في قلب العالم القديم ويلتقي في قارات آسيا وأفريقيا وأوروبا.\n🌍 الأهمية الاستراتيجية: يتحكم في 4 ممرات بحرية عالمية بالغة الأهمية:\n• قناة السويس (في مصر المحروسة).\n• مضيق هرمز.\n• مضيق باب المندب.\n• مضيق جبل طارق.\n🗺️ الخرائط والقرايب: يحيط بالوطن العربي البحر المتوسط شمالاً، والمحيط الهندي جنوباً، والخليج العربي شرقاً، والمحيط الأطلنطي غرباً."
+            },
+            2: { 
+                title: "الدرس الثاني: تضاريس وطننا العربي والخرائط", 
+                text: "⛰️ الجبال: تنقسم لجبال انكسارية نشأت بتصدع قشرة الأرض (مثل جبال البحر الأحمر)، وجبال التوائية كبرى (مثل جبال أطلس).\n🏜️ الهضاب: تمتد مساحات شاسعة مثل هضبة إفريقيا الشمالية وهضبة نجد وبادية الشام.\n🌊 السهول: تشمل السهول الفيضية حول الأنهار الكبرى (النيل ودجلة والفرات) والسهول الساحلية المطلة على البحار والمحيطات."
+            },
+            3: { 
+                title: "الدرس الثالث: المناخ والنبات الطبيعي", 
+                text: "☀️ الأقاليم المناخية:\n• إقليم البحر المتوسط: معتدل حار جاف صيفاً، دافئ ممطر شتاءً.\n• الإقليم الصحراوي الحار: شديد الحرارة صيفاً وشديد البرودة شتاءً.\n• الإقليم المداري: حار ممطر صيفاً ودافئ جاف شتاءً.\n🌱 النبات الطبيعي: تتنوع النباتات والحيوانات البرية في كل إقليم تناسباً مع درجات الحرارة والأمطار."
+            },
+            4: { 
+                title: "الدرس الرابع: التحديات البيئية والمستقبل", 
+                text: "⚠️ التحديات: يواجه الوطن العربي مشكلات التصحر، الجفاف، وقلة المياه بسبب التغيرات المناخية.\n💡 الحلول والجهود: تقوم الدول العربية بمبادرات خضراء عملاقة مثل مبادرة الشرق الأوسط الأخضر، زراعة الأشجار، التوسع في تحلية المياه، وتنظيم الري للحفاظ على البيئة."
+            }
+        };
+
+        function handleLogin() {
+            let name = document.getElementById('reg-name').value.trim();
+            let email = document.getElementById('reg-email').value.trim();
+            let pass = document.getElementById('reg-pass').value.trim();
+
+            if (name && email && pass) {
+                document.getElementById('auth-screen').style.display = 'none';
+                gameStarted = true;
+                loadNextQuestion();
+            } else {
+                alert('الرجاء إدخال الاسم والبريد الإلكتروني وكلمة المرور للمتابعة!');
+            }
+        }
+
+        const player = document.getElementById('player');
+        const arena = document.getElementById('game-arena');
+
+        player.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            dragStartX = e.touches[0].clientX - player.offsetLeft;
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            let arenaRect = arena.getBoundingClientRect();
+            let newX = e.touches[0].clientX - arenaRect.left - (player.offsetWidth / 2);
+            if (newX < 0) newX = 0;
+            if (newX > arenaRect.width - player.offsetWidth) newX = arenaRect.width - player.offsetWidth;
+            player.style.left = `${newX}px`;
+        });
+
+        document.addEventListener('touchend', () => { isDragging = false; });
+
+        player.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            dragStartX = e.clientX - player.offsetLeft;
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            let arenaRect = arena.getBoundingClientRect();
+            let newX = e.clientX - arenaRect.left - (player.offsetWidth / 2);
+            if (newX < 0) newX = 0;
+            if (newX > arenaRect.width - player.offsetWidth) newX = arenaRect.width - player.offsetWidth;
+            player.style.left = `${newX}px`;
+        });
+
+        document.addEventListener('mouseup', () => { isDragging = false; });
+
+        function loadNextQuestion() {
+            if (!gameStarted) return;
+            clearBubbles();
+            if (currentQIndex >= questions.length) currentQIndex = 0;
+
+            const q = questions[currentQIndex];
+            document.getElementById('q-title').innerText = q.title;
+
+            if (q.type === 'mcq') {
+                spawnFallingOptions(q);
+            } else if (q.type === 'essay') {
+                openEssayModal(q);
+            }
+        }
+
+        function spawnFallingOptions(q) {
+            const arenaWidth = arena.offsetWidth;
+            q.options.forEach((optText, index) => {
+                const bubble = document.createElement('div');
+                bubble.className = 'falling-option';
+                bubble.innerText = optText;
+                
+                let posX = Math.random() * (arenaWidth - 140) + 10;
+                let posY = 75 + (index * 30);
+                let speed = 1.0 + Math.random() * 0.5;
+                let direction = 1;
+
+                bubble.style.left = `${posX}px`;
+                bubble.style.top = `${posY}px`;
+
+                arena.appendChild(bubble);
+                activeBubbles.push({ element: bubble, x: posX, y: posY, speed: speed, dir: direction, isCorrect: index === q.correct });
+            });
+
+            animateBubbles();
+        }
+
+        function animateBubbles() {
+            const arenaHeight = arena.offsetHeight;
+            const playerRect = player.getBoundingClientRect();
+
+            activeBubbles.forEach((b) => {
+                b.y += b.speed * b.dir;
+                if (b.y > arenaHeight - 110 || b.y < 65) b.dir *= -1;
+                b.element.style.top = `${b.y}px`;
+
+                const bRect = b.element.getBoundingClientRect();
+                if (bRect.bottom >= playerRect.top && bRect.top <= playerRect.bottom && bRect.right >= playerRect.left && bRect.left <= playerRect.right) {
+                    handleOptionCatch(b);
+                }
+            });
+
+            animationFrameId = requestAnimationFrame(animateBubbles);
+        }
+
+        function handleOptionCatch(bubbleObj) {
+            cancelAnimationFrame(animationFrameId);
+            if (bubbleObj.isCorrect) {
+                score += 20;
+                updateScore();
+                alert('🎉 إجابة صحيحة يا بطل! تم إضافة 20 نقطة.');
+                speakText(questions[currentQIndex].explanation);
+            } else {
+                alert('❌ إجابة خاطئة، حاول مرة أخرى!');
+            }
+            currentQIndex++;
+            loadNextQuestion();
+        }
+
+        function clearBubbles() {
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            activeBubbles.forEach(b => b.element.remove());
+            activeBubbles = [];
+        }
+
+        function openEssayModal(q) {
+            document.getElementById('essay-question').innerText = q.title;
+            document.getElementById('essay-input').value = '';
+            document.getElementById('essay-result').style.display = 'none';
+            document.getElementById('essay-modal').style.display = 'flex';
+        }
+
+        function submitEssay() {
+            const userText = document.getElementById('essay-input').value.trim();
+            if (userText === '') { alert('يرجى كتابة إجابتك أولاً!'); return; }
+            score += 100;
+            updateScore();
+            const q = questions[currentQIndex];
+            document.getElementById('essay-explanation').innerText = q.explanation;
+            document.getElementById('essay-result').style.display = 'block';
+            speakText(q.explanation);
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ar-SA';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function openLessons() { document.getElementById('lessons-modal').style.display = 'flex'; }
+        function openStore() { document.getElementById('store-modal').style.display = 'flex'; }
+        function openVip() { document.getElementById('vip-modal').style.display = 'flex'; }
+        
+        function closeModal(id) { 
+            document.getElementById(id).style.display = 'none'; 
+            if (id === 'essay-modal') { currentQIndex++; loadNextQuestion(); }
+        }
+
+        function showLessonDetail(lessonId) {
+            const lesson = lessonsData[lessonId];
+            currentActiveLessonTitle = lesson.title;
+            currentActiveLessonText = lesson.text;
+
+            document.getElementById('reader-title').innerText = lesson.title;
+            document.getElementById('reader-text').innerText = lesson.text;
+            document.getElementById('lesson-reader-box').style.display = 'block';
+            speakText(lesson.text);
+        }
+
+        function openPdfViewer() {
+            document.getElementById('pdf-title').innerText = currentActiveLessonTitle;
+            document.getElementById('pdf-body').innerText = currentActiveLessonText.replace(/\n/g, '<br>');
+            document.getElementById('pdf-modal').style.display = 'flex';
+        }
+
+        function claimReward(cost, rewardName) {
+            if (score >= cost) {
+                score -= cost;
+                updateScore();
+                alert(`🎉 مبروك يا بطل! تم خصم النقاط وشراء (${rewardName}) بنجاح.`);
+            } else {
+                alert(`عفواً رصيدك غير كافي! تحتاج إلى ${cost - score} نقطة إضافية.`);
+            }
+        }
+
+        function openMysteryBox() {
+            if (score >= 100) {
+                score -= 100;
+                let bonus = Math.random() > 0.5 ? 150 : 250;
+                score += bonus;
+                updateScore();
+                alert(`🎁 فتحت صندوق الحظ وكسبت مفاجأة بقيمة ${bonus} نقطة!`);
+            } else {
+                alert('تحتاج إلى 100 نقطة لفتح صندوق الحظ!');
+            }
+        }
+
+        function updateScore() {
+            document.getElementById('user-score').innerText = score;
+        }
+    </script>
+</body>
+</html>
