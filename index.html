@@ -253,7 +253,7 @@
 </head>
 <body>
 
-    <!-- شاشة تسجيل الدخول -->
+    <!-- شاشة تسجيل الدخول (تختفي تلقائياً إذا كان الحساب محفوظاً) -->
     <div id="login-screen">
         <div class="login-card">
             <h2>🎓 تسجيل دخول منصة مارتن</h2>
@@ -311,7 +311,7 @@
             <button class="btn" id="next-btn-off" style="display:none;" onclick="nextOfflineQuestion()">السؤال التالي ➡️</button>
         </div>
 
-        <!-- 2. قسم غرفة التحدي الأونلاين (مع الكاميرا والمايك وزوم) -->
+        <!-- 2. قسم غرفة التحدي الأونلاين -->
         <div id="online-section" class="card" style="display:none;">
             <h3>👥 الغرفة التفاعلية الأونلاين (صوت وصورة مع صديقك)</h3>
             <p style="margin-bottom: 15px; color: #94a3b8;">أنشئ غرفة أو انضم لغرفة صديقك لحل الأسئلة معاً وكسب شهر مجاني لمدة نصف ساعة!</p>
@@ -329,7 +329,7 @@
                 </div>
             </div>
 
-            <!-- منطقة التحدي المباشر داخل الغرفة -->
+            <!-- منطقة التحدي المباشر -->
             <div id="live-battle-area" style="display:none;">
                 <div class="timer-box" style="margin-bottom: 15px;">
                     ⏱️ الوقت المتبقي للتحدي: <span id="battle-timer">30:00</span>
@@ -339,7 +339,6 @@
                     <div>نقاط صديقك: <span id="friend-battle-score" style="color:var(--accent-yellow);">0</span></div>
                 </div>
 
-                <!-- شاشات الزوم المصغرة -->
                 <div class="video-grid">
                     <div class="video-card">
                         <h4>📷 كاميرتك المباشرة</h4>
@@ -356,7 +355,6 @@
                     </div>
                 </div>
 
-                <!-- أسئلة التحدي الأونلاين -->
                 <div style="background:#0f172a; padding:15px; border-radius:10px; border:1px solid #334155;">
                     <h4 id="online-q-title">سؤال التحدي:</h4>
                     <p id="online-q-text" style="margin: 10px 0; font-size:1.1rem; font-weight:bold;"></p>
@@ -412,11 +410,12 @@
     </div>
 
     <script>
-        let userPoints = 0;
-        let solvedCount = 0;
+        let userPoints = parseInt(localStorage.getItem('martin_userPoints')) || 0;
+        let solvedCount = parseInt(localStorage.getItem('martin_solvedCount')) || 0;
+        let isVip = localStorage.getItem('martin_isVip') === 'true';
+
         let currentOffIndex = 0;
         let answeredOff = [];
-        let isVip = false;
 
         let myBattleScore = 0;
         let friendBattleScore = 0;
@@ -425,7 +424,6 @@
         let currentOnlineIndex = 0;
         let localStream;
 
-        // بنك الأسئلة المأخوذ من كتاب الدراسات (مفرغة وبدون حلول جاهزة لتختبر نفسك)
         const questionsDatabase = [
             {
                 q: "من الأماكن المقدسة التي يقصدها السياح بدولة فلسطين:",
@@ -459,18 +457,51 @@
             }
         ];
 
+        // التحقق تلقائياً إذا كان الحساب محفوظاً مسبقاً عند فتح الموقع
+        window.onload = function() {
+            const savedName = localStorage.getItem('martin_studentName');
+            const savedEmail = localStorage.getItem('martin_studentEmail');
+            const savedPass = localStorage.getItem('martin_studentPass');
+
+            if(savedName && savedEmail && savedPass) {
+                // إذا وجد حساب محفوظ، يتم تخطي شاشة الدخول والدخول للموقع مباشرة
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                updateStats();
+                loadOfflineQuestion();
+            }
+        };
+
         function startPlatform() {
             const name = document.getElementById('student-name').value;
             const email = document.getElementById('student-email').value;
             const pass = document.getElementById('student-pass').value;
 
             if (name && email && pass) {
+                // حفظ بيانات الحساب في الذاكرة لتظل مسجلة دائماً
+                localStorage.setItem('martin_studentName', name);
+                localStorage.setItem('martin_studentEmail', email);
+                localStorage.setItem('martin_studentPass', pass);
+
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
+                updateStats();
                 loadOfflineQuestion();
             } else {
-                alert("يرجى إدخال جميع بيانات تسجيل الدخول!");
+                alert("يرجى إدخال جميع بيانات الحساب (الاسم، البريد، وكلمة المرور)!");
             }
+        }
+
+        function saveProgress() {
+            localStorage.setItem('martin_userPoints', userPoints);
+            localStorage.setItem('martin_solvedCount', solvedCount);
+            localStorage.setItem('martin_isVip', isVip);
+        }
+
+        function updateStats() {
+            document.getElementById('points').innerText = userPoints + ' 🪙';
+            document.getElementById('solved').innerText = solvedCount + ' / 500';
+            saveProgress();
         }
 
         function switchTab(tab) {
@@ -495,7 +526,6 @@
             }
         }
 
-        /* دوئم الحل أوفلاين */
         function loadOfflineQuestion() {
             document.getElementById('explanation-off').style.display = 'none';
             document.getElementById('next-btn-off').style.display = 'none';
@@ -547,12 +577,6 @@
             loadOfflineQuestion();
         }
 
-        function updateStats() {
-            document.getElementById('points').innerText = userPoints + ' 🪙';
-            document.getElementById('solved').innerText = solvedCount + ' / 500';
-        }
-
-        /* دوال الغرفة الأونلاين والتحدي المباشر */
         function createRoom() {
             const rCode = Math.floor(100000 + Math.random() * 900000);
             document.getElementById('r-code').innerText = rCode;
@@ -663,6 +687,8 @@
         function finishBattle() {
             alert(`انتهت الـ 30 دقيقة الخاصة بالتحدي!\nنتيجتك: ${myBattleScore}\nنتيجة صديقك: ${friendBattleScore}`);
             if(myBattleScore >= friendBattleScore) {
+                isVip = true;
+                saveProgress();
                 alert("🎉 مبروك! لقد فزت بالتحدي وحصلت على اشتراك شهر مجاني VIP في المنصة!");
             } else {
                 alert("للأسف فاز صديقك هذه المرة، جرب تحدياً جديداً!");
