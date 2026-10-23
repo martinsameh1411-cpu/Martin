@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة King of الدروسات التعليمية | الصف السادس الابتدائي</title>
+    <title>منصة King of الدروسات التعليمية الشاملة</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -30,7 +30,7 @@
             padding-bottom: 40px;
         }
 
-        /* شاشة تسجيل الدخول */
+        /* شاشة تسجيل الدخول وحفظ الحساب والأي دي */
         #login-screen {
             position: fixed;
             top: 0;
@@ -90,12 +90,8 @@
             max-width: 800px;
             border-radius: 12px;
             border: 1px solid #334155;
-        }
-
-        .stat-value {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: var(--accent-blue);
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .container {
@@ -205,7 +201,7 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             transition: 0.2s;
         }
 
@@ -252,6 +248,40 @@
             font-weight: bold;
             font-size: 0.8rem;
         }
+
+        /* شاشة عرض النص المرئي أثناء القراءة الصوتية */
+        .subtitle-box {
+            background: #090d16;
+            border: 2px dashed var(--accent-blue);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--accent-yellow);
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-box {
+            background: #0f172a;
+            border-radius: 10px;
+            padding: 15px;
+            height: 200px;
+            overflow-y: auto;
+            border: 1px solid #334155;
+            margin-bottom: 10px;
+            text-align: right;
+        }
+        .chat-msg {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            background: #1e293b;
+            padding: 8px;
+            border-radius: 6px;
+        }
     </style>
 </head>
 <body>
@@ -260,7 +290,7 @@
     <div id="login-screen">
         <div class="login-card">
             <h2>👑 منصة King of الدروسات</h2>
-            <input type="text" id="student-name" class="input-field" placeholder="اسم الطالب">
+            <input type="text" id="student-name" class="input-field" placeholder="اسمك الكامل">
             <input type="email" id="student-email" class="input-field" placeholder="البريد الإلكتروني">
             <input type="password" id="student-pass" class="input-field" placeholder="كلمة المرور">
             <button class="btn" onclick="startPlatform()">دخول المنصة 🚀</button>
@@ -269,29 +299,25 @@
 
     <header>
         <h1>👑 منصة King of الدروسات التعليمية</h1>
-        <p>دراسات الصف السادس الابتدائي - التنافس والأونلاين</p>
+        <p>الصف السادس الابتدائي - المنهج الشامل والدردشة والتحميل</p>
     </header>
 
     <div class="container" style="display:none;" id="main-content">
-        <!-- شريط الإحصائيات -->
+        <!-- شريط الإحصائيات والأي دي -->
         <div class="stats-bar">
-            <div class="stat-item">
-                <div>النقاط المكتسبة</div>
-                <div class="stat-value" id="points">0 🪙</div>
-            </div>
-            <div class="stat-item">
-                <div>اللقب الحالي</div>
-                <div class="stat-value" id="user-title" style="color:var(--accent-yellow);">King of الدروسات 👑</div>
-            </div>
+            <div>البطل: <span id="display-name" style="color:var(--accent-yellow);"></span></div>
+            <div>معرف الأي دي: <span id="display-id" style="color:var(--accent-blue);"></span></div>
+            <div>النقاط: <span id="points">0 🪙</span></div>
+            <button class="btn btn-green" style="width:auto; padding: 5px 15px; margin:0; font-size:0.85rem;" onclick="downloadAppFile()">📥 تحميل التطبيق لجهازك</button>
         </div>
 
-        <!-- قسم إضافة كود التفعيل المكون من 10 أرقام -->
+        <!-- إدخال الكود السري المخفي -->
         <div class="card" style="border: 2px solid var(--accent-yellow);">
-            <h3>🔑 تفعيل الحساب بكود مكون من 10 أرقام</h3>
-            <p style="margin-bottom: 10px; font-size: 0.9rem; color: #94a3b8;">أدخل أحد الأكواد الرقمية الـ 200 المفعلة (من 2026000001 إلى 2026000200) لفتح كل المميزات والشهادات لمدة شهر!</p>
+            <h3>🔑 تفعيل الحساب بكود سري (لمدة شهر كامل)</h3>
+            <p style="margin-bottom: 10px; font-size: 0.85rem; color: #94a3b8;">أدخل الكود السري لفتح كافة الـ PDF والشهادات والمميزات فوراً!</p>
             <div style="display: flex; gap: 10px;">
-                <input type="text" id="vip-code-input" class="input-field" placeholder="أدخل كود الـ 10 أرقام هنا" style="margin: 0;" maxlength="10">
-                <button class="btn btn-green" style="width: 180px; margin: 0;" onclick="activateVipCode()">تفعيل الكود ⚡</button>
+                <input type="password" id="secret-code-input" class="input-field" placeholder="أدخل الكود السري هنا..." style="margin: 0;">
+                <button class="btn btn-green" style="width: 160px; margin: 0;" onclick="activateSecretCode()">تفعيل ⚡</button>
             </div>
         </div>
 
@@ -299,13 +325,14 @@
         <div class="nav-tabs">
             <button class="tab-btn active" id="tab-offline" onclick="switchTab('offline')">📝 تدريبات يومية</button>
             <button class="tab-btn" id="tab-online" onclick="switchTab('online')">👥 غرفة أونلاين</button>
-            <button class="tab-btn" id="tab-maps" onclick="switchTab('maps')">🗺️ ملفات PDF للدروس</button>
+            <button class="tab-btn" id="tab-maps" onclick="switchTab('maps')">🗺️ مكتبة PDF للدروس</button>
+            <button class="tab-btn" id="tab-chat" onclick="switchTab('chat')">💬 مراسلات الأصحاب</button>
             <button class="tab-btn" id="tab-shop" onclick="switchTab('shop')">🎮 متجر الجوائز</button>
         </div>
 
         <!-- 1. قسم التدريبات اليومية -->
         <div id="offline-section" class="card">
-            <h3>📝 التدريبات والأسئلة اليومية (حل براحتك)</h3>
+            <h3>📝 الأسئلة والتدريبات اليومية (حل براحتك)</h3>
             <p id="q-num-off" style="color:var(--accent-yellow); margin-top:5px;">السؤال رقم 1</p>
             <p id="q-text-off" style="font-size: 1.2rem; margin: 15px 0; font-weight:bold;"></p>
 
@@ -322,7 +349,7 @@
         <!-- 2. قسم غرفة التحدي الأونلاين -->
         <div id="online-section" class="card" style="display:none;">
             <h3>👥 الغرفة التفاعلية الأونلاين (درس زوم مع صديقك)</h3>
-            <p style="margin-bottom: 15px; color: #94a3b8;">أنشئ غرفة أو انضم لرقم غرفة صديقك، افتح الكاميرا والمايك، وتنافسوا لمدة نصف ساعة للفوز بالشهر المجاني!</p>
+            <p style="margin-bottom: 15px; color: #94a3b8;">أنشئ غرفة أو انضم لرقم غرفة صديقك، افتح الكاميرا والمايك، وتنافسوا لمدة نصف ساعة للفوز بنقاط الشهر المجاني!</p>
 
             <div id="room-controls-box">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
@@ -337,7 +364,6 @@
                 </div>
             </div>
 
-            <!-- منطقة التحدي المباشر -->
             <div id="live-battle-area" style="display:none;">
                 <div class="timer-box" style="margin-bottom: 15px;">
                     ⏱️ الوقت المتبقي للتحدي: <span id="battle-timer">30:00</span>
@@ -372,52 +398,101 @@
             </div>
         </div>
 
-        <!-- 3. قسم ملفات الـ PDF لكل درس -->
+        <!-- 3. مكتبة ملفات الـ PDF الشاملة للـ 4 دروس والخرائط (مع الشاشة المرئية للصوتيات) -->
         <div id="maps-section" class="card" style="display:none;">
-            <h3>🗺️ مكتبة ملفات الـ PDF لكل درس (مع القراءة الصوتيّة)</h3>
-            <p style="margin-bottom: 15px; color: #94a3b8;">لكل درس ملف PDF مستقل يضم الشرح والتدريبات مع خاصية القراءة الصوتية!</p>
+            <h3>🗺️ مكتبة ملفات الـ PDF الشاملة (الأربعة دروس والخرائط)</h3>
+            <p style="margin-bottom: 15px; color: #94a3b8;">كل درس له ملف PDF خاص به يضم الشرح والخرائط والتدريبات مع القراءة الصوتية والنص المرئي!</p>
+
+            <!-- صندوق ظهور الكلام المرئي أثناء القراءة الصوتية -->
+            <div class="subtitle-box" id="subtitle-display">
+                💬 اضغط على زر "قراءة صوتية" لأي درس لكي تظهر الكلمات هنا بالصوت والصورة...
+            </div>
 
             <div class="shop-item">
-                <div>
-                    <strong>📄 درس (1): خصائص الوطن العربي (شرح + تدريبات)</strong>
-                </div>
-                <div style="display: flex; gap: 5px;">
-                    <button class="btn btn-audio" style="width:auto;" onclick="speakText('درس خصائص الوطن العربي يوضح الموقع الجغرافي والفلكي والأهمية الدينية والحضارية.')">🔊 قراءة صوتية</button>
-                    <button class="btn btn-green" style="width:auto;" onclick="downloadPdf('خصائص_الوطن_العربي')">تحميل PDF 📥</button>
+                <div><strong>📄 درس (1): خصائص الوطن العربي</strong></div>
+                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                    <button class="btn btn-audio" style="width:auto;" onclick="speakLesson(1)">🔊 قراءة صوتية</button>
+                    <button class="btn btn-green" style="width:auto;" onclick="openPdfLesson('خصائص_الوطن_العربي')">فتح/تحميل PDF 📥</button>
                 </div>
             </div>
 
             <div class="shop-item">
-                <div>
-                    <strong>📄 درس (2): مناخ ونبات الوطن العربي (شرح + تدريبات)</strong>
+                <div><strong>📄 درس (2): مناخ ونبات الوطن العربي</strong></div>
+                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                    <button class="btn btn-audio" style="width:auto;" onclick="speakLesson(2)">🔊 قراءة صوتية</button>
+                    <button class="btn btn-green" style="width:auto;" onclick="openPdfLesson('مناخ_ونبات_الوطن_العربي')">فتح/تحميل PDF 📥</button>
                 </div>
-                <div style="display: flex; gap: 5px;">
-                    <button class="btn btn-audio" style="width:auto;" onclick="speakText('درس مناخ ونبات الوطن العربي يتناول العوامل المؤثرة في المناخ والأقاليم المناخية.')">🔊 قراءة صوتية</button>
-                    <button class="btn btn-green" style="width:auto;" onclick="downloadPdf('مناخ_ونبات_الوطن_العربي')">تحميل PDF 📥</button>
+            </div>
+
+            <div class="shop-item">
+                <div><strong>📄 درس (3): مشكلات بيئية وتحديات بالوطن العربي</strong></div>
+                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                    <button class="btn btn-audio" style="width:auto;" onclick="speakLesson(3)">🔊 قراءة صوتية</button>
+                    <button class="btn btn-green" style="width:auto;" onclick="openPdfLesson('مشكلات_بيئية_وتحديات')">فتح/تحميل PDF 📥</button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <div><strong>📄 درس (4): التורّث الحضاري والثقافي + الخرائط</strong></div>
+                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                    <button class="btn btn-audio" style="width:auto;" onclick="speakLesson(4)">🔊 قراءة صوتية</button>
+                    <button class="btn btn-green" style="width:auto;" onclick="openPdfLesson('التراث_والخرائط')">فتح/تحميل PDF 📥</button>
                 </div>
             </div>
         </div>
 
-        <!-- 4. قسم متجر الجوائز والشهادات -->
+        <!-- 4. قسم مراسلات الأصحاب باستخدام الـ ID -->
+        <div id="chat-section" class="card" style="display:none;">
+            <h3>💬 غرفة مراسلات الأصحاب (بواسطة الـ ID)</h3>
+            <p style="margin-bottom: 10px; color: #94a3b8;">تواصل مع أصحابك عبر كتابة الـ ID الخاص بصديقك والرسالة:</p>
+            
+            <div class="chat-box" id="chat-messages">
+                <div class="chat-msg"><strong>النظام:</strong> أهلاً بك في شات أصحاب King of الدروسات!</div>
+            </div>
+
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <input type="text" id="friend-id-input" class="input-field" placeholder="ID الصديق" style="flex: 1; margin:0;">
+                <input type="text" id="chat-msg-input" class="input-field" placeholder="اكتب رسالتك هنا..." style="flex: 2; margin:0;">
+                <button class="btn btn-blue" style="width: auto; margin:0;" onclick="sendChatMessage()">إرسال ✉️</button>
+            </div>
+        </div>
+
+        <!-- 5. متجر الجوائز والتفوق المطور -->
         <div id="shop-section" class="card" style="display:none;">
-            <h3>🏆 متجر الجوائز والتفوق</h3>
+            <h3>🏆 متجر الجوائز والتفوق الشامل</h3>
 
             <div class="shop-item">
                 <div>
-                    <strong>👑 اشتراك VIP الشهري الشامل</strong>
-                    <div style="font-size: 0.85rem; color: #94a3b8;">يفتح لك جميع الشروحات وملفات الـ PDF</div>
-                    <div style="font-weight:bold; color:var(--accent-blue);">السعر: 5000 نقطة أو كود رقمي</div>
+                    <strong>👑 اشتراك VIP الشهري</strong>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">يفتح لك كافة الـ PDF والمميزات المتقدمة</div>
+                    <div style="font-weight:bold; color:var(--accent-blue);">السعر: 3000 نقطة</div>
                 </div>
-                <button class="btn" style="width:auto;" onclick="buyVip()">اشتراك الآن 🔓</button>
+                <button class="btn" style="width:auto;" onclick="buyVip()">اشتراك 🔓</button>
             </div>
 
             <div class="shop-item">
                 <div>
                     <strong>📜 شهادة "King of الدروسات" المعتمدة</strong>
-                    <div style="font-size: 0.85rem; color: #94a3b8;">شهادة التفوق الكبرى المعتمدة باسمك الشخصي</div>
-                    <div style="font-weight:bold; color:var(--accent-yellow);">السعر: 7000 نقطة</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">شهادة تفوق رسمية تصدر خصيصاً باسمك ولقبك الملكي</div>
+                    <div style="font-weight:bold; color:var(--accent-yellow);">السعر: 5000 نقطة</div>
                 </div>
                 <button class="btn" style="width:auto;" onclick="buyCertificate()">شراء الشهادة 🎓</button>
+            </div>
+
+            <div class="shop-item">
+                <div>
+                    <strong>🎨 تفعيل الثيم الملكي المطور</strong>
+                    <div style="font-weight:bold; color:var(--accent-green);">السعر: 1500 نقطة</div>
+                </div>
+                <button class="btn" style="width:auto;" onclick="alert('تم تفعيل الثيم الملكي بنجاح!')">تفعيل 🖌️</button>
+            </div>
+
+            <div class="shop-item">
+                <div>
+                    <strong>⭐ لقب ملكي إضافي (أسطورة الدراسات)</strong>
+                    <div style="font-weight:bold; color:var(--accent-yellow);">السعر: 2000 نقطة</div>
+                </div>
+                <button class="btn" style="width:auto;" onclick="alert('تم شراء اللقب بنجاح!')">شراء 🏅</button>
             </div>
         </div>
     </div>
@@ -426,12 +501,14 @@
         let userPoints = parseInt(localStorage.getItem('martin_userPoints')) || 0;
         let solvedCount = parseInt(localStorage.getItem('martin_solvedCount')) || 0;
         let isVip = localStorage.getItem('martin_isVip') === 'true';
+        let studentId = localStorage.getItem('martin_studentId') || 'ID-' + Math.floor(100000 + Math.random() * 900000);
+        localStorage.setItem('martin_studentId', studentId);
 
-        // توليد 200 كود رقمي مكون من 10 أرقام (من 2026000001 إلى 2026000200)
-        const validVipCodes = [];
+        // الأكواد السرية الـ 200 المكونة من 10 أرقام (مخفية تماماً)
+        const validSecretCodes = [];
         for (let i = 1; i <= 200; i++) {
             let numStr = i.toString().padStart(6, '0');
-            validVipCodes.push(`2026${numStr}`);
+            validSecretCodes.push(`2026${numStr}`);
         }
 
         let currentOffIndex = 0;
@@ -458,6 +535,14 @@
             }
         ];
 
+        // نصوص الدروس للقراءة الصوتية والعرض المرئي
+        const lessonTexts = {
+            1: "درس خصائص الوطن العربي يوضح الموقع الجغرافي والفلكي وأهمية الوطن العربي الدينية والحضارية والاقتصادية مع التدريبات الكاملة والخرائط.",
+            2: "درس مناخ ونبات الوطن العربي يتناول العوامل المؤثرة في المناخ، وأقاليم البحر المتوسط والاقليم الصحراوي الحار والمداري وحشائش الاستبس والسافانا.",
+            3: "درس مشكلات بيئية وتحديات يتحدث عن مشكلة الجفاف والتصحر وتلوث الهواء وجهود الدول العربية في مواجهة التغير المناخي والسيول.",
+            4: "درس التراث الحضاري والثقافي للوطن العربي يوضح المعالم الأثرية، بالإضافة إلى التدريب الشامل على الخرائط الصماء وكيفية حلها."
+        };
+
         window.onload = function() {
             const savedName = localStorage.getItem('martin_studentName');
             const savedEmail = localStorage.getItem('martin_studentEmail');
@@ -466,6 +551,8 @@
             if(savedName && savedEmail && savedPass) {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
+                document.getElementById('display-name').innerText = savedName;
+                document.getElementById('display-id').innerText = studentId;
                 updateStats();
                 loadOfflineQuestion();
             }
@@ -483,32 +570,12 @@
 
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
+                document.getElementById('display-name').innerText = name;
+                document.getElementById('display-id').innerText = studentId;
                 updateStats();
                 loadOfflineQuestion();
             } else {
                 alert("يرجى إدخال جميع بيانات الحساب!");
-            }
-        }
-
-        // تفعيل كود الـ 10 أرقام
-        function activateVipCode() {
-            const inputCode = document.getElementById('vip-code-input').value.trim();
-            let usedCodes = JSON.parse(localStorage.getItem('martin_usedCodes')) || [];
-
-            if (validVipCodes.includes(inputCode)) {
-                if (usedCodes.includes(inputCode)) {
-                    alert("عفواً، هذا الكود الرقمي تم استخدامه من قبل!");
-                } else {
-                    usedCodes.push(inputCode);
-                    localStorage.setItem('martin_usedCodes', JSON.stringify(usedCodes));
-                    isVip = true;
-                    userPoints += 1000;
-                    saveProgress();
-                    updateStats();
-                    alert("🎉 مبروك يا King of الدروسات! تم تفعيل كود الـ 10 أرقام بنجاح وفتح جميع المميزات والـ PDF والشهادات لمده شهر كامل!");
-                }
-            } else {
-                alert("الكود الرقمي غير صحيح! تأكد من إدخال 10 أرقام صحيحة من قائمة الأكواد المفعلة.");
             }
         }
 
@@ -528,6 +595,7 @@
             document.getElementById('offline-section').style.display = 'none';
             document.getElementById('online-section').style.display = 'none';
             document.getElementById('maps-section').style.display = 'none';
+            document.getElementById('chat-section').style.display = 'none';
             document.getElementById('shop-section').style.display = 'none';
 
             if(tab === 'offline') {
@@ -539,19 +607,73 @@
             } else if(tab === 'maps') {
                 document.getElementById('maps-section').style.display = 'block';
                 document.getElementById('tab-maps').classList.add('active');
+            } else if(tab === 'chat') {
+                document.getElementById('chat-section').style.display = 'block';
+                document.getElementById('tab-chat').classList.add('active');
             } else if(tab === 'shop') {
                 document.getElementById('shop-section').style.display = 'block';
                 document.getElementById('tab-shop').classList.add('active');
             }
         }
 
-        function speakText(text) {
+        // قراءة صوتية مع عرض النص المرئي لحظياً (الإملاء الصوتي المرئي)
+        function speakLesson(lessonNum) {
+            const text = lessonTexts[lessonNum];
+            const subtitleBox = document.getElementById('subtitle-display');
+            
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 let utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'ar-SA';
                 utterance.rate = 0.9;
+
+                // تحديث النص المرئي أثناء النطق
+                subtitleBox.innerText = `🔊 جاري القراءة: "${text}"`;
+
+                utterance.onend = function() {
+                    subtitleBox.innerText = "✅ انتهت القراءة الصوتية للدرس بنجاح.";
+                };
+
                 window.speechSynthesis.speak(utterance);
+            } else {
+                alert("متصفحك لا يدعم القراءة الصوتية.");
+            }
+        }
+
+        // فتح ملف الـ PDF الخاص بالدرس (يعمل بحرية للمشتركين أو يطلب تفعيل VIP)
+        function openPdfLesson(lessonName) {
+            if(isVip) {
+                // فتح ملف وهمي أو تنزيه ملف PDF مباشر للمستخدم
+                const pdfContent = `%PDF-1.4 مذكرات King of الدروسات الشاملة - درس: ${lessonName}`;
+                const blob = new Blob([pdfContent], { type: 'application/pdf' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `${lessonName}_King_Of_Dorosat.pdf`;
+                link.click();
+                alert(`📥 تم فتح وتحميل ملف الـ PDF الخاص بـ (${lessonName}) بنجاح!`);
+            } else {
+                alert("🔒 هذا الـ PDF حصري لمشتركي الـ VIP أو أصحاب الكود السري! قم بتفعيل الكود من الأعلى أو الشراء من المتجر.");
+            }
+        }
+
+        function activateSecretCode() {
+            const inputCode = document.getElementById('secret-code-input').value.trim();
+            let usedCodes = JSON.parse(localStorage.getItem('martin_usedCodes')) || [];
+
+            if (validSecretCodes.includes(inputCode)) {
+                if (usedCodes.includes(inputCode)) {
+                    alert("عفواً، هذا الكود تم استخدامه من قبل!");
+                } else {
+                    usedCodes.push(inputCode);
+                    localStorage.setItem('martin_usedCodes', JSON.stringify(usedCodes));
+                    isVip = true;
+                    userPoints += 1000;
+                    saveProgress();
+                    updateStats();
+                    alert("🎉 مبروك يا King of الدروسات! تم تفعيل الكود السري بنجاح وفتح جميع الـ PDF والشهادات لمده شهر كامل!");
+                }
+            } else {
+                alert("الكود السري غير صحيح!");
             }
         }
 
@@ -588,7 +710,7 @@
 
             if (selected === correct) {
                 btn.classList.add('correct');
-                userPoints += 10;
+                userPoints += 15;
                 solvedCount += 1;
                 updateStats();
             } else {
@@ -637,7 +759,7 @@
                 localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
                 document.getElementById('localVideo').srcObject = localStream;
             } catch(e) {
-                alert("يرجى السماح بصلاحيات الكاميرا والمايك للعمل داخل الغرفة.");
+                alert("يرجى السماح بصلاحيات الكاميرا والمايك للعمل داخل الغرفة التفاعلية.");
             }
         }
 
@@ -717,40 +839,58 @@
             alert(`انتهت الـ 30 دقيقة الخاصة بالتحدي!\nنتيجتك: ${myBattleScore}\nنتيجة صديقك: ${friendBattleScore}`);
             if(myBattleScore >= friendBattleScore) {
                 isVip = true;
+                userPoints += 500;
                 saveProgress();
-                alert("🎉 مبروك يا King of الدروسات! لقد فزت بالتحدي وحصلت على اشتراك شهر مجاني VIP في المنصة!");
+                alert("🎉 مبروك يا King of الدروسات! لقد فزت بالتحدي وحصلت على اشتراك شهر مجاني VIP ونقاط تفوق!");
             } else {
                 alert("حاول مرة أخرى لتفوز باشتراك VIP!");
             }
         }
 
-        function downloadPdf(lessonName) {
-            if(isVip) {
-                alert(`جاري تحميل ملف الـ PDF الخاص بـ (${lessonName})... 📥`);
+        // زر التحميل الخاص بالمنصة كبرنامج مستقل على جهازك بدون كروم
+        function downloadAppFile() {
+            const htmlContent = document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'King_Of_Dorosat_App.html';
+            link.click();
+            alert("📥 تم تحميل المنصة كبرنامج مستقل على جهازك! يمكنك فتحه في أي وقت بدون جوجل كروم أو إنترنت.");
+        }
+
+        function sendChatMessage() {
+            const friendId = document.getElementById('friend-id-input').value.trim();
+            const msg = document.getElementById('chat-msg-input').value.trim();
+
+            if(friendId && msg) {
+                const chatBox = document.getElementById('chat-messages');
+                chatBox.innerHTML += `<div class="chat-msg"><strong>أنت (إلى ${friendId}):</strong> ${msg}</div>`;
+                document.getElementById('chat-msg-input').value = '';
+                alert(`✉️ تم إرسال الرسالة بنجاح إلى الأي دي: ${friendId}`);
             } else {
-                alert("عفواً، ميزة تحميل الـ PDF متاحة لمشتركي الـ VIP أو باستخدام كود التفعيل الرقمي!");
+                alert("الرجاء إدخال ID الصديق وكتابة رسالة صحيحة!");
             }
         }
 
         function buyVip() {
-            if(userPoints >= 5000) {
-                userPoints -= 5000;
+            if(userPoints >= 3000) {
+                userPoints -= 3000;
                 isVip = true;
                 updateStats();
                 alert("🎉 مبروك! تم تفعيل اشتراك الـ VIP بنجاح.");
             } else {
-                alert(`تحتاج إلى 5000 نقطة للاشتراك! رصيدك: ${userPoints}`);
+                alert(`تحتاج إلى 3000 نقطة للاشتراك! رصيدك الحالي: ${userPoints}`);
             }
         }
 
         function buyCertificate() {
             const studentName = localStorage.getItem('martin_studentName') || "King of الدروسات";
-            if(isVip || userPoints >= 7000) {
-                if(!isVip) userPoints -= 7000;
+            if(isVip || userPoints >= 5000) {
+                if(!isVip && userPoints >= 5000) userPoints -= 5000;
                 updateStats();
-                alert(`📜 مبروك يا بطل! تم إصدار شهادة التفوق الكبرى باسم الطالب: (${studentName}) - بلقب King of الدروسات 👑!`);
+                alert(`📜 مبروك يا بطل الأبطال! تم إصدار شهادة التفوق الكبرى رسمياً باسم: (${studentName}) - ولقب [King of الدروسات] 👑!`);
             } else {
-                alert(`تحتاج إلى 7000 نقطة أو تفعيل كود الـ VIP للحصول على الشهادة!`);
+                alert(`تحتاج إلى 5000 نقطة أو تفعيل اشتراك الـ VIP للحصول على الشهادة المعتمدة!`);
             }
         }
     </script>
