@@ -30,7 +30,7 @@
             padding-bottom: 40px;
         }
 
-        /* شاشة تسجيل الدخول */
+        /* شاشة تسجيل الدخول (محفوظة تلقائياً) */
         #login-screen {
             position: fixed;
             top: 0;
@@ -142,6 +142,7 @@
         .btn:hover { opacity: 0.9; }
         .btn-green { background: var(--accent-green); color: white; }
         .btn-blue { background: var(--accent-blue); color: black; }
+        .btn-audio { background: #8b5cf6; color: white; }
 
         .options-grid {
             display: grid;
@@ -184,6 +185,8 @@
             border-radius: 12px;
             margin-bottom: 15px;
             border: 1px solid #334155;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .nav-tabs {
@@ -253,7 +256,7 @@
 </head>
 <body>
 
-    <!-- شاشة تسجيل الدخول (تختفي تلقائياً إذا كان الحساب محفوظاً) -->
+    <!-- شاشة تسجيل الدخول -->
     <div id="login-screen">
         <div class="login-card">
             <h2>🎓 تسجيل دخول منصة مارتن</h2>
@@ -270,7 +273,7 @@
     </header>
 
     <div class="container" style="display:none;" id="main-content">
-        <!-- شريط الإحصائيات -->
+        <!-- شريط الإحصائيات وحفظ النقاط تلقائياً -->
         <div class="stats-bar">
             <div class="stat-item">
                 <div>النقاط المكتسبة</div>
@@ -287,17 +290,17 @@
             ⏳ متبقي على نهاية تحدي الـ VIP: <span id="countdown">20 يوم و 23 ساعة</span>
         </div>
 
-        <!-- التبويبات (الأقسام الرئيسية) -->
+        <!-- التبويبات والأقسام -->
         <div class="nav-tabs">
-            <button class="tab-btn active" id="tab-offline" onclick="switchTab('offline')">📝 حل أوفلاين</button>
+            <button class="tab-btn active" id="tab-offline" onclick="switchTab('offline')">📝 تدريبات يومية</button>
             <button class="tab-btn" id="tab-online" onclick="switchTab('online')">👥 غرفة أونلاين</button>
-            <button class="tab-btn" id="tab-maps" onclick="switchTab('maps')">🗺️ خرائط وPDF</button>
+            <button class="tab-btn" id="tab-maps" onclick="switchTab('maps')">🗺️ ملفات PDF للدروس</button>
             <button class="tab-btn" id="tab-shop" onclick="switchTab('shop')">🎮 متجر الجوائز</button>
         </div>
 
-        <!-- 1. قسم حل الأسئلة أوفلاين -->
+        <!-- 1. قسم التدريبات اليومية -->
         <div id="offline-section" class="card">
-            <h3>📝 الأسئلة اليومية (أوفلاين)</h3>
+            <h3>📝 التدريبات والأسئلة اليومية (حل براحتك)</h3>
             <p id="q-num-off" style="color:var(--accent-yellow); margin-top:5px;">السؤال رقم 1</p>
             <p id="q-text-off" style="font-size: 1.2rem; margin: 15px 0; font-weight:bold;"></p>
 
@@ -311,10 +314,10 @@
             <button class="btn" id="next-btn-off" style="display:none;" onclick="nextOfflineQuestion()">السؤال التالي ➡️</button>
         </div>
 
-        <!-- 2. قسم غرفة التحدي الأونلاين -->
+        <!-- 2. قسم غرفة التحدي الأونلاين (زوم مع صديقك) -->
         <div id="online-section" class="card" style="display:none;">
-            <h3>👥 الغرفة التفاعلية الأونلاين (صوت وصورة مع صديقك)</h3>
-            <p style="margin-bottom: 15px; color: #94a3b8;">أنشئ غرفة أو انضم لغرفة صديقك لحل الأسئلة معاً وكسب شهر مجاني لمدة نصف ساعة!</p>
+            <h3>👥 الغرفة التفاعلية الأونلاين (درس زوم مع صديقك)</h3>
+            <p style="margin-bottom: 15px; color: #94a3b8;">أنشئ غرفة أو انضم لرقم غرفة صديقك، افتح الكاميرا والمايك، وتنافسوا لمدة نصف ساعة للفوز بالشهر المجاني!</p>
 
             <div id="room-controls-box">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
@@ -364,31 +367,75 @@
             </div>
         </div>
 
-        <!-- 3. قسم الخرائط والـ PDF -->
+        <!-- 3. قسم ملفات الـ PDF لكل درس (مع القراءة الصوتيّة) -->
         <div id="maps-section" class="card" style="display:none;">
-            <h3>🗺️ الشرح والتدريب على الخرائط والـ PDF</h3>
-            <p style="margin-bottom: 10px;">تحميل مذكرات الدراسات الاجتماعية والخرائط الشاملة.</p>
+            <h3>🗺️ مكتبة ملفات الـ PDF لكل درس (مع القراءة الصوتيّة)</h3>
+            <p style="margin-bottom: 15px; color: #94a3b8;">لكل درس ملف PDF مستقل يضم الشرح، المهام، التدريبات، وطرق الحل، مع إمكانية تشغيل الشرح بالصوت التلقائي!</p>
+
             <div class="shop-item">
                 <div>
-                    <strong>📄 مذكرات المراجعة النهائية (PDF)</strong>
-                    <div style="font-size: 0.85rem; color: var(--accent-yellow);">متاحة لمشتركي الـ VIP</div>
+                    <strong>📄 درس (1): خصائص الوطن العربي (شرح + تدريبات)</strong>
+                    <div style="font-size: 0.85rem; color: var(--accent-yellow);">ملف شامل بجميع مهام الدرس</div>
                 </div>
-                <button class="btn" style="width:auto; background: var(--accent-green);" onclick="downloadPdf()">تحميل الـ PDF 📥</button>
+                <div style="display: flex; gap: 5px;">
+                    <button class="btn btn-audio" style="width:auto;" onclick="speakText('درس خصائص الوطن العربي يوضح الموقع الجغرافي والفلكي وأهمية الوطن العربي الدينية والحضارية والاقتصادية مع التدريبات الكاملة.')">🔊 قراءة صوتية</button>
+                    <button class="btn btn-green" style="width:auto;" onclick="downloadPdf('خصائص_الوطن_العربي')">تحميل PDF 📥</button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <div>
+                    <strong>📄 درس (2): مناخ ونبات الوطن العربي (شرح + تدريبات)</strong>
+                    <div style="font-size: 0.85rem; color: var(--accent-yellow);">ملف الأقاليم المناخية والنباتية</div>
+                </div>
+                <div style="display: flex; gap: 5px;">
+                    <button class="btn btn-audio" style="width:auto;" onclick="speakText('درس مناخ ونبات الوطن العربي يتناول العوامل المؤثرة في المناخ، وأقاليم البحر المتوسط والاقليم الصحراوي الحار والمداري وحشائش الاستبس والسافانا.')">🔊 قراءة صوتية</button>
+                    <button class="btn btn-green" style="width:auto;" onclick="downloadPdf('مناخ_ونبات_الوطن_العربي')">تحميل PDF 📥</button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <div>
+                    <strong>📄 درس (3): مشكلات بيئية وتحديات (شرح + تدريبات)</strong>
+                    <div style="font-size: 0.85rem; color: var(--accent-yellow);">ملف الجفاف، التصحر، والتغير المناخي</div>
+                </div>
+                <div style="display: flex; gap: 5px;">
+                    <button class="btn btn-audio" style="width:auto;" onclick="speakText('درس مشكلات بيئية وتحديات يتحدث عن مشكلة الجفاف والتصحر وتلوث الهواء وجهود الدول العربية في مواجهة التغير المناخي والسيول.')">🔊 قراءة صوتية</button>
+                    <button class="btn btn-green" style="width:auto;" onclick="downloadPdf('مشكلات_بيئية_وتحديات')">تحميل PDF 📥</button>
+                </div>
             </div>
         </div>
 
-        <!-- 4. قسم متجر المكافآت -->
+        <!-- 4. قسم متجر الجوائز (مع الشهادة الكبرى وفتح الكل عند 10000 ساعة/نقطة) -->
         <div id="shop-section" class="card" style="display:none;">
             <h3>🏆 متجر الجوائز والحوافز التعليمية</h3>
-            <p style="margin-bottom: 15px; color: #94a3b8;">استبدل نقاطك بالميزات والألقاب واشتراك الـ VIP!</p>
+            <p style="margin-bottom: 15px; color: #94a3b8;">استبدل نقاطك بالميزات والألقاب واشتراك الـ VIP والشهادات المعتمدة!</p>
 
             <div class="shop-item">
                 <div>
                     <strong>👑 اشتراك VIP الشهري</strong>
-                    <div style="font-size: 0.85rem; color: #94a3b8;">يفتح لك جميع ملفات الـ PDF والشرح</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">يفتح لك جميع ملفات الـ PDF المتقدمة</div>
                     <div style="font-weight:bold; color:var(--accent-blue);">السعر: 5000 نقطة</div>
                 </div>
                 <button class="btn" style="width:auto;" onclick="buyVip()">اشتراك الآن 🔓</button>
+            </div>
+
+            <div class="shop-item">
+                <div>
+                    <strong>📜 الشهادة التعليمية الكبرى المعتمدة</strong>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">شهادة تفوق رسمية باسمك من المنصة</div>
+                    <div style="font-weight:bold; color:var(--accent-yellow);">السعر: 7000 نقطة</div>
+                </div>
+                <button class="btn" style="width:auto;" onclick="buyCertificate()">شراء الشهادة 🎓</button>
+            </div>
+
+            <div class="shop-item">
+                <div>
+                    <strong>🌟 فتح شامل نهائي (عند جمع 10000 نقطة)</strong>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">يفتح لك كل ما تريده في المنصة بلا حدود!</div>
+                    <div style="font-weight:bold; color:var(--accent-green);">السعر: 10000 نقطة</div>
+                </div>
+                <button class="btn" style="width:auto; background:var(--accent-green); color:white;" onclick="unlockEverything()">فتح الكل 🔓🚀</button>
             </div>
 
             <div class="shop-item">
@@ -457,14 +504,13 @@
             }
         ];
 
-        // التحقق تلقائياً إذا كان الحساب محفوظاً مسبقاً عند فتح الموقع
+        // الحفاظ على تسجيل الدخول وحفظ البيانات تلقائياً
         window.onload = function() {
             const savedName = localStorage.getItem('martin_studentName');
             const savedEmail = localStorage.getItem('martin_studentEmail');
             const savedPass = localStorage.getItem('martin_studentPass');
 
             if(savedName && savedEmail && savedPass) {
-                // إذا وجد حساب محفوظ، يتم تخطي شاشة الدخول والدخول للموقع مباشرة
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 updateStats();
@@ -478,7 +524,6 @@
             const pass = document.getElementById('student-pass').value;
 
             if (name && email && pass) {
-                // حفظ بيانات الحساب في الذاكرة لتظل مسجلة دائماً
                 localStorage.setItem('martin_studentName', name);
                 localStorage.setItem('martin_studentEmail', email);
                 localStorage.setItem('martin_studentPass', pass);
@@ -523,6 +568,18 @@
             } else if(tab === 'shop') {
                 document.getElementById('shop-section').style.display = 'block';
                 document.getElementById('tab-shop').classList.add('active');
+            }
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                let utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ar-SA';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("متصفحك لا يدعم القراءة الصوتية.");
             }
         }
 
@@ -695,11 +752,11 @@
             }
         }
 
-        function downloadPdf() {
+        function downloadPdf(lessonName) {
             if(isVip) {
-                alert("جاري تحميل ملفات الـ PDF... 📥");
+                alert(`جاري تحميل ملف الـ PDF الخاص بـ (${lessonName})... 📥`);
             } else {
-                alert("عفواً، ميزة تحميل الـ PDF متاحة فقط لمشتركي الـ VIP.");
+                alert("عفواً، ميزة تحميل ملفات الـ PDF الخاصة بالدروس متاحة فقط لمشتركي الـ VIP أو لمن يفوز بتحدي الغرفة الأونلاين!");
             }
         }
 
@@ -711,6 +768,28 @@
                 alert("🎉 مبروك! تم تفعيل اشتراك الـ VIP بنجاح.");
             } else {
                 alert(`تحتاج إلى 5000 نقطة للاشتراك! رصيدك: ${userPoints}`);
+            }
+        }
+
+        function buyCertificate() {
+            if(userPoints >= 7000) {
+                userPoints -= 7000;
+                isVip = true;
+                updateStats();
+                alert("📜 مبروك يا بطل! تم إصدار الشهادة التعليمية المعتمدة باسمك وتفعيل صلاحيات الـ VIP.");
+            } else {
+                alert(`تحتاج إلى 7000 نقطة لشراء الشهادة! رصيدك الحالي: ${userPoints}`);
+            }
+        }
+
+        function unlockEverything() {
+            if(userPoints >= 10000) {
+                userPoints -= 10000;
+                isVip = true;
+                updateStats();
+                alert("🚀 مبروك يا بطل الأبطال! لقد فتحت كل ما تريده في المنصة وأصبحت الملك المتوج!");
+            } else {
+                alert(`تحتاج إلى 10000 نقطة لفتح كل شيء! رصيدك الحالي: ${userPoints}`);
             }
         }
     </script>
