@@ -3,248 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة مارتن لمراجعة الدراسات</title>
+    <title>منصة مراجعة الدراسات الاجتماعية</title>
     <style>
-        :root {
-            --bg-color: #0d1b2a;
-            --card-bg: #1b263b;
-            --accent: #415a77;
-            --accent-hover: #778da9;
-            --text: #e0e1dd;
-            --success: #2d6a4f;
-            --danger: #9b2226;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            direction: rtl;
         }
-        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text); margin: 0; padding: 15px; display: flex; justify-content: center; }
-        .container { width: 100%; max-width: 500px; }
-        .text-center { text-align: center; }
-        .card { background-color: var(--card-bg); border-radius: 15px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); border: 1px solid #415a77; }
-        .btn { display: block; width: 100%; padding: 12px; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; text-align: center; margin-top: 10px; transition: 0.3s; text-decoration: none; }
-        .btn-primary { background-color: var(--accent); color: white; }
-        .btn-primary:hover { background-color: var(--accent-hover); }
-        .btn-success { background-color: var(--success); color: white; }
-        .btn-danger { background-color: var(--danger); color: white; }
-        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #415a77; background: #0d1b2a; color: white; font-size: 16px; }
-        .hidden { display: none !important; }
-        .lesson-box { background: #131b2e; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-right: 5px solid #415a77; }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .lesson-card {
+            background-color: #eef2f5;
+            border-right: 5px solid #3498db;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+        .lesson-title {
+            font-size: 1.3em;
+            color: #2980b9;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .content-box {
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+        .btn-action {
+            display: inline-block;
+            background-color: #27ae60;
+            color: white;
+            padding: 10px 18px;
+            margin-top: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: background 0.3s;
+        }
+        .btn-action:hover {
+            background-color: #219150;
+        }
+        .btn-quiz {
+            background-color: #e67e22;
+        }
+        .btn-quiz:hover {
+            background-color: #d35400;
+        }
     </style>
 </head>
 <body>
 
-<div class="container" id="app">
-    <!-- Header -->
-    <div class="text-center card">
-        <h2>📚 منصة مارتن لمراجعة الدراسات</h2>
-        <p>الشرح الوافي، الخرائط التفصيلية، والتحكم الصوتي الكامل</p>
+<div class="container">
+    <h1>📚 منصة مراجعة الدراسات الاجتماعية</h1>
+    <p style="text-align: center; color: #7f8c8d;">مراجعة شاملة ومستمرة للصفوف الدراسية</p>
+
+    <!-- الدرس الأول -->
+    <div class="lesson-card">
+        <div class="lesson-title">الدرس الأول: موقع وطننا العربي</div>
+        <div class="content-box">
+            <p><strong>الموقع الجغرافي:</strong> يقع الوطن العربي في قلب العالم القديم وسط قارات آسيا وإفريقيا وأوروبا.</p>
+            <p><strong>الحدود:</strong></p>
+            <ul>
+                <li>الشمال: البحر المتوسط وجبال توروس.</li>
+                <li>الجنوب: المحيط الهندي والصحراء الكبرى.</li>
+                <li>الشرق: الخليج العربي وبحر عمان.</li>
+                <li>الغرب: المحيط الأطلنطي.</li>
+            </ul>
+            <p><strong>الأهمية الاستراتيجية:</strong> يشرف على 4 ممرات مائية مهمة (مضيق هرمز - مضيق باب المندب - قناة السويس - مضيق جبل طارق).</p>
+        </div>
+        <button class="btn-action" onclick="alert('جارٍ تشغيل الصوت للشرح...')">🔊 استماع للشرح الصوتى</button>
     </div>
 
-    <!-- Auth / Login -->
-    <div id="auth-card" class="card">
-        <h3>تسجيل الدخول / إنشاء حساب</h3>
-        <input type="text" id="username" placeholder="أدخل اسمك هنا...">
-        <button class="btn btn-primary" onclick="login()">دخول المنصة وحفظ الحساب</button>
+    <!-- الدرس الثاني -->
+    <div class="lesson-card">
+        <div class="lesson-title">الدرس الثاني: تضاريس وطننا العربي</div>
+        <div class="content-box">
+            <p><strong>1. الجبال:</strong> تنقسم إلى جبال انكسارية (مثل جبال البحر الأحمر) وجبال التوائية (مثل جبال أطلس).</p>
+            <p><strong>2. الهضاب:</strong> مثل هضبة إفريقيا الشمالية وهضبة نجد وهضبة بادية الشام.</p>
+            <p><strong>3. السهول:</strong> تنقسم إلى سهول فيضية حول الأنهار وسهول ساحلية على البحار والمحيطات.</p>
+        </div>
+        <button class="btn-action" onclick="alert('جارٍ تشغيل الصوت للشرح...')">🔊 استماع للشرح الصوتى</button>
     </div>
 
-    <!-- Main Dashboard -->
-    <div id="dashboard" class="card hidden">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <h3 id="welcome-msg" style="margin: 0;">مرحباً: </h3>
-            <div style="background: #e9c46a; color: #000; padding: 8px 15px; border-radius: 20px; font-weight: bold;">
-                ⭐ النقاط: <span id="user-points">320</span>
-            </div>
-        </div>
-
-        <button class="btn btn-primary" onclick="showSection('lessons')">📖 الشرح والخرائط</button>
-        <button class="btn btn-danger" onclick="showSection('quiz')">🎯 الأسئلة والتمارين</button>
-        <button class="btn btn-success" onclick="showSection('store')">🛒 المتجر وصندوق الحظ</button>
-    </div>
-
-    <!-- Lessons Section -->
-    <div id="lessons-section" class="card hidden">
-        <button class="btn btn-primary" style="margin-bottom: 15px;" onclick="showSection('dashboard')">⬅ رجوع للرئيسية</button>
-        <h3>📖 الشرح الكامل للدروس والخرائط</h3>
-        
-        <!-- Lesson 1 -->
-        <div class="lesson-box">
-            <h4>الدرس الأول: موقع وطننا العربي (شرح كامل)</h4>
-            <p><strong>الموقع الجغرافي:</strong> يقع الوطن العربي في قلب العالم القديم ويلتقي في قارات آسيا وأفريقيا وأوروبا، وتتوسط أراضيه قارات العالم القديم لتكون همزة وصل تجارية وحضارية عظيمة عبر التاريخ.</p>
-            <p><strong>الحدود الجغرافية المفصلة:</strong><br>
-            • الشمال: البحر المتوسط ومياه جبال توروس الفاصلة.<br>
-            • الجنوب: المحيط الهندي العميق والصحراء الكبرى الإفريقية.<br>
-            • الشرق: الخليج العربي وبحر عمان وخليج عدن.<br>
-            • الغرب: مياه المحيط الأطلنطي المفتوحة.</p>
-            <p><strong>الأهمية الاقتصادية والاستراتيجية للمضايق:</strong> يتحكم الوطن العربي في 4 ممرات بحرية عالمية بالغة الأهمية: مضيق هرمز، مضيق باب المندب، قناة السويس المصرية العريقة، ومضيق جبل طارق.</p>
-            <div class="text-center">
-                <p>🗺️ خريطة تابعة للدرس الأول</p>
-                <div style="background:#222; padding:10px; border-radius:8px; color:#aaa; font-weight:bold;">[خريطة الوطن العربي التفاعلية]</div>
-            </div>
-            <button class="btn btn-success" onclick="speakText('الموقع الجغرافي يقع الوطن العربي في قلب العالم القديم...')">🔊 استماع للشرح صوتياً</button>
-            <a href="#" class="btn btn-danger">📥 تحميل مذكرة الدرس والخرائط (PDF)</a>
-        </div>
-
-        <!-- Lesson 2 -->
-        <div class="lesson-box">
-            <h4>الدرس الثاني: تضاريس وطننا العربي (شرح كامل)</h4>
-            <p>تتنوع التضاريس داخل أراضي الوطن العربي بشكل فريد ومنقسمة لثلاثة أقسام رئيسية:</p>
-            <p>1. <strong>الجبال:</strong> تنقسم لجبال انكسارية نشأت نتيجة تصدع قشرة الأرض (مثل جبال البحر الأحمر)، وجبال التوائية نشأت عن حركات باطنية كبرى (مثل جبال أطلس الشامخة).</p>
-            <p>2. <strong>الهضاب:</strong> تمتد مساحات شاسعة من الهضاب مثل هضبة إفريقيا الشمالية في الجناح الأفريقي، وهضبة نجد وبادية الشام في الجناح الآسيوي.</p>
-            <p>3. <strong>السهول:</strong> تشمل السهول الفيضية الخصبة حول الأنهار الكبرى كالنهر العظيم النيل ودجلة والفرات، والسهول الساحلية المطلة على البحار.</p>
-            <div class="text-center">
-                <p>🗺️ خريطة تابعة للدرس الثاني</p>
-                <div style="background:#222; padding:10px; border-radius:8px; color:#aaa; font-weight:bold;">[خريطة التضاريس والجبال]</div>
-            </div>
-            <button class="btn btn-success" onclick="speakText('تتنوع التضاريس داخل أراضي الوطن العربي...')">🔊 استماع للشرح صوتياً</button>
-            <a href="#" class="btn btn-danger">📥 تحميل مذكرة الدرس والخرائط (PDF)</a>
-        </div>
-
-        <!-- Lesson 3 -->
-        <div class="lesson-box">
-            <h4>الدرس الثالث: المناخ والنبات الطبيعي في وطننا العربي (شرح كامل)</h4>
-            <p>يؤثر تنوع الموقع الفلكي وتضاريس الوطن العربي في تنوع مناخه، ويسود به أقاليم مناخية متعددة أبرزها:</p>
-            <p>• <strong>الإقليم البحر المتوسط:</strong> معتدل حار جاف صيفاً، دافئ ممطر شتاءً.<br>
-            • <strong>الإقليم الصحراوي الحار:</strong> شديد الحرارة صيفاً وخاصة نهاراً، وشديد البرودة شتاءً وخاصة ليلاً.<br>
-            • <strong>الإقليم المداري:</strong> حار ممطر صيفاً، دافئ جاف شتاءً.</p>
-            <div class="text-center">
-                <p>🗺️ خريطة أقاليم المناخ</p>
-                <div style="background:#222; padding:10px; border-radius:8px; color:#aaa; font-weight:bold;">[خريطة الأقاليم المناخية والنبات الطبيعي]</div>
-            </div>
-            <button class="btn btn-success" onclick="speakText('يؤثر تنوع الموقع الفلكي وتضاريس الوطن العربي في تنوع مناخه...')">🔊 استماع للشرح صوتياً</button>
-            <a href="#" class="btn btn-danger">📥 تحميل مذكرة الدرس والخرائط (PDF)</a>
-        </div>
-
-        <!-- Lesson 4 -->
-        <div class="lesson-box">
-            <h4>الدرس الرابع: التكامل الاقتصادي والاجتماعي العربي (شرح كامل)</h4>
-            <p>يتمتع الوطن العربي بتكامل اقتصادي كبير نظراً لتنوع موارده الطبيعية والثروات الزراعية والصناعية والمعدنية بين دوله المختلفة.</p>
-            <p>• تسعى الدول العربية لتحقيق الوحدة الاقتصادية والتجارة البينية وتذليل العقبات الجمركية.<br>
-            • تفعيل دور المنظمات العربية المشتركة لرفع مستوى معيشة المواطن العربي وتطوير التعليم والتكنولوجيا.</p>
-            <div class="text-center">
-                <p>🗺️ خريطة التكامل الاقتصادي</p>
-                <div style="background:#222; padding:10px; border-radius:8px; color:#aaa; font-weight:bold;">[خريطة الثروات البينية والتكامل]</div>
-            </div>
-            <button class="btn btn-success" onclick="speakText('يتمتع الوطن العربي بتكامل اقتصادي كبير...')">🔊 استماع للشرح صوتياً</button>
-            <a href="#" class="btn btn-danger">📥 تحميل مذكرة الدرس والخرائط (PDF)</a>
-        </div>
-    </div>
-
-    <!-- Quiz Section -->
-    <div id="quiz-section" class="card hidden">
-        <button class="btn btn-primary" style="margin-bottom: 15px;" onclick="showSection('dashboard')">⬅ رجوع للرئيسية</button>
-        <h3>🎯 الأسئلة والتمارين (لكسب النقاط)</h3>
-        <div id="quiz-container">
-            <p id="question-title">1. ما هو الممر المائي الذي يربط بين البحر المتوسط والبحر الأحمر؟</p>
-            <button class="btn btn-primary" onclick="answerQuiz(true)">قناة السويس</button>
-            <button class="btn btn-primary" onclick="answerQuiz(false)">مضيق هرمز</button>
-            <button class="btn btn-primary" onclick="answerQuiz(false)">مضيق باب المندب</button>
-            <button class="btn btn-primary" onclick="answerQuiz(false)">مضيق جبل طارق</button>
-        </div>
-        <p id="quiz-result" class="text-center" style="margin-top: 15px; font-weight: bold;"></p>
-    </div>
-
-    <!-- Store Section -->
-    <div id="store-section" class="card hidden">
-        <button class="btn btn-primary" style="margin-bottom: 15px;" onclick="showSection('dashboard')">⬅ رجوع للرئيسية</button>
-        <h3>🎁 صندوق الحظ والمتجر</h3>
-        
-        <div class="lesson-box">
-            <h4>🎁 صندوق الحظ العشوائي (التكلفة: 50 نقطة فقط!)</h4>
-            <p>ادفع 50 نقطة فقط وجرب حظك، قد تفوز بنقاط مضاعفة أو مفاجآت رائعة!</p>
-            <button class="btn btn-success" onclick="openLuckyBox()">افتح صندوق الحظ بـ 50 نقطة 📦</button>
-        </div>
-
-        <div class="lesson-box">
-            <h4>👑 متجر الترقية الشهرية</h4>
-            <p><strong>اشتري شهر مجاني كامل (VIP)</strong><br>فتح كافة المزايا الخاصة وتخطي المستويات (5000 نقطة)</p>
-            <button class="btn btn-danger" onclick="buyVip()">شراء (5000 نقطة)</button>
-        </div>
+    <!-- قسم الأسئلة والتطبيقات -->
+    <div style="text-align: center; margin-top: 30px;">
+        <button class="btn-action btn-quiz" onclick="alert('أهلاً بك في قسم الأسئلة والتطبيقات!')">🎯 البدء في التمارين والأسئلة</button>
     </div>
 </div>
-
-<script>
-    let currentUser = localStorage.getItem('martin_user') || '';
-    let points = parseInt(localStorage.getItem('martin_points')) || 320;
-
-    if (currentUser) {
-        document.getElementById('auth-card').classList.add('hidden');
-        document.getElementById('dashboard').classList.remove('hidden');
-        document.getElementById('welcome-msg').innerText = "مرحباً: " + currentUser;
-        document.getElementById('user-points').innerText = points;
-    }
-
-    function login() {
-        let name = document.getElementById('username').value.trim();
-        if(name) {
-            localStorage.setItem('martin_user', name);
-            currentUser = name;
-            document.getElementById('auth-card').classList.add('hidden');
-            document.getElementById('dashboard').classList.remove('hidden');
-            document.getElementById('welcome-msg').innerText = "مرحباً: " + currentUser;
-            document.getElementById('user-points').innerText = points;
-        } else {
-            alert("الرجاء إدخال اسم الطالب!");
-        }
-    }
-
-    function showSection(section) {
-        document.getElementById('dashboard').classList.add('hidden');
-        document.getElementById('lessons-section').classList.add('hidden');
-        document.getElementById('quiz-section').classList.add('hidden');
-        document.getElementById('store-section').classList.add('hidden');
-
-        if(section === 'dashboard') document.getElementById('dashboard').classList.remove('hidden');
-        if(section === 'lessons') document.getElementById('lessons-section').classList.remove('hidden');
-        if(section === 'quiz') document.getElementById('quiz-section').classList.remove('hidden');
-        if(section === 'store') document.getElementById('store-section').classList.remove('hidden');
-    }
-
-    function speakText(text) {
-        if ('speechSynthesis' in window) {
-            let utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'ar-SA';
-            window.speechSynthesis.speak(utterance);
-        } else {
-            alert("متصفحك لا يدعم القراءة الصوتية.");
-        }
-    }
-
-    function answerQuiz(isCorrect) {
-        let res = document.getElementById('quiz-result');
-        if(isCorrect) {
-            points += 50;
-            localStorage.setItem('martin_points', points);
-            document.getElementById('user-points').innerText = points;
-            res.style.color = '#2d6a4f';
-            res.innerText = "🎉 إجابة ممتازة! حصلت على 50 نقطة جديدة!";
-        } else {
-            res.style.color = '#9b2226';
-            res.innerText = "❌ إجابة خاطئة، حاول مرة أخرى!";
-        }
-    }
-
-    function openLuckyBox() {
-        if(points >= 50) {
-            points -= 50;
-            let win = Math.random() > 0.5 ? 100 : 200;
-            points += win;
-            localStorage.setItem('martin_points', points);
-            document.getElementById('user-points').innerText = points;
-            alert("🎉 مبروك! فتحت صندوق الحظ وفزت بـ " + win + " نقطة إضافية!");
-        } else {
-            alert("❌ نقاطك غير كافية! اجمع 50 نقطة على الأقل لفتح الصندوق.");
-        }
-    }
-
-    function buyVip() {
-        if(points >= 5000) {
-            points -= 5000;
-            localStorage.setItem('martin_points', points);
-            document.getElementById('user-points').innerText = points;
-            alert("👑 مبروك! تم تفعيل اشتراك VIP الشهري الكامل بنجاح.");
-        } else {
-            alert("❌ رصيدك الحالي لا يكفي لشراء شهر VIP (يحتاج 5000 نقطة). استمر في حل التمارين وصندوق الحظ!");
-        }
-    }
-</script>
 
 </body>
 </html>
