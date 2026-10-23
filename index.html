@@ -21,12 +21,50 @@
             margin: 0;
             padding: 0;
             font-family: 'Cairo', sans-serif;
+            user-select: none;
         }
 
         body {
             background-color: var(--bg-dark);
             color: var(--text-light);
             padding-bottom: 40px;
+        }
+
+        /* شاشة تسجيل الدخول */
+        #login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border: 3px solid var(--accent-blue);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #475569;
+            background: #0f172a;
+            color: white;
+            font-size: 1rem;
         }
 
         header {
@@ -52,10 +90,6 @@
             max-width: 800px;
             border-radius: 12px;
             border: 1px solid #334155;
-        }
-
-        .stat-item {
-            text-align: center;
         }
 
         .stat-value {
@@ -107,7 +141,6 @@
 
         .btn:hover {
             opacity: 0.9;
-            transform: scale(0.99);
         }
 
         .options-grid {
@@ -126,16 +159,19 @@
             cursor: pointer;
             font-size: 0.95rem;
             text-align: right;
+            transition: 0.2s;
+        }
+
+        .option-btn:hover {
+            background: #475569;
         }
 
         .option-btn.correct {
             background: var(--accent-green);
-            color: white;
         }
 
         .option-btn.wrong {
             background: var(--accent-red);
-            color: white;
         }
 
         .explanation {
@@ -151,24 +187,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px;
+            padding: 15px;
             background: #0f172a;
-            border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .map-box {
-            width: 100%;
-            height: 200px;
-            background: #1e293b;
-            border: 2px dashed var(--accent-blue);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border-radius: 12px;
             margin-bottom: 15px;
-            text-align: center;
-            color: #94a3b8;
+            border: 1px solid #334155;
         }
 
         .nav-tabs {
@@ -179,13 +202,14 @@
 
         .tab-btn {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             background: #334155;
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
+            transition: 0.2s;
         }
 
         .tab-btn.active {
@@ -196,12 +220,23 @@
 </head>
 <body>
 
+    <!-- شاشة تسجيل الدخول -->
+    <div id="login-screen">
+        <div class="login-card">
+            <h2>🎓 تسجيل دخول منصة مارتن</h2>
+            <input type="text" id="student-name" class="input-field" placeholder="اسم الطالب">
+            <input type="email" id="student-email" class="input-field" placeholder="البريد الإلكتروني">
+            <input type="password" id="student-pass" class="input-field" placeholder="كلمة المرور">
+            <button class="btn" onclick="startPlatform()">دخول المنصة 🚀</button>
+        </div>
+    </div>
+
     <header>
         <h1>🎓 منصة مارتن التعليمية</h1>
         <p>دراسات الصف السادس الابتدائي - الترم الأول</p>
     </header>
 
-    <div class="container">
+    <div class="container" style="display:none;" id="main-content">
         <!-- شريط الإحصائيات -->
         <div class="stats-bar">
             <div class="stat-item">
@@ -221,9 +256,9 @@
 
         <!-- التبويبات -->
         <div class="nav-tabs">
-            <button class="tab-btn active" onclick="switchTab('quiz')">📝 الأسئلة اليومية</button>
-            <button class="tab-btn" onclick="switchTab('maps')">🗺️ قسم الخرائط</button>
-            <button class="tab-btn" onclick="switchTab('shop')">🎮 متجر المكافآت</button>
+            <button class="tab-btn active" id="tab-quiz" onclick="switchTab('quiz')">📝 الأسئلة اليومية</button>
+            <button class="tab-btn" id="tab-maps" onclick="switchTab('maps')">🗺️ قسم الخرائط والـ PDF</button>
+            <button class="tab-btn" id="tab-shop" onclick="switchTab('shop')">🎮 متجر المكافآت</button>
         </div>
 
         <!-- قسم الأسئلة -->
@@ -238,46 +273,52 @@
                 <p id="exp-text"></p>
             </div>
 
-            <button class="btn" id="next-btn" style="display:none;" onclick="nextQuestion()">السؤال التالي ⬅️</button>
+            <button class="btn" id="next-btn" style="display:none;" onclick="nextQuestion()">السؤال التالي ➡️</button>
         </div>
 
-        <!-- قسم الخرائط -->
+        <!-- قسم الخرائط والـ PDF -->
         <div id="maps-section" class="card" style="display:none;">
             <h3>🗺️ الشرح والتدريب على الخرائط</h3>
-            <p style="margin-bottom: 10px;">ركز في الأماكن الأساسية الموضحة على الخريطة لامتحان الدراسات:</p>
-            <div class="map-box">
-                📍 [خريطة خاليج السويس، العقبة، الدلتا، ونهر النيل]
+            <p style="margin-bottom: 10px;">ركز في الأماكن الأساسية الموضحة على الخريطة لامتحان الدراسات.</p>
+            <div class="shop-item">
+                <div>
+                    <strong>📄 مذكرات الشرح والخرائط (PDF)</strong>
+                    <div style="font-size: 0.85rem; color: var(--accent-yellow);">تحميل مباشر للملفات الشاملة</div>
+                </div>
+                <button class="btn" style="width:auto; background: var(--accent-green);" onclick="downloadPdf()">تحميل الـ PDF 📥</button>
             </div>
-            <p><strong>تلميح مهم:</strong> يحد مصر من الشمال البحر المتوسط، ومن الشرق البحر الأحمر وخليج العقبة.</p>
         </div>
 
         <!-- قسم المتجر والجوائز -->
         <div id="shop-section" class="card" style="display:none;">
-            <h3>🏆 متجر الجوائز وفتح المودات</h3>
-            <p style="margin-bottom: 15px; color: #94a3b8;">استبدل نقاط المذاكرة بفتح مودات وألعاب ترفيهية!</p>
-
-            <div class="shop-item">
-                <div>
-                    <strong>🏍️ مود "عريس الجنة"</strong>
-                    <div style="font-size: 0.85rem; color: #94a3b8;">فتح الموتوسيكل على الكورنيش</div>
-                </div>
-                <button class="btn" style="width:auto;" onclick="buyItem('عريس الجنة', 250)">فتح بـ 250 نقطة</button>
-            </div>
-
-            <div class="shop-item">
-                <div>
-                    <strong>🚕 مود "تاكسي إسكندرية"</strong>
-                    <div style="font-size: 0.85rem; color: #94a3b8;">توصيل الزباين وفتح عربية اللادا</div>
-                </div>
-                <button class="btn" style="width:auto;" onclick="buyItem('تاكسي إسكندرية', 250)">فتح بـ 250 نقطة</button>
-            </div>
+            <h3>🏆 متجر الجوائز والحوافز التعليمية</h3>
+            <p style="margin-bottom: 15px; color: #94a3b8;">استبدل نقاط المذاكرة بالميزات والجوائز!</p>
 
             <div class="shop-item">
                 <div>
                     <strong>👑 اشتراك VIP الشهري</strong>
-                    <div style="font-size: 0.85rem; color: #94a3b8;">ميزات ذهبية ومظهر خاص بالشخصية</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">يفتح لك ملفات الـ PDF والشرح المتقدم</div>
+                    <div style="font-weight:bold; color:var(--accent-blue);">السعر: 5000 نقطة</div>
                 </div>
-                <button class="btn" style="width:auto; background: var(--accent-blue); color: #000;" onclick="alert('اكمل تحدي 500 سؤال لفتحه مجاناً!')">تحدي الـ 500 سؤال</button>
+                <button class="btn" style="width:auto;" onclick="buyVip()">اشتراك الآن 🔓</button>
+            </div>
+
+            <div class="shop-item">
+                <div>
+                    <strong>⭐ لقب "بطل الدراسات"</strong>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">وسام ذهبي يظهر بجانب اسمك</div>
+                    <div style="font-weight:bold; color:var(--accent-yellow);">السعر: 2000 نقطة</div>
+                </div>
+                <button class="btn" style="width:auto;" onclick="alert('تم شراء اللقب بنجاح!')">شراء اللقب 🏅</button>
+            </div>
+
+            <div class="shop-item">
+                <div>
+                    <strong>🎨 ثيم جديد للموقع</strong>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">تغيير ألوان وشكل المنصة التعليمية</div>
+                    <div style="font-weight:bold; color:var(--accent-green);">السعر: 3000 نقطة</div>
+                </div>
+                <button class="btn" style="width:auto;" onclick="alert('تم تفعيل الثيم الجديد!')">تفعيل الثيم 🖌️</button>
             </div>
         </div>
     </div>
@@ -286,8 +327,10 @@
         let userPoints = 0;
         let solvedCount = 0;
         let currentQIndex = 0;
+        let answeredQuestions = [];
+        let isVip = false;
 
-        const questions = [
+        const allQuestions = [
             {
                 q: "ما هو أطول نهر في العالم والذي يمر بمصر؟",
                 options: ["نهر الفرات", "نهر النيل", "نهر الأمازون", "نهر دجلة"],
@@ -305,15 +348,53 @@
                 options: ["الزراعية", "الصحراوية", "الساحلية", "الصناعية"],
                 correct: 1,
                 exp: "تتميز الصحراء الغربية بانتشار الكثبان الرملية والبيئة الصحراوية."
+            },
+            {
+                q: "تضم شبه جزيرة سيناء بيئات منها البيئة:",
+                options: ["الزراعية", "الساحلية والصحراوية", "الصناعية", "الفيضية"],
+                correct: 1,
+                exp: "شبه جزيرة سيناء تتميز ببيئات متنوعة منها الساحلية على البحرين المتوسط والأحمر والصحراوية في الداخل."
+            },
+            {
+                q: "تمتد جبال أطلس في قارة:",
+                options: ["آسيا", "أفريقيا", "أوروبا", "أمريكا الشمالية"],
+                correct: 1,
+                exp: "تمتد جبال أطلس في الجناح الأفريقي للوطن العربي وتحديداً في دول المغرب والجزائر وتونس."
             }
         ];
 
-        function loadQuestion() {
-            const q = questions[currentQIndex];
-            document.getElementById('q-num').innerText = currentQIndex + 1;
-            document.getElementById('q-text').innerText = q.q;
+        function startPlatform() {
+            const name = document.getElementById('student-name').value;
+            const email = document.getElementById('student-email').value;
+            const pass = document.getElementById('student-pass').value;
+
+            if (name && email && pass) {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                loadRandomQuestion();
+            } else {
+                alert("يرجى إدخال جميع البيانات!");
+            }
+        }
+
+        function loadRandomQuestion() {
             document.getElementById('explanation').style.display = 'none';
             document.getElementById('next-btn').style.display = 'none';
+
+            if (answeredQuestions.length >= allQuestions.length) {
+                answeredQuestions = [];
+                alert("تم الانتهاء من جميع الأسئلة المتاحة، سنبدأ من جديد!");
+            }
+
+            let available = allQuestions.filter((_, idx) => !answeredQuestions.includes(idx));
+            let randomIndex = Math.floor(Math.random() * available.length);
+            let q = available[randomIndex];
+            let originalIndex = allQuestions.indexOf(q);
+
+            currentQIndex = originalIndex;
+
+            document.getElementById('q-num').innerText = answeredQuestions.length + 1;
+            document.getElementById('q-text').innerText = q.q;
 
             const optsDiv = document.getElementById('options');
             optsDiv.innerHTML = '';
@@ -331,7 +412,7 @@
             const allBtns = document.querySelectorAll('.option-btn');
             allBtns.forEach(b => b.disabled = true);
 
-            if(selected === correct) {
+            if (selected === correct) {
                 btn.classList.add('correct');
                 userPoints += 10;
                 solvedCount += 1;
@@ -342,12 +423,13 @@
                 document.getElementById('exp-text').innerText = exp;
                 document.getElementById('explanation').style.display = 'block';
             }
+
+            answeredQuestions.push(currentQIndex);
             document.getElementById('next-btn').style.display = 'block';
         }
 
         function nextQuestion() {
-            currentQIndex = (currentQIndex + 1) % questions.length;
-            loadQuestion();
+            loadRandomQuestion();
         }
 
         function updateStats() {
@@ -363,28 +445,35 @@
 
             if(tab === 'quiz') {
                 document.getElementById('quiz-section').style.display = 'block';
-                event.target.classList.add('active');
+                document.getElementById('tab-quiz').classList.add('active');
             } else if(tab === 'maps') {
                 document.getElementById('maps-section').style.display = 'block';
-                event.target.classList.add('active');
+                document.getElementById('tab-maps').classList.add('active');
             } else if(tab === 'shop') {
                 document.getElementById('shop-section').style.display = 'block';
-                event.target.classList.add('active');
+                document.getElementById('tab-shop').classList.add('active');
             }
         }
 
-        function buyItem(name, cost) {
-            if(userPoints >= cost) {
-                userPoints -= cost;
-                updateStats();
-                alert(`مبروك! تم فتح مود "${name}" بنجاح 🎉`);
+        function downloadPdf() {
+            if (isVip) {
+                alert("جاري بدء تحميل ملفات الـ PDF التعليمية... 📥");
             } else {
-                alert(`عفواً! محتاج ${cost - userPoints} نقطة كمان من المذاكرة عشان تفتح المود ده.`);
+                alert("عفواً، ميزة تحميل الـ PDF متاحة فقط لمشتركين الـ VIP. فعلها من المتجر!");
             }
         }
 
-        // تشغيل السؤال الأول عند التحميل
-        loadQuestion();
+        function buyVip() {
+            if (userPoints >= 5000) {
+                userPoints -= 5000;
+                isVip = true;
+                updateStats();
+                alert("🎉 مبروك يا بطل! تم تفعيل اشتراك الـ VIP بنجاح والوصول لملفات الـ PDF.");
+            } else {
+                alert(`عفواً، تحتاج إلى 5000 نقطة للاشتراك! رصيدك الحالي: ${userPoints}`);
+            }
+        }
+
     </script>
 </body>
 </html>
