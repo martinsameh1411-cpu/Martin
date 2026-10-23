@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة مارتن التعليمية | الغرفة الأونلاين والتحدي الجماعي</title>
+    <title>منصة مارتن التعليمية الشاملة | الصف السادس الابتدائي</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -21,6 +21,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Cairo', sans-serif;
+            user-select: none;
         }
 
         body {
@@ -29,21 +30,77 @@
             padding-bottom: 40px;
         }
 
+        /* شاشة تسجيل الدخول */
+        #login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border: 3px solid var(--accent-blue);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #475569;
+            background: #0f172a;
+            color: white;
+            font-size: 1rem;
+        }
+
         header {
             background: linear-gradient(135deg, #1e1b4b, #312e81);
             padding: 20px;
             text-align: center;
             border-bottom: 4px solid var(--accent-yellow);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
 
         header h1 {
             color: var(--accent-yellow);
             font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            background: var(--card-bg);
+            padding: 15px;
+            margin: 15px auto;
+            max-width: 800px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--accent-blue);
         }
 
         .container {
-            max-width: 900px;
-            margin: 20px auto;
+            max-width: 800px;
+            margin: 0 auto;
             padding: 0 15px;
         }
 
@@ -56,114 +113,35 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
         }
 
+        .timer-box {
+            background: #451a03;
+            border: 2px solid var(--accent-yellow);
+            color: var(--accent-yellow);
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
         .btn {
             background: var(--accent-yellow);
             color: #000;
             border: none;
-            padding: 12px 20px;
+            padding: 12px 24px;
             font-size: 1rem;
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
             transition: 0.2s;
-            margin: 5px 0;
             width: 100%;
+            margin-top: 10px;
         }
 
-        .btn:hover {
-            opacity: 0.9;
-        }
-
-        .btn-green {
-            background: var(--accent-green);
-            color: white;
-        }
-
-        .btn-blue {
-            background: var(--accent-blue);
-            color: black;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 8px;
-            border: 1px solid #475569;
-            background: #0f172a;
-            color: white;
-            font-size: 1rem;
-        }
-
-        .room-actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        /* شبكة الفيديو والزوم */
-        .video-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .video-card {
-            background: #0f172a;
-            border: 2px solid var(--accent-blue);
-            border-radius: 12px;
-            padding: 10px;
-            text-align: center;
-            position: relative;
-        }
-
-        video {
-            width: 100%;
-            height: 180px;
-            background: #000;
-            border-radius: 8px;
-            object-fit: cover;
-        }
-
-        .controls-bar {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 8px;
-        }
-
-        .mini-btn {
-            padding: 6px 12px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.85rem;
-        }
-
-        /* العداد للسباق */
-        .challenge-timer {
-            background: #451a03;
-            border: 2px solid var(--accent-yellow);
-            color: var(--accent-yellow);
-            text-align: center;
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .score-board {
-            display: flex;
-            justify-content: space-between;
-            background: #0f172a;
-            padding: 12px 20px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
+        .btn:hover { opacity: 0.9; }
+        .btn-green { background: var(--accent-green); color: white; }
+        .btn-blue { background: var(--accent-blue); color: black; }
 
         .options-grid {
             display: grid;
@@ -179,257 +157,534 @@
             padding: 12px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.95rem;
             text-align: right;
+            transition: 0.2s;
         }
 
+        .option-btn:hover { background: #475569; }
         .option-btn.correct { background: var(--accent-green); }
         .option-btn.wrong { background: var(--accent-red); }
 
+        .explanation {
+            margin-top: 15px;
+            padding: 12px;
+            background: #0f172a;
+            border-right: 4px solid var(--accent-blue);
+            border-radius: 4px;
+            display: none;
+        }
+
+        .shop-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #0f172a;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #334155;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: #334155;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--accent-blue);
+            color: #000;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .video-card {
+            background: #0f172a;
+            border: 2px solid var(--accent-blue);
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        video {
+            width: 100%;
+            height: 150px;
+            background: #000;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .controls-bar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .mini-btn {
+            padding: 5px 10px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
 
+    <!-- شاشة تسجيل الدخول -->
+    <div id="login-screen">
+        <div class="login-card">
+            <h2>🎓 تسجيل دخول منصة مارتن</h2>
+            <input type="text" id="student-name" class="input-field" placeholder="اسم الطالب">
+            <input type="email" id="student-email" class="input-field" placeholder="البريد الإلكتروني">
+            <input type="password" id="student-pass" class="input-field" placeholder="كلمة المرور">
+            <button class="btn" onclick="startPlatform()">دخول المنصة 🚀</button>
+        </div>
+    </div>
+
     <header>
-        <h1>🎓 منصة مارتن | التحدي الأونلاين المباشر</h1>
-        <p>تنافس مع صديقك بالصوت والصورة وحل أسئلة الدراسات للفوز بشهر مجاني!</p>
+        <h1>🎓 منصة مارتن التعليمية الشاملة</h1>
+        <p>دراسات الصف السادس الابتدائي - الترم الأول</p>
     </header>
 
-    <div class="container">
+    <div class="container" style="display:none;" id="main-content">
+        <!-- شريط الإحصائيات -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div>النقاط المكتسبة</div>
+                <div class="stat-value" id="points">0 🪙</div>
+            </div>
+            <div class="stat-item">
+                <div>الأسئلة المجابة</div>
+                <div class="stat-value" id="solved">0 / 500</div>
+            </div>
+        </div>
 
-        <!-- قسم إنشاء ودخول الغرف -->
-        <div class="card" id="room-setup">
-            <h2>👥 التحدي الجماعي والغرف الأونلاين</h2>
-            <p style="margin-bottom: 15px; color: #94a3b8;">أنشئ غرفة وزوّد رقمها لصاحبك عشان تدخلوا سوا زي زوم!</p>
+        <!-- العداد التنازلي للتحدي -->
+        <div class="timer-box">
+            ⏳ متبقي على نهاية تحدي الـ VIP: <span id="countdown">20 يوم و 23 ساعة</span>
+        </div>
 
-            <div class="room-actions">
-                <div>
-                    <h3>1️⃣ إنشاء غرفة جديدة</h3>
-                    <button class="btn btn-green" onclick="createRoom()">إنشاء غرفة جديدة 🎲</button>
-                    <div id="created-code-box" style="margin-top: 10px; display:none; font-weight:bold; color:var(--accent-yellow);">
-                        رقم الغرفة الخاص بك: <span id="room-code-display"></span>
+        <!-- التبويبات (الأقسام الرئيسية) -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" id="tab-offline" onclick="switchTab('offline')">📝 حل أوفلاين</button>
+            <button class="tab-btn" id="tab-online" onclick="switchTab('online')">👥 غرفة أونلاين</button>
+            <button class="tab-btn" id="tab-maps" onclick="switchTab('maps')">🗺️ خرائط وPDF</button>
+            <button class="tab-btn" id="tab-shop" onclick="switchTab('shop')">🎮 متجر الجوائز</button>
+        </div>
+
+        <!-- 1. قسم حل الأسئلة أوفلاين -->
+        <div id="offline-section" class="card">
+            <h3>📝 الأسئلة اليومية (أوفلاين)</h3>
+            <p id="q-num-off" style="color:var(--accent-yellow); margin-top:5px;">السؤال رقم 1</p>
+            <p id="q-text-off" style="font-size: 1.2rem; margin: 15px 0; font-weight:bold;"></p>
+
+            <div class="options-grid" id="options-off"></div>
+
+            <div class="explanation" id="explanation-off">
+                <strong>💡 الشرح وطريقة الحل الصحيحة:</strong>
+                <p id="exp-text-off"></p>
+            </div>
+
+            <button class="btn" id="next-btn-off" style="display:none;" onclick="nextOfflineQuestion()">السؤال التالي ➡️</button>
+        </div>
+
+        <!-- 2. قسم غرفة التحدي الأونلاين (مع الكاميرا والمايك وزوم) -->
+        <div id="online-section" class="card" style="display:none;">
+            <h3>👥 الغرفة التفاعلية الأونلاين (صوت وصورة مع صديقك)</h3>
+            <p style="margin-bottom: 15px; color: #94a3b8;">أنشئ غرفة أو انضم لغرفة صديقك لحل الأسئلة معاً وكسب شهر مجاني لمدة نصف ساعة!</p>
+
+            <div id="room-controls-box">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div>
+                        <button class="btn btn-green" onclick="createRoom()">إنشاء غرفة جديدة 🎲</button>
+                        <div id="room-code-show" style="margin-top:8px; display:none; font-weight:bold; color:var(--accent-yellow);">رقم الغرفة: <span id="r-code"></span></div>
+                    </div>
+                    <div>
+                        <input type="text" id="enter-room-input" class="input-field" placeholder="أدخل رقم غرفة صديقك">
+                        <button class="btn btn-blue" onclick="joinRoom()">تسجيل دخول للغرفة 🚀</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- منطقة التحدي المباشر داخل الغرفة -->
+            <div id="live-battle-area" style="display:none;">
+                <div class="timer-box" style="margin-bottom: 15px;">
+                    ⏱️ الوقت المتبقي للتحدي: <span id="battle-timer">30:00</span>
+                </div>
+                <div class="stats-bar" style="margin-bottom: 15px;">
+                    <div>نقاطك أونلاين: <span id="my-battle-score" style="color:var(--accent-blue);">0</span></div>
+                    <div>نقاط صديقك: <span id="friend-battle-score" style="color:var(--accent-yellow);">0</span></div>
+                </div>
+
+                <!-- شاشات الزوم المصغرة -->
+                <div class="video-grid">
+                    <div class="video-card">
+                        <h4>📷 كاميرتك المباشرة</h4>
+                        <video id="localVideo" autoplay playsinline muted></video>
+                        <div class="controls-bar">
+                            <button class="mini-btn btn-green" onclick="toggleMic()">🎙️ مايك</button>
+                            <button class="mini-btn btn-blue" onclick="toggleCam()">📹 كاميرا</button>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <h4>👤 كاميرا صديقك</h4>
+                        <video id="remoteVideo" autoplay playsinline></video>
+                        <p style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">متصل بالدرس المشترك</p>
                     </div>
                 </div>
 
-                <div>
-                    <h3>2️⃣ الانضمام لغرفة صديق</h3>
-                    <input type="text" id="join-code-input" class="input-field" placeholder="أدخل رقم غرفة صديقك">
-                    <button class="btn btn-blue" onclick="joinRoom()">تسجيل دخول للغرفة 🚀</button>
+                <!-- أسئلة التحدي الأونلاين -->
+                <div style="background:#0f172a; padding:15px; border-radius:10px; border:1px solid #334155;">
+                    <h4 id="online-q-title">سؤال التحدي:</h4>
+                    <p id="online-q-text" style="margin: 10px 0; font-size:1.1rem; font-weight:bold;"></p>
+                    <div class="options-grid" id="online-options"></div>
+                    <button class="btn" id="online-next-btn" style="display:none; margin-top:10px;" onclick="nextOnlineQuestion()">السؤال التالي ➡️</button>
                 </div>
             </div>
         </div>
 
-        <!-- منطقة التحدي المباشر (تظهر بعد إنشاء أو دخول الغرفة) -->
-        <div id="live-room" style="display: none;">
-
-            <!-- عداد النصف ساعة والسكور -->
-            <div class="challenge-timer">
-                ⏱️ الوقت المتبقي لنهاية تحدي الشهر المجاني: <span id="timer">30:00</span>
-            </div>
-
-            <div class="score-board">
-                <div>أنت: <span id="my-score" style="color:var(--accent-blue);">0</span> سؤال صحيح</div>
-                <div>صديقك: <span id="friend-score" style="color:var(--accent-yellow);">0</span> سؤال صحيح</div>
-            </div>
-
-            <!-- شبكة الكاميرا والمايك (مثل زوم) -->
-            <div class="video-grid">
-                <div class="video-card">
-                    <h4>📷 الكاميرا الخاصة بك</h4>
-                    <video id="localVideo" autoplay playsinline muted></video>
-                    <div class="controls-bar">
-                        <button class="mini-btn btn-green" onclick="toggleMic()">🎙️ المايك</button>
-                        <button class="mini-btn btn-blue" onclick="toggleCam()">📹 الكاميرا</button>
-                    </div>
+        <!-- 3. قسم الخرائط والـ PDF -->
+        <div id="maps-section" class="card" style="display:none;">
+            <h3>🗺️ الشرح والتدريب على الخرائط والـ PDF</h3>
+            <p style="margin-bottom: 10px;">تحميل مذكرات الدراسات الاجتماعية والخرائط الشاملة.</p>
+            <div class="shop-item">
+                <div>
+                    <strong>📄 مذكرات المراجعة النهائية (PDF)</strong>
+                    <div style="font-size: 0.85rem; color: var(--accent-yellow);">متاحة لمشتركي الـ VIP</div>
                 </div>
-
-                <div class="video-card">
-                    <h4>👤 كاميرا صديقك المباشرة</h4>
-                    <video id="remoteVideo" autoplay playsinline placeholder="بانتظار دخول صديقك..."></video>
-                    <p style="font-size:0.8rem; color:#94a3b8; margin-top:5px;">متصل عبر المباشر</p>
-                </div>
+                <button class="btn" style="width:auto; background: var(--accent-green);" onclick="downloadPdf()">تحميل الـ PDF 📥</button>
             </div>
-
-            <!-- قسم الأسئلة المسحوبة من كتاب الدراسات (بدون الحلول) -->
-            <div class="card">
-                <h3 id="question-title">السؤال رقم 1:</h3>
-                <p id="question-text" style="font-size: 1.2rem; margin: 15px 0; font-weight: bold;">جاري تحميل السؤال...</p>
-
-                <div class="options-grid" id="options-container"></div>
-
-                <button class="btn" id="next-q-btn" style="display:none; margin-top:15px;" onclick="nextQuestion()">السؤال التالي ➡️</button>
-            </div>
-
         </div>
 
+        <!-- 4. قسم متجر المكافآت -->
+        <div id="shop-section" class="card" style="display:none;">
+            <h3>🏆 متجر الجوائز والحوافز التعليمية</h3>
+            <p style="margin-bottom: 15px; color: #94a3b8;">استبدل نقاطك بالميزات والألقاب واشتراك الـ VIP!</p>
+
+            <div class="shop-item">
+                <div>
+                    <strong>👑 اشتراك VIP الشهري</strong>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">يفتح لك جميع ملفات الـ PDF والشرح</div>
+                    <div style="font-weight:bold; color:var(--accent-blue);">السعر: 5000 نقطة</div>
+                </div>
+                <button class="btn" style="width:auto;" onclick="buyVip()">اشتراك الآن 🔓</button>
+            </div>
+
+            <div class="shop-item">
+                <div>
+                    <strong>⭐ لقب "بطل الدراسات"</strong>
+                    <div style="font-weight:bold; color:var(--accent-yellow);">السعر: 2000 نقطة</div>
+                </div>
+                <button class="btn" style="width:auto;" onclick="alert('تم شراء اللقب بنجاح!')">شراء اللقب 🏅</button>
+            </div>
+
+            <div class="shop-item">
+                <div>
+                    <strong>🎨 ثيم جديد للموقع</strong>
+                    <div style="font-weight:bold; color:var(--accent-green);">السعر: 3000 نقطة</div>
+                </div>
+                <button class="btn" style="width:auto;" onclick="alert('تم تفعيل الثيم الجديد!')">تفعيل 🖌️</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        let localStream;
-        let myScore = 0;
-        let friendScore = 0;
-        let timeLeft = 1800; // 30 دقيقة بالثواني
-        let timerInterval;
+        let userPoints = 0;
+        let solvedCount = 0;
+        let currentOffIndex = 0;
+        let answeredOff = [];
+        let isVip = false;
 
-        // قائمة الأسئلة المأخوذة من الصور (بدون الإجابات السابقة ومفرغة كلياً للتحدي)
-        const questionsList = [
+        let myBattleScore = 0;
+        let friendBattleScore = 0;
+        let battleTimeLeft = 1800;
+        let battleInterval;
+        let currentOnlineIndex = 0;
+        let localStream;
+
+        // بنك الأسئلة المأخوذ من كتاب الدراسات (مفرغة وبدون حلول جاهزة لتختبر نفسك)
+        const questionsDatabase = [
             {
                 q: "من الأماكن المقدسة التي يقصدها السياح بدولة فلسطين:",
                 options: ["الكعبة المشرفة", "واحة عين صالح", "جبل توبقال", "كنيسة المهد"],
-                correct: 3
+                correct: 3,
+                exp: "كنيسة المهد تعد من أهم المعالم والأماكن المقدسة في فلسطين."
             },
             {
                 q: "من مظاهر شكل تضاريس الوطن العربي في دولة الجزائر:",
                 options: ["وادي الدواسر", "واحة سيوة", "واحة عين صالح", "وادي العلاقي"],
-                correct: 2
+                correct: 2,
+                exp: "واحة عين صالح تعتبر من التضاريس والواحات المعروفة بالجزائر."
             },
             {
                 q: "تنتشر تربية الأغنام والمعز بالوطن العربي في الإقليم المناخي:",
                 options: ["الموسمي", "البحر المتوسط", "الصحراوي الحار", "المداري"],
-                correct: 1
+                correct: 1,
+                exp: "حشائش الاستبس تنمو في إقليم البحر المتوسط وتتربى عليها الأغنام والماعز."
             },
             {
                 q: "يمكن مواجهة مشكلة الجفاف بالوطن العربي من خلال:",
                 options: ["تطوير شبكات الري", "التوسع العمراني", "استخدام النقل المستدام", "إنشاء السدود والمحرات"],
-                correct: 0
+                correct: 0,
+                exp: "تطوير شبكات الري الحديثة يساهم بشكل مباشر في مواجهة مشكلة الجفاف."
             },
             {
                 q: "تسقط أمطار الإقليم المداري في فصل:",
                 options: ["الشتاء", "الصيف", "الربيع", "الخريف"],
-                correct: 1
-            },
-            {
-                q: "إقليم مناخي تنمو به حشائش الاستبس وتربي عليها الأغنام والماعز يسمى:",
-                options: ["إقليم البحر المتوسط", "الإقليم المداري", "الإقليم الصحراوي", "الإقليم الاستوائي"],
-                correct: 0
-            },
-            {
-                q: "من أشهر الكثبان الرملية بالوطن العربي بين مصر والسودان:",
-                options: ["بحر الرمال العظيم", "صحراء النفوذ", "الصحراء الكبرى", "صحراء الربع الخالي"],
-                correct: 0
+                correct: 1,
+                exp: "تتميز أمطار الإقليم المداري بسقوطها خلال فصل الصيف."
             }
         ];
 
-        let currentQIndex = 0;
+        function startPlatform() {
+            const name = document.getElementById('student-name').value;
+            const email = document.getElementById('student-email').value;
+            const pass = document.getElementById('student-pass').value;
 
-        function createRoom() {
-            const code = Math.floor(100000 + Math.random() * 900000);
-            document.getElementById('room-code-display').innerText = code;
-            document.getElementById('created-code-box').style.display = 'block';
-            alert(`تم إنشاء الغرفة بنجاح! رقم الغرفة هو: ${code}\nأعطِ هذا الرقم لصديقك للانضمام.`);
-            enterRoom();
-        }
-
-        function joinRoom() {
-            const code = document.getElementById('join-code-input').value;
-            if (code.length < 5) {
-                alert("يرجى إدخال رقم غرفة صحيح مكون من 6 أرقام!");
-                return;
-            }
-            alert(`تم الانضمام للغرفة رقم ${code} بنجاح!`);
-            enterRoom();
-        }
-
-        function enterRoom() {
-            document.getElementById('room-setup').style.display = 'none';
-            document.getElementById('live-room').style.display = 'block';
-            startCamera();
-            startTimer();
-            loadQuestion();
-        }
-
-        // تشغيل كاميرا ومايك المستخدم (خاصية زوم المباشرة)
-        async function startCamera() {
-            try {
-                localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-                document.getElementById('localVideo').srcObject = localStream;
-            } catch (err) {
-                alert("يرجى السماح بصلاحيات الكاميرا والمايك للعمل داخل الغرفة الأونلاين!");
+            if (name && email && pass) {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                loadOfflineQuestion();
+            } else {
+                alert("يرجى إدخال جميع بيانات تسجيل الدخول!");
             }
         }
 
-        function toggleMic() {
-            if (localStream) {
-                const audioTrack = localStream.getAudioTracks()[0];
-                audioTrack.enabled = !audioTrack.enabled;
-                alert(audioTrack.enabled ? "تم تشغيل المايك 🎙️" : "تم كتم المايك 🔇");
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('offline-section').style.display = 'none';
+            document.getElementById('online-section').style.display = 'none';
+            document.getElementById('maps-section').style.display = 'none';
+            document.getElementById('shop-section').style.display = 'none';
+
+            if(tab === 'offline') {
+                document.getElementById('offline-section').style.display = 'block';
+                document.getElementById('tab-offline').classList.add('active');
+            } else if(tab === 'online') {
+                document.getElementById('online-section').style.display = 'block';
+                document.getElementById('tab-online').classList.add('active');
+            } else if(tab === 'maps') {
+                document.getElementById('maps-section').style.display = 'block';
+                document.getElementById('tab-maps').classList.add('active');
+            } else if(tab === 'shop') {
+                document.getElementById('shop-section').style.display = 'block';
+                document.getElementById('tab-shop').classList.add('active');
             }
         }
 
-        function toggleCam() {
-            if (localStream) {
-                const videoTrack = localStream.getVideoTracks()[0];
-                videoTrack.enabled = !videoTrack.enabled;
-                alert(videoTrack.enabled ? "تم تشغيل الكاميرا 📹" : "تم إيقاف الكاميرا 📷");
+        /* دوئم الحل أوفلاين */
+        function loadOfflineQuestion() {
+            document.getElementById('explanation-off').style.display = 'none';
+            document.getElementById('next-btn-off').style.display = 'none';
+
+            if (answeredOff.length >= questionsDatabase.length) {
+                answeredOff = [];
             }
-        }
 
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                let minutes = Math.floor(timeLeft / 60);
-                let seconds = timeLeft % 60;
-                seconds = seconds < 10 ? '0' + seconds : seconds;
-                document.getElementById('timer').innerText = `${minutes}:${seconds}`;
+            let available = questionsDatabase.filter((_, idx) => !answeredOff.includes(idx));
+            let q = available[Math.floor(Math.random() * available.length)];
+            currentOffIndex = questionsDatabase.indexOf(q);
 
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    finishChallenge();
-                }
-                timeLeft--;
-            }, 1000);
-        }
+            document.getElementById('q-num-off').innerText = `السؤال رقم ${answeredOff.length + 1}`;
+            document.getElementById('q-text-off').innerText = q.q;
 
-        function loadQuestion() {
-            document.getElementById('next-q-btn').style.display = 'none';
-            let q = questionsList[currentQIndex];
-
-            document.getElementById('question-title').innerText = `السؤال رقم ${currentQIndex + 1}:`;
-            document.getElementById('question-text').innerText = q.q;
-
-            const optsDiv = document.getElementById('options-container');
+            const optsDiv = document.getElementById('options-off');
             optsDiv.innerHTML = '';
 
             q.options.forEach((opt, idx) => {
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
                 btn.innerText = opt;
-                btn.onclick = () => checkAnswer(idx, q.correct, btn);
+                btn.onclick = () => checkOfflineAnswer(idx, q.correct, q.exp, btn);
                 optsDiv.appendChild(btn);
             });
         }
 
-        function checkAnswer(selected, correct, btn) {
-            const allBtns = document.querySelectorAll('.option-btn');
+        function checkOfflineAnswer(selected, correct, exp, btn) {
+            const allBtns = document.querySelectorAll('#options-off .option-btn');
             allBtns.forEach(b => b.disabled = true);
 
             if (selected === correct) {
                 btn.classList.add('correct');
-                myScore += 1;
-                document.getElementById('my-score').innerText = myScore;
+                userPoints += 10;
+                solvedCount += 1;
+                updateStats();
+            } else {
+                btn.classList.add('wrong');
+                allBtns[correct].classList.add('correct');
+                document.getElementById('exp-text-off').innerText = exp;
+                document.getElementById('explanation-off').style.display = 'block';
+            }
+
+            answeredOff.push(currentOffIndex);
+            document.getElementById('next-btn-off').style.display = 'block';
+        }
+
+        function nextOfflineQuestion() {
+            loadOfflineQuestion();
+        }
+
+        function updateStats() {
+            document.getElementById('points').innerText = userPoints + ' 🪙';
+            document.getElementById('solved').innerText = solvedCount + ' / 500';
+        }
+
+        /* دوال الغرفة الأونلاين والتحدي المباشر */
+        function createRoom() {
+            const rCode = Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('r-code').innerText = rCode;
+            document.getElementById('room-code-show').style.display = 'block';
+            alert(`تم إنشاء الغرفة بنجاح! رقم غرفتك هو: ${rCode}`);
+            startLiveRoom();
+        }
+
+        function joinRoom() {
+            const codeInput = document.getElementById('enter-room-input').value;
+            if(codeInput.length < 5) {
+                alert("برجاء إدخال رقم غرفة صحيح!");
+                return;
+            }
+            alert(`تم الانضمام للغرفة رقم ${codeInput} بنجاح!`);
+            startLiveRoom();
+        }
+
+        function startLiveRoom() {
+            document.getElementById('room-controls-box').style.display = 'none';
+            document.getElementById('live-battle-area').style.display = 'block';
+            initCamera();
+            startBattleTimer();
+            loadOnlineQuestion();
+        }
+
+        async function initCamera() {
+            try {
+                localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                document.getElementById('localVideo').srcObject = localStream;
+            } catch(e) {
+                alert("يرجى السماح بصلاحيات الكاميرا والمايك للعمل داخل الغرفة التفاعلية.");
+            }
+        }
+
+        function toggleMic() {
+            if(localStream) {
+                const track = localStream.getAudioTracks()[0];
+                track.enabled = !track.enabled;
+                alert(track.enabled ? "تم فتح المايك 🎙️" : "تم كتم المايك 🔇");
+            }
+        }
+
+        function toggleCam() {
+            if(localStream) {
+                const track = localStream.getVideoTracks()[0];
+                track.enabled = !track.enabled;
+                alert(track.enabled ? "تم فتح الكاميرا 📹" : "تم إيقاف الكاميرا 📷");
+            }
+        }
+
+        function startBattleTimer() {
+            battleInterval = setInterval(() => {
+                let m = Math.floor(battleTimeLeft / 60);
+                let s = battleTimeLeft % 60;
+                s = s < 10 ? '0' + s : s;
+                document.getElementById('battle-timer').innerText = `${m}:${s}`;
+
+                if(battleTimeLeft <= 0) {
+                    clearInterval(battleInterval);
+                    finishBattle();
+                }
+                battleTimeLeft--;
+            }, 1000);
+        }
+
+        function loadOnlineQuestion() {
+            document.getElementById('online-next-btn').style.display = 'none';
+            let q = questionsDatabase[currentOnlineIndex];
+
+            document.getElementById('online-q-title').innerText = `سؤال التحدي رقم ${currentOnlineIndex + 1}`;
+            document.getElementById('online-q-text').innerText = q.q;
+
+            const optsDiv = document.getElementById('online-options');
+            optsDiv.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => checkOnlineAnswer(idx, q.correct, btn);
+                optsDiv.appendChild(btn);
+            });
+        }
+
+        function checkOnlineAnswer(selected, correct, btn) {
+            const allBtns = document.querySelectorAll('#online-options .option-btn');
+            allBtns.forEach(b => b.disabled = true);
+
+            if(selected === correct) {
+                btn.classList.add('correct');
+                myBattleScore++;
+                document.getElementById('my-battle-score').innerText = myBattleScore;
             } else {
                 btn.classList.add('wrong');
                 allBtns[correct].classList.add('correct');
             }
 
-            document.getElementById('next-q-btn').style.display = 'block';
+            document.getElementById('online-next-btn').style.display = 'block';
         }
 
-        function nextQuestion() {
-            currentQIndex++;
-            if (currentQIndex >= questionsList.length) {
-                currentQIndex = 0; // إعادة الدورة عند الانتهاء
-            }
-            loadQuestion();
+        function nextOnlineQuestion() {
+            currentOnlineIndex++;
+            if(currentOnlineIndex >= questionsDatabase.length) currentOnlineIndex = 0;
+            loadOnlineQuestion();
         }
 
-        function finishChallenge() {
-            alert(`🎉 انتهت الـ 30 دقيقة الخاصة بالتحدي!\nنتيجتك: ${myScore}\nنتيجة صديقك: ${friendScore}`);
-            if (myScore > friendScore) {
-                alert("🏆 مبروك! لقد فزت بالتحدي وحصلت على اشتراك شهر مجاني VIP في المنصة!");
-            } else if (myScore < friendScore) {
-                alert("للأسف فاز صديقك بالتحدي، حاول مرة أخرى لتفوز بالشهر المجاني!");
+        function finishBattle() {
+            alert(`انتهت الـ 30 دقيقة الخاصة بالتحدي!\nنتيجتك: ${myBattleScore}\nنتيجة صديقك: ${friendBattleScore}`);
+            if(myBattleScore >= friendBattleScore) {
+                alert("🎉 مبروك! لقد فزت بالتحدي وحصلت على اشتراك شهر مجاني VIP في المنصة!");
             } else {
-                alert("تعادل! قم ببدء تحدي جديد لحسم الفائز بالشهر المجاني.");
+                alert("للأسف فاز صديقك هذه المرة، جرب تحدياً جديداً!");
+            }
+        }
+
+        function downloadPdf() {
+            if(isVip) {
+                alert("جاري تحميل ملفات الـ PDF... 📥");
+            } else {
+                alert("عفواً، ميزة تحميل الـ PDF متاحة فقط لمشتركي الـ VIP.");
+            }
+        }
+
+        function buyVip() {
+            if(userPoints >= 5000) {
+                userPoints -= 5000;
+                isVip = true;
+                updateStats();
+                alert("🎉 مبروك! تم تفعيل اشتراك الـ VIP بنجاح.");
+            } else {
+                alert(`تحتاج إلى 5000 نقطة للاشتراك! رصيدك: ${userPoints}`);
             }
         }
     </script>
