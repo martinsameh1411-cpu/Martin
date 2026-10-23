@@ -36,6 +36,7 @@
         
         .explanation-box { margin-top: 10px; background: #334155; padding: 10px; border-radius: 10px; border-right: 4px solid #10b981; }
         .audio-btn { background: #38bdf8; color: #0f172a; border: none; padding: 6px 10px; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 6px; display: inline-flex; align-items: center; gap: 5px; font-size: 0.8rem; }
+        .pdf-btn { background: #ef4444; color: white; border: none; padding: 6px 10px; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 6px; display: inline-flex; align-items: center; gap: 5px; font-size: 0.8rem; text-decoration: none; }
 
         /* Store & Lessons Grid */
         .store-grid, .lessons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
@@ -83,45 +84,48 @@
         </div>
     </div>
 
-    <!-- Lessons Hub Modal (Interactive Simplified Summaries) -->
+    <!-- Lessons Hub Modal (Interactive Detailed Summaries + PDF) -->
     <div id="lessons-modal" class="modal">
         <div class="modal-content" style="max-width: 520px;">
             <button class="close-btn" onclick="closeModal('lessons-modal')">✕</button>
-            <h3>📖 ملخصات الدروس المبسطة</h3>
-            <p style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px;">اختر الدرس واستمع لشرحه الكرتوني الممتع!</p>
+            <h3>📖 ملخصات الدروس الشاملة ومذكرات الـ PDF</h3>
+            <p style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px;">اختر الدرس للاطلاع على الشرح الكامل المفصل وتحميل المذكرة!</p>
             
             <div class="lessons-grid">
                 <div class="lesson-item">
                     <h4>الدرس 1: وطننا العربي</h4>
                     <p style="font-size: 0.7rem;">الموقع الفلكي والجغرافي والأهمية</p>
-                    <button class="read-btn" onclick="showLessonDetail(1)">قراءة وشرح 🔊</button>
+                    <button class="read-btn" onclick="showLessonDetail(1)">قراءة الشرح الكامل 🔊</button>
                 </div>
                 <div class="lesson-item">
                     <h4>الدرس 2: تضاريس وطننا</h4>
                     <p style="font-size: 0.7rem;">الجبال، الهضاب، والسهول</p>
-                    <button class="read-btn" onclick="showLessonDetail(2)">قراءة وشرح 🔊</button>
+                    <button class="read-btn" onclick="showLessonDetail(2)">قراءة الشرح الكامل 🔊</button>
                 </div>
                 <div class="lesson-item">
                     <h4>الدرس 3: المناخ والنبات</h4>
                     <p style="font-size: 0.7rem;">الأقاليم المناخية والنبات الطبيعي</p>
-                    <button class="read-btn" onclick="showLessonDetail(3)">قراءة وشرح 🔊</button>
+                    <button class="read-btn" onclick="showLessonDetail(3)">قراءة الشرح الكامل 🔊</button>
                 </div>
                 <div class="lesson-item">
                     <h4>الدرس 4: التحديات البيئية</h4>
                     <p style="font-size: 0.7rem;">الجفاف، التصحر، والتغير المناخي</p>
-                    <button class="read-btn" onclick="showLessonDetail(4)">قراءة وشرح 🔊</button>
+                    <button class="read-btn" onclick="showLessonDetail(4)">قراءة الشرح الكامل 🔊</button>
                 </div>
             </div>
             
             <div id="lesson-reader-box" style="display:none; margin-top: 12px; background: #0f172a; padding: 12px; border-radius: 10px; border: 1px solid #38bdf8; text-align: right;">
                 <h4 id="reader-title" style="color: #38bdf8; margin-bottom: 6px;"></h4>
-                <p id="reader-text" style="font-size: 0.85rem; line-height: 1.5; margin-bottom: 8px;"></p>
-                <button class="audio-btn" onclick="speakText(document.getElementById('reader-text').innerText)">🔊 استمع لشرح الدرس بالكامل</button>
+                <p id="reader-text" style="font-size: 0.85rem; line-height: 1.6; margin-bottom: 8px;"></p>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button class="audio-btn" onclick="speakText(document.getElementById('reader-text').innerText)">🔊 استمع للشرح الصوتي</button>
+                    <a id="pdf-download-link" href="#" target="_blank" class="pdf-btn">📥 تحميل مذكرة الدرس (PDF)</a>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Store Modal (Manual Points Deduction) -->
+    <!-- Store Modal -->
     <div id="store-modal" class="modal">
         <div class="modal-content" style="max-width: 500px;">
             <button class="close-btn" onclick="closeModal('store-modal')">✕</button>
@@ -161,7 +165,7 @@
         let activeBubbles = [];
         let animationFrameId = null;
 
-        // Combined Questions Pool (MCQ & Essay)
+        // Combined Questions Pool
         const questions = [
             {
                 type: 'mcq',
@@ -189,12 +193,28 @@
             }
         ];
 
-        // Simplified Cartoon Lessons Content for Sixth Grade
+        // Detailed Expanded Lessons Content with PDF links simulation
         const lessonsData = {
-            1: { title: "الدرس الأول: وطننا العربي", text: "أهلاً بك يا بطل في وطنا العربي العظيم! يقع وطننا وسط قارات العالم القديم، ويضم دولاً تجمعها لغة وثقافة واحدة. وله أهمية اقتصادية كبرى لأنه يتحكم في طرق التجارة العالمية ويطل على بحار ومحيطات هامة مثل البحر المتوسط والأحمر." },
-            2: { title: "الدرس الثاني: تضاريس وطننا العربي", text: "تأمل جمال أرضنا العربية! تختلف تضاريسها بين جبال شامخة مثل جبال أطلس وجبال البحر الأحمر، وهضاب واسعة كهضبة إفريقيا الشمالية، وسحب فياضة تجري حول أنهارنا العظيمة مثل نهر النيل." },
-            3: { title: "الدرس الثالث: المناخ والنبات الطبيعي", text: "جو الوطن العربي متنوع وجميل! لدينا أقاليم مناخية مختلفة مثل إقليم البحر المتوسط والمعتدل والإقليم الصحراوي الحار، تنمو فيها نباتات طبيعية وحيوانات صحراوية مدهشة تناسب كل بيئة." },
-            4: { title: "الدرس الرابع: التحديات البيئية في وطننا العربي", text: "واجه وطننا العربي بعض التحديات مثل الجفاف وقلة الأمطار والتصحر وتغير المناخ، لكن دولنا العربية تقوم بجهود ضخمة لمواجهتها مثل مبادرة السعودية الخضراء وزراعة ملايين الأشجار لحماية البيئة!" }
+            1: { 
+                title: "الدرس الأول: موقع وطننا العربي (شرح تفصيلي)", 
+                text: "يقع الوطن العربي في قلب العالم القديم، ويحجز مكاناً استراتيجياً فريداً يربط بين قارات آسيا وأفريقيا وأوروبا. يتميز بموقعه الفلكي الذي يمتد بين خطي طول 60 درجة شرقاً و17 درجة غرباً، ودائرتي عرض 2 جنوباً و37.5 شمالاً. ويمتلك أهمية اقتصادية كبرى نظراً لتحكمه في أهم الممرات التجارية العالمية مثل قناة السويس، مضيق هرمز، مضيق باب المندب، ومضيق جبل طارق، مما يجعله محط أنظار العالم عبر التاريخ.",
+                pdf: "#" 
+            },
+            2: { 
+                title: "الدرس الثاني: تضاريس وطننا العربي (شرح تفصيلي)", 
+                text: "تتنوع تضاريس الوطن العربي بشكل مدهش لتشمل مظاهر سطح الأرض المختلفة. أولاً الجبال: وتتنوع بين جبال انكسارية نشأت نتيجة تصدع قشرة الأرض مثل جبال البحر الأحمر وجبال الشام، وجبال التوائية نشأت نتيجة حركات باطنية كبرى مثل جبال أطلس وكردستان ووساز. ثانياً الهضاب: مثل هضبة إفريقيا الشمالية الكبرى وهضبة نجد. ثالثاً السهول: وتضم السهول الفيضية الخصبة حول الأنهار الكبرى كالنيل ودجلة والفرات، والسهول الساحلية المطلة على البحار والمحيطات.",
+                pdf: "#" 
+            },
+            3: { 
+                title: "الدرس الثالث: المناخ والنبات الطبيعي (شرح تفصيلي)", 
+                text: "يسود الوطن العربي عدة أقاليم مناخية تتأثر بموقعها الفلكي والتضاريس. 1- إقليم بحر المتوسط: يتميز باعتدال الحرارة ومطره شتاءً. 2- الإقليم الصحراوي الحار: يشغل المساحة الأكبر ويتميز بشدة الحرارة صيفاً والبرودة الشتاء وقلة الأمطار. 3- الإقليم المداري: يتميز بالحرارة المرتفعة والأمطار الصيفية. وتتنوع النباتات الطبيعية تبعاً لهذه الأقاليم بين الغابات الحرجية، الحشائش المعتدلة والساحنة (الستانا والبسبرس)، والنباتات الصحراوية.",
+                pdf: "#" 
+            },
+            4: { 
+                title: "الدرس الرابع: التحديات البيئية في وطننا العربي (شرح تفصيلي)", 
+                text: "يواجه وطننا العربي عدة تحديات بيئية مؤثرة مثل ظاهرة التصحر نتيجة تدهور الأراضي وقلة الأمطار، ومشكلة الندرة المائية وزيادة استهلاك المياه، وتغير المناخ الذي يهدد الأمن الغذائي. وفي المقابل، تبذل الحكومات العربية جهوداً حثيثة لمواجهة هذه التحديات عبر مشاريع ضخمة مثل مبادرة الشرق الأوسط الأخضر، التوسع في إقامة الساخات الخضراء، وتحلية مياه البحر واستخدام نظم الري الحديثة.",
+                pdf: "#" 
+            }
         };
 
         const player = document.getElementById('player');
@@ -349,6 +369,7 @@
             const lesson = lessonsData[lessonId];
             document.getElementById('reader-title').innerText = lesson.title;
             document.getElementById('reader-text').innerText = lesson.text;
+            document.getElementById('pdf-download-link').href = lesson.pdf;
             document.getElementById('lesson-reader-box').style.display = 'block';
             speakText(lesson.text);
         }
@@ -386,3 +407,4 @@
     </script>
 </body>
 </html>
+
