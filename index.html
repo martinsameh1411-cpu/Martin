@@ -2,66 +2,389 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>منصة مارتن التعليمية - دراسات الصف السادس الابتدائي</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة مارتن التعليمية | الصف السادس الابتدائي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; user-select: none; }
-        body { background: linear-gradient(135deg, #0f172a, #1e3c72); color: #fff; min-height: 100vh; overflow-x: hidden; text-align: center; padding-bottom: 20px; }
-        
-        /* Auth Screen */
-        #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; z-index: 300; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
-        .auth-card { background: #1e293b; padding: 25px; border-radius: 20px; border: 3px solid #38bdf8; max-width: 400px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: right; }
-        .auth-card h2 { color: #38bdf8; text-align: center; margin-bottom: 15px; }
-        .input-group { margin-bottom: 12px; }
-        .input-group label { display: block; font-size: 0.85rem; margin-bottom: 5px; color: #cbd5e1; }
-        .input-group input { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: white; font-size: 0.95rem; }
-        .start-btn { background: #10b981; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; font-size: 1.05rem; width: 100%; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4); }
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --accent-yellow: #f59e0b;
+            --accent-blue: #38bdf8;
+            --accent-green: #22c55e;
+            --accent-red: #ef4444;
+            --text-light: #f8fafc;
+        }
 
-        /* Top Navigation Bar */
-        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-bottom: 2px solid rgba(255,255,255,0.1); position: sticky; top: 0; z-index: 100; flex-wrap: wrap; gap: 8px; }
-        .score-badge { background: #f59e0b; color: #fff; padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; cursor: pointer; border: 2px dashed #fff; transition: 0.2s; }
-        .score-badge:hover { background: #d97706; transform: scale(1.05); }
-        .nav-btns { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
-        .nav-btn { border: none; padding: 6px 12px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.8rem; color: white; }
-        .btn-lessons { background: #3b82f6; }
-        .btn-store { background: #10b981; }
-        .btn-vip { background: #8b5cf6; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
 
-        /* Game Arena */
-        .game-container { position: relative; width: 100%; max-width: 550px; height: 420px; margin: 15px auto; background: url('https://img.freepik.com/free-vector/cartoon-desert-landscape-with-pyramids_107791-2365.jpg') center/cover; border-radius: 20px; border: 4px solid #38bdf8; overflow: hidden; touch-action: none; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        .question-box { position: absolute; top: 12px; left: 4%; width: 92%; background: rgba(15, 23, 42, 0.9); padding: 10px; border-radius: 12px; border: 2px solid #38bdf8; font-size: 0.9rem; font-weight: bold; color: #f8fafc; z-index: 10; }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            padding-bottom: 40px;
+        }
 
-        .falling-option { position: absolute; background: #3b82f6; color: white; padding: 8px 14px; border-radius: 20px; font-weight: bold; font-size: 0.8rem; box-shadow: 0 4px 12px rgba(0,0,0,0.4); border: 2px solid #fff; z-index: 5; text-align: center; max-width: 160px; cursor: pointer; }
+        header {
+            background: linear-gradient(135deg, #1e1b4b, #312e81);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--accent-yellow);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
 
-        .player-character { position: absolute; bottom: 10px; left: 40%; width: 85px; height: 100px; cursor: grab; z-index: 20; }
-        .box-container { width: 100%; height: 26px; background: #d97706; border: 2px solid #78350f; border-radius: 6px; position: absolute; top: 0; text-align: center; font-size: 0.7rem; line-height: 22px; font-weight: bold; color: #fff; }
-        .kid-avatar { width: 60px; height: 65px; background: url('https://cdn-icons-png.flaticon.com/512/3408/3408455.png') center/contain no-repeat; position: absolute; bottom: 0; left: 12px; }
+        header h1 {
+            color: var(--accent-yellow);
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
 
-        /* Modals */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 200; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(5px); }
-        .modal-content { background: #1e293b; padding: 20px; border-radius: 20px; max-width: 500px; width: 100%; border: 3px solid #38bdf8; position: relative; text-align: right; max-height: 85vh; overflow-y: auto; }
-        .modal-content h3 { color: #38bdf8; margin-bottom: 10px; font-size: 1.1rem; }
-        textarea { width: 100%; height: 70px; background: #0f172a; border: 1px solid #475569; color: white; padding: 10px; border-radius: 10px; margin: 8px 0; resize: none; font-size: 0.85rem; }
-        .btn-submit { background: #f59e0b; color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; cursor: pointer; font-size: 0.9rem; }
-        
-        .explanation-box { margin-top: 10px; background: #334155; padding: 10px; border-radius: 10px; border-right: 4px solid #10b981; font-size: 0.85rem; }
-        .audio-btn { background: #38bdf8; color: #0f172a; border: none; padding: 6px 10px; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 6px; font-size: 0.8rem; }
-        .pdf-btn { background: #ef4444; color: white; border: none; padding: 8px 12px; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 8px; font-size: 0.85rem; width: 100%; }
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            background: var(--card-bg);
+            padding: 15px;
+            margin: 15px auto;
+            max-width: 800px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+        }
 
-        .lessons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
-        .lesson-item { background: #334155; padding: 10px; border-radius: 10px; text-align: center; border: 1px solid #475569; }
-        .lesson-item h4 { color: #f59e0b; margin-bottom: 4px; font-size: 0.85rem; }
-        .read-btn { background: #3b82f6; border: none; color: white; padding: 5px 8px; border-radius: 6px; font-weight: bold; margin-top: 5px; cursor: pointer; width: 100%; font-size: 0.75rem; }
-        .close-btn { position: absolute; top: 10px; left: 15px; background: #ef4444; color: white; border: none; border-radius: 50%; width: 24px; height: 24px; font-weight: bold; cursor: pointer; }
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--accent-blue);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        .timer-box {
+            background: #451a03;
+            border: 2px solid var(--accent-yellow);
+            color: var(--accent-yellow);
+            text-align: center;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background: var(--accent-yellow);
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: scale(0.99);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .option-btn {
+            background: #334155;
+            color: #fff;
+            border: 2px solid transparent;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            text-align: right;
+        }
+
+        .option-btn.correct {
+            background: var(--accent-green);
+            color: white;
+        }
+
+        .option-btn.wrong {
+            background: var(--accent-red);
+            color: white;
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 12px;
+            background: #0f172a;
+            border-right: 4px solid var(--accent-blue);
+            border-radius: 4px;
+            display: none;
+        }
+
+        .shop-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #0f172a;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .map-box {
+            width: 100%;
+            height: 200px;
+            background: #1e293b;
+            border: 2px dashed var(--accent-blue);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #94a3b8;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: #334155;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .tab-btn.active {
+            background: var(--accent-blue);
+            color: #000;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Auth Screen -->
-    <div id="auth-screen">
-        <div class="auth-card">
-            <h2>🎓 تسجيل دخول منصة مارتن</h2>
-            <div class="input-group">
-                <label>اسم الطالب (أ
+    <header>
+        <h1>🎓 منصة مارتن التعليمية</h1>
+        <p>دراسات الصف السادس الابتدائي - الترم الأول</p>
+    </header>
 
-                    
+    <div class="container">
+        <!-- شريط الإحصائيات -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div>النقاط المكتسبة</div>
+                <div class="stat-value" id="points">0 🪙</div>
+            </div>
+            <div class="stat-item">
+                <div>الأسئلة المجابة</div>
+                <div class="stat-value" id="solved">0 / 500</div>
+            </div>
+        </div>
+
+        <!-- العداد التنازلي للتحدي -->
+        <div class="timer-box">
+            ⏳ متبقي على نهاية تحدي الـ VIP: <span id="countdown">20 يوم و 23 ساعة</span>
+        </div>
+
+        <!-- التبويبات -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('quiz')">📝 الأسئلة اليومية</button>
+            <button class="tab-btn" onclick="switchTab('maps')">🗺️ قسم الخرائط</button>
+            <button class="tab-btn" onclick="switchTab('shop')">🎮 متجر المكافآت</button>
+        </div>
+
+        <!-- قسم الأسئلة -->
+        <div id="quiz-section" class="card">
+            <h3>السؤال رقم <span id="q-num">1</span> من 50 اليوم</h3>
+            <p id="q-text" style="font-size: 1.2rem; margin: 15px 0;">جاري تحميل السؤال...</p>
+
+            <div class="options-grid" id="options"></div>
+
+            <div class="explanation" id="explanation">
+                <strong>💡 الشرح وطريقة الحل الصحيحة:</strong>
+                <p id="exp-text"></p>
+            </div>
+
+            <button class="btn" id="next-btn" style="display:none;" onclick="nextQuestion()">السؤال التالي ⬅️</button>
+        </div>
+
+        <!-- قسم الخرائط -->
+        <div id="maps-section" class="card" style="display:none;">
+            <h3>🗺️ الشرح والتدريب على الخرائط</h3>
+            <p style="margin-bottom: 10px;">ركز في الأماكن الأساسية الموضحة على الخريطة لامتحان الدراسات:</p>
+            <div class="map-box">
+                📍 [خريطة خاليج السويس، العقبة، الدلتا، ونهر النيل]
+            </div>
+            <p><strong>تلميح مهم:</strong> يحد مصر من الشمال البحر المتوسط، ومن الشرق البحر الأحمر وخليج العقبة.</p>
+        </div>
+
+        <!-- قسم المتجر والجوائز -->
+        <div id="shop-section" class="card" style="display:none;">
+            <h3>🏆 متجر الجوائز وفتح المودات</h3>
+            <p style="margin-bottom: 15px; color: #94a3b8;">استبدل نقاط المذاكرة بفتح مودات وألعاب ترفيهية!</p>
+
+            <div class="shop-item">
+                <div>
+                    <strong>🏍️ مود "عريس الجنة"</strong>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">فتح الموتوسيكل على الكورنيش</div>
+                </div>
+                <button class="btn" style="width:auto;" onclick="buyItem('عريس الجنة', 250)">فتح بـ 250 نقطة</button>
+            </div>
+
+            <div class="shop-item">
+                <div>
+                    <strong>🚕 مود "تاكسي إسكندرية"</strong>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">توصيل الزباين وفتح عربية اللادا</div>
+                </div>
+                <button class="btn" style="width:auto;" onclick="buyItem('تاكسي إسكندرية', 250)">فتح بـ 250 نقطة</button>
+            </div>
+
+            <div class="shop-item">
+                <div>
+                    <strong>👑 اشتراك VIP الشهري</strong>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">ميزات ذهبية ومظهر خاص بالشخصية</div>
+                </div>
+                <button class="btn" style="width:auto; background: var(--accent-blue); color: #000;" onclick="alert('اكمل تحدي 500 سؤال لفتحه مجاناً!')">تحدي الـ 500 سؤال</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let userPoints = 0;
+        let solvedCount = 0;
+        let currentQIndex = 0;
+
+        const questions = [
+            {
+                q: "ما هو أطول نهر في العالم والذي يمر بمصر؟",
+                options: ["نهر الفرات", "نهر النيل", "نهر الأمازون", "نهر دجلة"],
+                correct: 1,
+                exp: "نهر النيل هو أطول أنهار الكرة الأرضية ويمتلك أهمية استراتيجية كبيرة لمصر."
+            },
+            {
+                q: "يحد مصر من جهة الشمال:",
+                options: ["البحر الأحمر", "البحر المتوسط", "المحيط الأطلسي", "خليج السويس"],
+                correct: 1,
+                exp: "البحر المتوسط يقع في شمال مصر وهو الحد الساحلي الشمالي للبلاد."
+            },
+            {
+                q: "تعتبر بيئة الصحراء الغربية من البيئات:",
+                options: ["الزراعية", "الصحراوية", "الساحلية", "الصناعية"],
+                correct: 1,
+                exp: "تتميز الصحراء الغربية بانتشار الكثبان الرملية والبيئة الصحراوية."
+            }
+        ];
+
+        function loadQuestion() {
+            const q = questions[currentQIndex];
+            document.getElementById('q-num').innerText = currentQIndex + 1;
+            document.getElementById('q-text').innerText = q.q;
+            document.getElementById('explanation').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+
+            const optsDiv = document.getElementById('options');
+            optsDiv.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(idx, q.correct, q.exp, btn);
+                optsDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selected, correct, exp, btn) {
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.disabled = true);
+
+            if(selected === correct) {
+                btn.classList.add('correct');
+                userPoints += 10;
+                solvedCount += 1;
+                updateStats();
+            } else {
+                btn.classList.add('wrong');
+                allBtns[correct].classList.add('correct');
+                document.getElementById('exp-text').innerText = exp;
+                document.getElementById('explanation').style.display = 'block';
+            }
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentQIndex = (currentQIndex + 1) % questions.length;
+            loadQuestion();
+        }
+
+        function updateStats() {
+            document.getElementById('points').innerText = userPoints + ' 🪙';
+            document.getElementById('solved').innerText = solvedCount + ' / 500';
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('quiz-section').style.display = 'none';
+            document.getElementById('maps-section').style.display = 'none';
+            document.getElementById('shop-section').style.display = 'none';
+
+            if(tab === 'quiz') {
+                document.getElementById('quiz-section').style.display = 'block';
+                event.target.classList.add('active');
+            } else if(tab === 'maps') {
+                document.getElementById('maps-section').style.display = 'block';
+                event.target.classList.add('active');
+            } else if(tab === 'shop') {
+                document.getElementById('shop-section').style.display = 'block';
+                event.target.classList.add('active');
+            }
+        }
+
+        function buyItem(name, cost) {
+            if(userPoints >= cost) {
+                userPoints -= cost;
+                updateStats();
+                alert(`مبروك! تم فتح مود "${name}" بنجاح 🎉`);
+            } else {
+                alert(`عفواً! محتاج ${cost - userPoints} نقطة كمان من المذاكرة عشان تفتح المود ده.`);
+            }
+        }
+
+        // تشغيل السؤال الأول عند التحميل
+        loadQuestion();
+    </script>
+</body>
+</html>
