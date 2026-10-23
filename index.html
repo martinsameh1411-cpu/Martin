@@ -2,109 +2,387 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة مراجعة الدراسات الاجتماعية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>منصة مارتن التعليمية - دراسات الصف السادس الابتدائي</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-            padding: 20px;
-            color: #333;
-            direction: rtl;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        h1, h2, h3 {
-            color: #2c3e50;
-            text-align: center;
-        }
-        .lesson-card {
-            background-color: #eef2f5;
-            border-right: 5px solid #3498db;
-            padding: 15px 20px;
-            margin-bottom: 20px;
-            border-radius: 6px;
-        }
-        .lesson-title {
-            font-size: 1.3em;
-            color: #2980b9;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        .content-box {
-            line-height: 1.8;
-            font-size: 1.05em;
-        }
-        .btn-action {
-            display: inline-block;
-            background-color: #27ae60;
-            color: white;
-            padding: 10px 18px;
-            margin-top: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-            border: none;
-            transition: background 0.3s;
-        }
-        .btn-action:hover {
-            background-color: #219150;
-        }
-        .btn-quiz {
-            background-color: #e67e22;
-        }
-        .btn-quiz:hover {
-            background-color: #d35400;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; user-select: none; }
+        body { background: linear-gradient(135deg, #0f172a, #1e3c72); color: #fff; min-height: 100vh; overflow-x: hidden; text-align: center; }
+        
+        /* Top Navigation Bar */
+        .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-bottom: 2px solid rgba(255,255,255,0.1); position: sticky; top: 0; z-index: 100; }
+        .score-badge { background: #f59e0b; color: #fff; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 1rem; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4); }
+        .nav-btns { display: flex; gap: 8px; }
+        .shop-btn { background: #10b981; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.85rem; }
+        .lessons-btn { background: #3b82f6; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.85rem; }
+
+        /* Game Arena */
+        .game-container { position: relative; width: 100%; max-width: 550px; height: 440px; margin: 15px auto; background: url('https://img.freepik.com/free-vector/cartoon-desert-landscape-with-pyramids_107791-2365.jpg') center/cover; border-radius: 20px; border: 4px solid #38bdf8; overflow: hidden; touch-action: none; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .question-box { position: absolute; top: 12px; left: 4%; width: 92%; background: rgba(15, 23, 42, 0.9); padding: 12px; border-radius: 12px; border: 2px solid #38bdf8; font-size: 0.95rem; font-weight: bold; color: #f8fafc; z-index: 10; backdrop-filter: blur(5px); }
+
+        /* Bouncing Choice Bubbles */
+        .falling-option { position: absolute; background: #3b82f6; color: white; padding: 8px 15px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0,0,0,0.4); border: 2px solid #fff; z-index: 5; text-align: center; max-width: 170px; }
+
+        /* Catching Player Character */
+        .player-character { position: absolute; bottom: 10px; left: 40%; width: 85px; height: 105px; cursor: grab; z-index: 20; }
+        .box-container { width: 100%; height: 30px; background: #d97706; border: 2px solid #78350f; border-radius: 6px; position: absolute; top: 0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.4); text-align: center; font-size: 0.75rem; line-height: 26px; font-weight: bold; color: #fff; }
+        .kid-avatar { width: 65px; height: 70px; background: url('https://cdn-icons-png.flaticon.com/512/3408/3408455.png') center/contain no-repeat; position: absolute; bottom: 0; left: 10px; }
+
+        /* Modals */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 200; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(5px); }
+        .modal-content { background: #1e293b; padding: 20px; border-radius: 20px; max-width: 480px; width: 100%; border: 3px solid #38bdf8; position: relative; text-align: right; max-height: 85vh; overflow-y: auto; }
+        .modal-content h3 { color: #38bdf8; margin-bottom: 10px; font-size: 1.15rem; }
+        textarea { width: 100%; height: 75px; background: #0f172a; border: 1px solid #475569; color: white; padding: 10px; border-radius: 10px; margin: 8px 0; resize: none; font-size: 0.9rem; }
+        .btn-submit { background: #f59e0b; color: white; border: none; padding: 10px; border-radius: 10px; font-weight: bold; width: 100%; cursor: pointer; font-size: 0.95rem; }
+        
+        .explanation-box { margin-top: 10px; background: #334155; padding: 10px; border-radius: 10px; border-right: 4px solid #10b981; }
+        .audio-btn { background: #38bdf8; color: #0f172a; border: none; padding: 6px 10px; border-radius: 12px; font-weight: bold; cursor: pointer; margin-top: 6px; display: inline-flex; align-items: center; gap: 5px; font-size: 0.8rem; }
+
+        /* Store & Lessons Grid */
+        .store-grid, .lessons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        .store-item, .lesson-item { background: #334155; padding: 12px; border-radius: 10px; text-align: center; border: 1px solid #475569; }
+        .store-item h4, .lesson-item h4 { color: #f59e0b; margin-bottom: 4px; font-size: 0.9rem; }
+        .buy-btn, .read-btn { background: #10b981; border: none; color: white; padding: 5px 10px; border-radius: 6px; font-weight: bold; margin-top: 6px; cursor: pointer; width: 100%; font-size: 0.8rem; }
+        .read-btn { background: #3b82f6; }
+        .close-btn { position: absolute; top: 10px; left: 15px; background: #ef4444; color: white; border: none; border-radius: 50%; width: 26px; height: 26px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>📚 منصة مراجعة الدراسات الاجتماعية</h1>
-    <p style="text-align: center; color: #7f8c8d;">مراجعة شاملة ومستمرة للصفوف الدراسية</p>
-
-    <!-- الدرس الأول -->
-    <div class="lesson-card">
-        <div class="lesson-title">الدرس الأول: موقع وطننا العربي</div>
-        <div class="content-box">
-            <p><strong>الموقع الجغرافي:</strong> يقع الوطن العربي في قلب العالم القديم وسط قارات آسيا وإفريقيا وأوروبا.</p>
-            <p><strong>الحدود:</strong></p>
-            <ul>
-                <li>الشمال: البحر المتوسط وجبال توروس.</li>
-                <li>الجنوب: المحيط الهندي والصحراء الكبرى.</li>
-                <li>الشرق: الخليج العربي وبحر عمان.</li>
-                <li>الغرب: المحيط الأطلنطي.</li>
-            </ul>
-            <p><strong>الأهمية الاستراتيجية:</strong> يشرف على 4 ممرات مائية مهمة (مضيق هرمز - مضيق باب المندب - قناة السويس - مضيق جبل طارق).</p>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="score-badge">🏆 النقاط: <span id="user-score">0</span></div>
+        <div class="nav-btns">
+            <button class="lessons-btn" onclick="openLessons()">📖 ملخصات الدروس</button>
+            <button class="shop-btn" onclick="openStore()">🛒 المتجر</button>
         </div>
-        <button class="btn-action" onclick="alert('جارٍ تشغيل الصوت للشرح...')">🔊 استماع للشرح الصوتى</button>
     </div>
 
-    <!-- الدرس الثاني -->
-    <div class="lesson-card">
-        <div class="lesson-title">الدرس الثاني: تضاريس وطننا العربي</div>
-        <div class="content-box">
-            <p><strong>1. الجبال:</strong> تنقسم إلى جبال انكسارية (مثل جبال البحر الأحمر) وجبال التوائية (مثل جبال أطلس).</p>
-            <p><strong>2. الهضاب:</strong> مثل هضبة إفريقيا الشمالية وهضبة نجد وهضبة بادية الشام.</p>
-            <p><strong>3. السهول:</strong> تنقسم إلى سهول فيضية حول الأنهار وسهول ساحلية على البحار والمحيطات.</p>
+    <!-- Main Game Arena -->
+    <div class="game-container" id="game-arena">
+        <div class="question-box" id="q-title">جاري تحميل اللعبة...</div>
+        
+        <div class="player-character" id="player">
+            <div class="box-container">🎁 صندوق الكنز</div>
+            <div class="kid-avatar" id="avatar"></div>
         </div>
-        <button class="btn-action" onclick="alert('جارٍ تشغيل الصوت للشرح...')">🔊 استماع للشرح الصوتى</button>
     </div>
 
-    <!-- قسم الأسئلة والتطبيقات -->
-    <div style="text-align: center; margin-top: 30px;">
-        <button class="btn-action btn-quiz" onclick="alert('أهلاً بك في قسم الأسئلة والتطبيقات!')">🎯 البدء في التمارين والأسئلة</button>
+    <!-- Essay Question Modal (100 Points) -->
+    <div id="essay-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('essay-modal')">✕</button>
+            <h3 id="essay-title">سؤال مقالي (100 نقطة)</h3>
+            <p id="essay-question" style="font-size: 0.95rem; line-height: 1.4;"></p>
+            <textarea id="essay-input" placeholder="اكتب إجابتك هنا يا بطل..."></textarea>
+            <button class="btn-submit" onclick="submitEssay()">إرسال الإجابة ومعاينة النتيجة</button>
+            
+            <div id="essay-result" style="display: none;" class="explanation-box">
+                <p id="essay-explanation" style="font-size: 0.85rem;"></p>
+                <button class="audio-btn" onclick="speakText(document.getElementById('essay-explanation').innerText)">🔊 استمع لشرح المعلم الآلي</button>
+            </div>
+        </div>
     </div>
-</div>
 
+    <!-- Lessons Hub Modal (Interactive Simplified Summaries) -->
+    <div id="lessons-modal" class="modal">
+        <div class="modal-content" style="max-width: 520px;">
+            <button class="close-btn" onclick="closeModal('lessons-modal')">✕</button>
+            <h3>📖 ملخصات الدروس المبسطة</h3>
+            <p style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 8px;">اختر الدرس واستمع لشرحه الكرتوني الممتع!</p>
+            
+            <div class="lessons-grid">
+                <div class="lesson-item">
+                    <h4>الدرس 1: وطننا العربي</h4>
+                    <p style="font-size: 0.7rem;">الموقع الفلكي والجغرافي والأهمية</p>
+                    <button class="read-btn" onclick="showLessonDetail(1)">قراءة وشرح 🔊</button>
+                </div>
+                <div class="lesson-item">
+                    <h4>الدرس 2: تضاريس وطننا</h4>
+                    <p style="font-size: 0.7rem;">الجبال، الهضاب، والسهول</p>
+                    <button class="read-btn" onclick="showLessonDetail(2)">قراءة وشرح 🔊</button>
+                </div>
+                <div class="lesson-item">
+                    <h4>الدرس 3: المناخ والنبات</h4>
+                    <p style="font-size: 0.7rem;">الأقاليم المناخية والنبات الطبيعي</p>
+                    <button class="read-btn" onclick="showLessonDetail(3)">قراءة وشرح 🔊</button>
+                </div>
+                <div class="lesson-item">
+                    <h4>الدرس 4: التحديات البيئية</h4>
+                    <p style="font-size: 0.7rem;">الجفاف، التصحر، والتغير المناخي</p>
+                    <button class="read-btn" onclick="showLessonDetail(4)">قراءة وشرح 🔊</button>
+                </div>
+            </div>
+            
+            <div id="lesson-reader-box" style="display:none; margin-top: 12px; background: #0f172a; padding: 12px; border-radius: 10px; border: 1px solid #38bdf8; text-align: right;">
+                <h4 id="reader-title" style="color: #38bdf8; margin-bottom: 6px;"></h4>
+                <p id="reader-text" style="font-size: 0.85rem; line-height: 1.5; margin-bottom: 8px;"></p>
+                <button class="audio-btn" onclick="speakText(document.getElementById('reader-text').innerText)">🔊 استمع لشرح الدرس بالكامل</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Store Modal (Manual Points Deduction) -->
+    <div id="store-modal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <button class="close-btn" onclick="closeModal('store-modal')">✕</button>
+            <h3>🛒 متجر المكافآت العجيب</h3>
+            <p style="font-size: 0.75rem; color: #94a3b8; margin-bottom: 10px;">اجمع النقاط واختر جائزتك المفضلة بنفسك!</p>
+            
+            <div class="store-grid">
+                <div class="store-item">
+                    <h4>🎓 شهر مجاني</h4>
+                    <p style="font-size: 0.7rem;">اشتراك سماع شرح الدروس كاملاً</p>
+                    <button class="buy-btn" onclick="claimReward(1500, 'اشتراك الشهر المجاني لشرح الدروس')">1500 نقطة</button>
+                </div>
+                <div class="store-item">
+                    <h4>👨‍🔬 زي العالم</h4>
+                    <p style="font-size: 0.7rem;">مظهر جديد للطالب في اللعبة</p>
+                    <button class="buy-btn" onclick="claimReward(300, 'زي العالم الصغير')">300 نقطة</button>
+                </div>
+                <div class="store-item">
+                    <h4>🚀 ثيم الفضاء</h4>
+                    <p style="font-size: 0.7rem;">تغيير خلفية ساحة اللعب</p>
+                    <button class="buy-btn" onclick="claimReward(500, 'خلفية الفضاء الخارجي')">500 نقطة</button>
+                </div>
+                <div class="store-item">
+                    <h4>🎁 صندوق حظ</h4>
+                    <p style="font-size: 0.7rem;">مفاجأة نقاط عشوائية</p>
+                    <button class="buy-btn" style="background:#f59e0b;" onclick="openMysteryBox()">100 نقطة</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let currentQIndex = 0;
+        let isDragging = false;
+        let dragStartX = 0;
+        let activeBubbles = [];
+        let animationFrameId = null;
+
+        // Combined Questions Pool (MCQ & Essay)
+        const questions = [
+            {
+                type: 'mcq',
+                title: 'سؤال: ما هو أهم ممر مائي يربط بين البحر المتوسط والأحمر؟',
+                options: ['قناة السويس', 'مضيق هرمز', 'نهر النيل'],
+                correct: 0,
+                explanation: 'إجابة صحيحة يا بطل! قناة السويس هي شريان التجارة العالمي.'
+            },
+            {
+                type: 'essay',
+                title: 'سؤال مقالي: بما تفسر؟ الأهمية الاقتصادية لموقع الوطن العربي.',
+                explanation: 'الإجابة النموذجية: لإشرافه على بحار ومحيطات هامة وتحكمه في ممرات مائية عالمية مثل قناة السويس وباب المندب.'
+            },
+            {
+                type: 'mcq',
+                title: 'سؤال: أكبر دولة عربية من حيث المساحة هي:',
+                options: ['مصر', 'الجزائر', 'السعودية'],
+                correct: 1,
+                explanation: 'أحسنت يا بطل! الجزائر هي الأكبر مساحة في الوطن العربي.'
+            },
+            {
+                type: 'essay',
+                title: 'سؤال مقالي: ما النتائج المترتبة على تنوع المناخ في الوطن العربي؟',
+                explanation: 'الإجابة النموذجية: أدى ذلك إلى تنوع المحاصيل الزراعية وتكامل الدول العربية.'
+            }
+        ];
+
+        // Simplified Cartoon Lessons Content for Sixth Grade
+        const lessonsData = {
+            1: { title: "الدرس الأول: وطننا العربي", text: "أهلاً بك يا بطل في وطنا العربي العظيم! يقع وطننا وسط قارات العالم القديم، ويضم دولاً تجمعها لغة وثقافة واحدة. وله أهمية اقتصادية كبرى لأنه يتحكم في طرق التجارة العالمية ويطل على بحار ومحيطات هامة مثل البحر المتوسط والأحمر." },
+            2: { title: "الدرس الثاني: تضاريس وطننا العربي", text: "تأمل جمال أرضنا العربية! تختلف تضاريسها بين جبال شامخة مثل جبال أطلس وجبال البحر الأحمر، وهضاب واسعة كهضبة إفريقيا الشمالية، وسحب فياضة تجري حول أنهارنا العظيمة مثل نهر النيل." },
+            3: { title: "الدرس الثالث: المناخ والنبات الطبيعي", text: "جو الوطن العربي متنوع وجميل! لدينا أقاليم مناخية مختلفة مثل إقليم البحر المتوسط والمعتدل والإقليم الصحراوي الحار، تنمو فيها نباتات طبيعية وحيوانات صحراوية مدهشة تناسب كل بيئة." },
+            4: { title: "الدرس الرابع: التحديات البيئية في وطننا العربي", text: "واجه وطننا العربي بعض التحديات مثل الجفاف وقلة الأمطار والتصحر وتغير المناخ، لكن دولنا العربية تقوم بجهود ضخمة لمواجهتها مثل مبادرة السعودية الخضراء وزراعة ملايين الأشجار لحماية البيئة!" }
+        };
+
+        const player = document.getElementById('player');
+        const arena = document.getElementById('game-arena');
+
+        // Touch & Drag Controls for Mobile Fingers
+        player.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            dragStartX = e.touches[0].clientX - player.offsetLeft;
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            let arenaRect = arena.getBoundingClientRect();
+            let newX = e.touches[0].clientX - arenaRect.left - (player.offsetWidth / 2);
+            if (newX < 0) newX = 0;
+            if (newX > arenaRect.width - player.offsetWidth) newX = arenaRect.width - player.offsetWidth;
+            player.style.left = `${newX}px`;
+        });
+
+        document.addEventListener('touchend', () => { isDragging = false; });
+
+        // Mouse Drag Support
+        player.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            dragStartX = e.clientX - player.offsetLeft;
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            let arenaRect = arena.getBoundingClientRect();
+            let newX = e.clientX - arenaRect.left - (player.offsetWidth / 2);
+            if (newX < 0) newX = 0;
+            if (newX > arenaRect.width - player.offsetWidth) newX = arenaRect.width - player.offsetWidth;
+            player.style.left = `${newX}px`;
+        });
+
+        document.addEventListener('mouseup', () => { isDragging = false; });
+
+        function loadNextQuestion() {
+            clearBubbles();
+            if (currentQIndex >= questions.length) currentQIndex = 0;
+
+            const q = questions[currentQIndex];
+            document.getElementById('q-title').innerText = q.title;
+
+            if (q.type === 'mcq') {
+                spawnFallingOptions(q);
+            } else if (q.type === 'essay') {
+                openEssayModal(q);
+            }
+        }
+
+        function spawnFallingOptions(q) {
+            const arenaWidth = arena.offsetWidth;
+            q.options.forEach((optText, index) => {
+                const bubble = document.createElement('div');
+                bubble.className = 'falling-option';
+                bubble.innerText = optText;
+                
+                let posX = Math.random() * (arenaWidth - 140) + 10;
+                let posY = 75 + (index * 30);
+                let speed = 1.0 + Math.random() * 0.5;
+                let direction = 1;
+
+                bubble.style.left = `${posX}px`;
+                bubble.style.top = `${posY}px`;
+
+                arena.appendChild(bubble);
+                activeBubbles.push({ element: bubble, x: posX, y: posY, speed: speed, dir: direction, isCorrect: index === q.correct });
+            });
+
+            animateBubbles();
+        }
+
+        function animateBubbles() {
+            const arenaHeight = arena.offsetHeight;
+            const playerRect = player.getBoundingClientRect();
+
+            activeBubbles.forEach((b) => {
+                b.y += b.speed * b.dir;
+                if (b.y > arenaHeight - 110 || b.y < 65) b.dir *= -1;
+                b.element.style.top = `${b.y}px`;
+
+                const bRect = b.element.getBoundingClientRect();
+                if (bRect.bottom >= playerRect.top && bRect.top <= playerRect.bottom && bRect.right >= playerRect.left && bRect.left <= playerRect.right) {
+                    handleOptionCatch(b);
+                }
+            });
+
+            animationFrameId = requestAnimationFrame(animateBubbles);
+        }
+
+        function handleOptionCatch(bubbleObj) {
+            cancelAnimationFrame(animationFrameId);
+            if (bubbleObj.isCorrect) {
+                score += 20;
+                updateScore();
+                alert('🎉 إجابة صحيحة يا بطل! تم إضافة 20 نقطة.');
+                speakText(questions[currentQIndex].explanation);
+            } else {
+                alert('❌ إجابة خاطئة، حاول مرة أخرى!');
+            }
+            currentQIndex++;
+            loadNextQuestion();
+        }
+
+        function clearBubbles() {
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            activeBubbles.forEach(b => b.element.remove());
+            activeBubbles = [];
+        }
+
+        function openEssayModal(q) {
+            document.getElementById('essay-question').innerText = q.title;
+            document.getElementById('essay-input').value = '';
+            document.getElementById('essay-result').style.display = 'none';
+            document.getElementById('essay-modal').style.display = 'flex';
+        }
+
+        function submitEssay() {
+            const userText = document.getElementById('essay-input').value.trim();
+            if (userText === '') { alert('يرجى كتابة إجابتك أولاً!'); return; }
+            score += 100;
+            updateScore();
+            const q = questions[currentQIndex];
+            document.getElementById('essay-explanation').innerText = q.explanation;
+            document.getElementById('essay-result').style.display = 'block';
+            speakText(q.explanation);
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ar-SA';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Modals management
+        function openStore() { document.getElementById('store-modal').style.display = 'flex'; }
+        function openLessons() { document.getElementById('lessons-modal').style.display = 'flex'; }
+        
+        function closeModal(id) { 
+            document.getElementById(id).style.display = 'none'; 
+            if (id === 'essay-modal') { currentQIndex++; loadNextQuestion(); }
+        }
+
+        function showLessonDetail(lessonId) {
+            const lesson = lessonsData[lessonId];
+            document.getElementById('reader-title').innerText = lesson.title;
+            document.getElementById('reader-text').innerText = lesson.text;
+            document.getElementById('lesson-reader-box').style.display = 'block';
+            speakText(lesson.text);
+        }
+
+        function claimReward(cost, rewardName) {
+            if (score >= cost) {
+                score -= cost;
+                updateScore();
+                alert(`🎉 مبروك يا بطل! تم خصم النقاط وشراء (${rewardName}) بنجاح.`);
+                if (rewardName.includes('الفضاء')) {
+                    arena.style.background = "url('https://img.freepik.com/free-vector/galaxy-background-with-shiny-stars_23-2148970444.jpg') center/cover";
+                }
+            } else {
+                alert(`عفواً رصيدك غير كافي! تحتاج إلى ${cost - score} نقطة إضافية لشراء هذه الجائزة.`);
+            }
+        }
+
+        function openMysteryBox() {
+            if (score >= 100) {
+                score -= 100;
+                let bonus = Math.random() > 0.5 ? 150 : 250;
+                score += bonus;
+                updateScore();
+                alert(`🎁 فتحت صندوق الحظ وكسبت مفاجأة بقيمة ${bonus} نقطة إضافية!`);
+            } else {
+                alert('تحتاج إلى 100 نقطة لفتح صندوق الحظ!');
+            }
+        }
+
+        function updateScore() {
+            document.getElementById('user-score').innerText = score;
+        }
+
+        window.onload = () => { loadNextQuestion(); };
+    </script>
 </body>
 </html>
