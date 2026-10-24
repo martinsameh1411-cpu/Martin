@@ -30,7 +30,6 @@
             padding-bottom: 40px;
         }
 
-        /* شاشة تسجيل الدخول وحفظ الحساب والأي دي */
         #login-screen {
             position: fixed;
             top: 0;
@@ -109,18 +108,6 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
         }
 
-        .timer-box {
-            background: #451a03;
-            border: 2px solid var(--accent-yellow);
-            color: var(--accent-yellow);
-            text-align: center;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-        }
-
         .btn {
             background: var(--accent-yellow);
             color: #000;
@@ -140,49 +127,26 @@
         .btn-blue { background: var(--accent-blue); color: black; }
         .btn-audio { background: #8b5cf6; color: white; }
 
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .option-btn {
-            background: #334155;
-            color: #fff;
-            border: 2px solid transparent;
-            padding: 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            text-align: right;
-            transition: 0.2s;
-        }
-
-        .option-btn:hover { background: #475569; }
-        .option-btn.correct { background: var(--accent-green); }
-        .option-btn.wrong { background: var(--accent-red); }
-
-        .explanation {
-            margin-top: 15px;
-            padding: 12px;
-            background: #0f172a;
-            border-right: 4px solid var(--accent-blue);
-            border-radius: 4px;
-            display: none;
-        }
-
         .shop-item {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
             padding: 15px;
             background: #0f172a;
             border-radius: 12px;
             margin-bottom: 15px;
             border: 1px solid #334155;
-            flex-wrap: wrap;
             gap: 10px;
+        }
+
+        .lesson-details-box {
+            background: #1e293b;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+            border-right: 3px solid var(--accent-yellow);
+            margin-top: 5px;
         }
 
         .nav-tabs {
@@ -210,46 +174,25 @@
             color: #000;
         }
 
-        .video-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .video-card {
-            background: #0f172a;
-            border: 2px solid var(--accent-blue);
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
             border-radius: 12px;
-            padding: 10px;
-            text-align: center;
+            border: 2px solid var(--accent-blue);
+            margin-top: 10px;
         }
 
-        video {
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 150px;
-            background: #000;
-            border-radius: 8px;
-            object-fit: cover;
+            height: 100%;
+            border: 0;
         }
 
-        .controls-bar {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 8px;
-        }
-
-        .mini-btn {
-            padding: 5px 10px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
-
-        /* شاشة عرض النص المرئي أثناء القراءة الصوتية */
         .subtitle-box {
             background: #090d16;
             border: 2px dashed var(--accent-blue);
@@ -290,7 +233,7 @@
     <div id="login-screen">
         <div class="login-card">
             <h2>👑 منصة King of الدروسات</h2>
-            <input type="text" id="student-name" class="input-field" placeholder="اسمك الكامل">
+            <input type="text" id="student-name" class="input-field" placeholder="اسمك الكامل (بدون تكرار)">
             <input type="email" id="student-email" class="input-field" placeholder="البريد الإلكتروني">
             <input type="password" id="student-pass" class="input-field" placeholder="كلمة المرور">
             <button class="btn" onclick="startPlatform()">دخول المنصة 🚀</button>
@@ -299,22 +242,21 @@
 
     <header>
         <h1>👑 منصة King of الدروسات التعليمية</h1>
-        <p>الصف السادس الابتدائي - المنهج الشامل والدردشة والتحميل</p>
+        <p>الصف السادس الابتدائي - الشرح بالفيديو، PDF، والدردشة</p>
     </header>
 
     <div class="container" style="display:none;" id="main-content">
-        <!-- شريط الإحصائيات والأي دي -->
+        <!-- شريط الإحصائيات -->
         <div class="stats-bar">
             <div>البطل: <span id="display-name" style="color:var(--accent-yellow);"></span></div>
-            <div>معرف الأي دي: <span id="display-id" style="color:var(--accent-blue);"></span></div>
             <div>النقاط: <span id="points">0 🪙</span></div>
             <button class="btn btn-green" style="width:auto; padding: 5px 15px; margin:0; font-size:0.85rem;" onclick="downloadAppFile()">📥 تحميل التطبيق لجهازك</button>
         </div>
 
-        <!-- إدخال الكود السري المخفي -->
+        <!-- تفعيل الحساب بالكود السري المخفي -->
         <div class="card" style="border: 2px solid var(--accent-yellow);">
             <h3>🔑 تفعيل الحساب بكود سري (لمدة شهر كامل)</h3>
-            <p style="margin-bottom: 10px; font-size: 0.85rem; color: #94a3b8;">أدخل الكود السري لفتح كافة الـ PDF والشهادات والمميزات فوراً!</p>
+            <p style="margin-bottom: 10px; font-size: 0.85rem; color: #94a3b8;">أدخل الكود السري لفتح كافة الفيديوهات الـ VIP والـ PDF والشهادات!</p>
             <div style="display: flex; gap: 10px;">
                 <input type="password" id="secret-code-input" class="input-field" placeholder="أدخل الكود السري هنا..." style="margin: 0;">
                 <button class="btn btn-green" style="width: 160px; margin: 0;" onclick="activateSecretCode()">تفعيل ⚡</button>
@@ -323,287 +265,214 @@
 
         <!-- التبويبات -->
         <div class="nav-tabs">
-            <button class="tab-btn active" id="tab-offline" onclick="switchTab('offline')">📝 تدريبات يومية</button>
-            <button class="tab-btn" id="tab-online" onclick="switchTab('online')">👥 غرفة أونلاين</button>
+            <button class="tab-btn active" id="tab-videos" onclick="switchTab('videos')">🎬 فيديوهات الشرح والأدوات</button>
             <button class="tab-btn" id="tab-maps" onclick="switchTab('maps')">🗺️ مكتبة PDF للدروس</button>
             <button class="tab-btn" id="tab-chat" onclick="switchTab('chat')">💬 مراسلات الأصحاب</button>
             <button class="tab-btn" id="tab-shop" onclick="switchTab('shop')">🎮 متجر الجوائز</button>
         </div>
 
-        <!-- 1. قسم التدريبات اليومية -->
-        <div id="offline-section" class="card">
-            <h3>📝 الأسئلة والتدريبات اليومية (حل براحتك)</h3>
-            <p id="q-num-off" style="color:var(--accent-yellow); margin-top:5px;">السؤال رقم 1</p>
-            <p id="q-text-off" style="font-size: 1.2rem; margin: 15px 0; font-weight:bold;"></p>
+        <!-- قسم فيديوهات الشرح والأدوات -->
+        <div id="videos-section" class="card">
+            <h3>🎬 شرح مستر ذكي عطية واستخدام الأدوات والخرائط</h3>
+            <p style="margin-bottom: 15px; color: #94a3b8;">شاهد شرح الدروس بالتفصيل مع توضيح أدوات المادة والخرائط التفاعلية:</p>
 
-            <div class="options-grid" id="options-off"></div>
-
-            <div class="explanation" id="explanation-off">
-                <strong>💡 الشرح وطريقة الحل الصحيحة:</strong>
-                <p id="exp-text-off"></p>
+            <div class="shop-item">
+                <strong style="color:var(--accent-yellow); font-size:1.1rem;">🎥 فيديو 1: شرح موقع وخصائص الوطن العربي والأدوات المستخدمة</strong>
+                <div class="video-container">
+                    <!-- ضع رابط الفيديو الخاص بك مكان YOUR_VIDEO_ID_1 -->
+                    <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID_1" title="فيديو الشرح 1" allowfullscreen></iframe>
+                </div>
+                <button class="btn btn-blue" onclick="addPointsForWatching(50)">حصلت على +50 نقطة لمشاهدة الفيديو 🎁</button>
             </div>
 
-            <button class="btn" id="next-btn-off" style="display:none;" onclick="nextOfflineQuestion()">السؤال التالي ➡️</button>
-        </div>
-
-        <!-- 2. قسم غرفة التحدي الأونلاين -->
-        <div id="online-section" class="card" style="display:none;">
-            <h3>👥 الغرفة التفاعلية الأونلاين (درس زوم مع صديقك)</h3>
-            <p style="margin-bottom: 15px; color: #94a3b8;">أنشئ غرفة أو انضم لرقم غرفة صديقك، افتح الكاميرا والمايك، وتنافسوا لمدة نصف ساعة للفوز بنقاط الشهر المجاني!</p>
-
-            <div id="room-controls-box">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-                    <div>
-                        <button class="btn btn-green" onclick="createRoom()">إنشاء غرفة جديدة 🎲</button>
-                        <div id="room-code-show" style="margin-top:8px; display:none; font-weight:bold; color:var(--accent-yellow);">رقم الغرفة: <span id="r-code"></span></div>
-                    </div>
-                    <div>
-                        <input type="text" id="enter-room-input" class="input-field" placeholder="أدخل رقم غرفة صديقك">
-                        <button class="btn btn-blue" onclick="joinRoom()">تسجيل دخول للغرفة 🚀</button>
-                    </div>
+            <div class="shop-item">
+                <strong style="color:var(--accent-yellow); font-size:1.1rem;">🎥 فيديو 2: شرح الأقاليم المناخية والخرائط الصماء</strong>
+                <div class="video-container">
+                    <!-- ضع رابط الفيديو الخاص بك مكان YOUR_VIDEO_ID_2 -->
+                    <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID_2" title="فيديو الشرح 2" allowfullscreen></iframe>
                 </div>
-            </div>
-
-            <div id="live-battle-area" style="display:none;">
-                <div class="timer-box" style="margin-bottom: 15px;">
-                    ⏱️ الوقت المتبقي للتحدي: <span id="battle-timer">30:00</span>
-                </div>
-                <div class="stats-bar" style="margin-bottom: 15px;">
-                    <div>نقاطك أونلاين: <span id="my-battle-score" style="color:var(--accent-blue);">0</span></div>
-                    <div>نقاط صديقك: <span id="friend-battle-score" style="color:var(--accent-yellow);">0</span></div>
-                </div>
-
-                <div class="video-grid">
-                    <div class="video-card">
-                        <h4>📷 كاميرتك المباشرة</h4>
-                        <video id="localVideo" autoplay playsinline muted></video>
-                        <div class="controls-bar">
-                            <button class="mini-btn btn-green" onclick="toggleMic()">🎙️ مايك</button>
-                            <button class="mini-btn btn-blue" onclick="toggleCam()">📹 كاميرا</button>
-                        </div>
-                    </div>
-                    <div class="video-card">
-                        <h4>👤 كاميرا صديقك</h4>
-                        <video id="remoteVideo" autoplay playsinline></video>
-                        <p style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">متصل بالدرس المشترك</p>
-                    </div>
-                </div>
-
-                <div style="background:#0f172a; padding:15px; border-radius:10px; border:1px solid #334155;">
-                    <h4 id="online-q-title">سؤال التحدي:</h4>
-                    <p id="online-q-text" style="margin: 10px 0; font-size:1.1rem; font-weight:bold;"></p>
-                    <div class="options-grid" id="online-options"></div>
-                    <button class="btn" id="online-next-btn" style="display:none; margin-top:10px;" onclick="nextOnlineQuestion()">السؤال التالي ➡️</button>
-                </div>
+                <button class="btn btn-blue" onclick="addPointsForWatching(50)">حصلت على +50 نقطة لمشاهدة الفيديو 🎁</button>
             </div>
         </div>
 
-        <!-- 3. مكتبة ملفات الـ PDF الشاملة للـ 4 دروس والخرائط (مع الشاشة المرئية للصوتيات) -->
+        <!-- قسم ملفات الـ PDF والشرح الكتابي التفصيلي -->
         <div id="maps-section" class="card" style="display:none;">
-            <h3>🗺️ مكتبة ملفات الـ PDF الشاملة (الأربعة دروس والخرائط)</h3>
-            <p style="margin-bottom: 15px; color: #94a3b8;">كل درس له ملف PDF خاص به يضم الشرح والخرائط والتدريبات مع القراءة الصوتية والنص المرئي!</p>
-
-            <!-- صندوق ظهور الكلام المرئي أثناء القراءة الصوتية -->
+            <h3>🗺️ مكتبة الشرح التفصيلي وملفات الـ PDF الشاملة</h3>
             <div class="subtitle-box" id="subtitle-display">
                 💬 اضغط على زر "قراءة صوتية" لأي درس لكي تظهر الكلمات هنا بالصوت والصورة...
             </div>
 
             <div class="shop-item">
-                <div><strong>📄 درس (1): خصائص الوطن العربي</strong></div>
-                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
-                    <button class="btn btn-audio" style="width:auto;" onclick="speakLesson(1)">🔊 قراءة صوتية</button>
-                    <button class="btn btn-green" style="width:auto;" onclick="openPdfLesson('خصائص_الوطن_العربي')">فتح/تحميل PDF 📥</button>
+                <div>
+                    <strong style="font-size: 1.1rem; color: var(--accent-yellow);">📄 درس (1): خصائص الوطن العربي</strong>
+                    <div class="lesson-details-box">
+                        <strong>📌 الشرح التفصيلي للدرس والأدوات:</strong><br>
+                        • الموقع الجغرافي والفلكي وأهم المضايق البحرية (مضيق هرمز، باب المندب، جبل طارق، وقناة السويس).<br>
+                        • الأهمية الدينية والحضارية والخرائط التفاعلية الموضحة بالدرس.
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; width: 100%;">
+                    <button class="btn btn-audio" style="flex:1;" onclick="speakLesson(1)">🔊 قراءة صوتية</button>
+                    <button class="btn btn-green" style="flex:1;" onclick="openPdfLesson(1)">تحميل PDF الشامل 📥</button>
                 </div>
             </div>
 
             <div class="shop-item">
-                <div><strong>📄 درس (2): مناخ ونبات الوطن العربي</strong></div>
-                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
-                    <button class="btn btn-audio" style="width:auto;" onclick="speakLesson(2)">🔊 قراءة صوتية</button>
-                    <button class="btn btn-green" style="width:auto;" onclick="openPdfLesson('مناخ_ونبات_الوطن_العربي')">فتح/تحميل PDF 📥</button>
+                <div>
+                    <strong style="font-size: 1.1rem; color: var(--accent-yellow);">📄 درس (2): مناخ ونبات الوطن العربي</strong>
+                    <div class="lesson-details-box">
+                        <strong>📌 الشرح التفصيلي للدرس والأدوات:</strong><br>
+                        • العوامل المؤثرة في المناخ (الموقع الفلكي، القرب من المسطحات المائية، التضاريس).<br>
+                        • الأقاليم المناخية: إقليم البحر المتوسط، الإقليم الصحراوي، والإقليم المداري.
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; width: 100%;">
+                    <button class="btn btn-audio" style="flex:1;" onclick="speakLesson(2)">🔊 قراءة صوتية</button>
+                    <button class="btn btn-green" style="flex:1;" onclick="openPdfLesson(2)">تحميل PDF الشامل 📥</button>
                 </div>
             </div>
 
             <div class="shop-item">
-                <div><strong>📄 درس (3): مشكلات بيئية وتحديات بالوطن العربي</strong></div>
-                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
-                    <button class="btn btn-audio" style="width:auto;" onclick="speakLesson(3)">🔊 قراءة صوتية</button>
-                    <button class="btn btn-green" style="width:auto;" onclick="openPdfLesson('مشكلات_بيئية_وتحديات')">فتح/تحميل PDF 📥</button>
+                <div>
+                    <strong style="font-size: 1.1rem; color: var(--accent-yellow);">📄 درس (3): مشكلات بيئية وتحديات بالوطن العربي</strong>
+                    <div class="lesson-details-box">
+                        <strong>📌 الشرح التفصيلي للدرس والأدوات:</strong><br>
+                        • المشكلات الرئيسية: الجفاف، التصحر، وتلوث البيئة.<br>
+                        • جهود الدول العربية في إقامة المحميات الطبيعية واستخدام الطاقة النظيفة.
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; width: 100%;">
+                    <button class="btn btn-audio" style="flex:1;" onclick="speakLesson(3)">🔊 قراءة صوتية</button>
+                    <button class="btn btn-green" style="flex:1;" onclick="openPdfLesson(3)">تحميل PDF الشامل 📥</button>
                 </div>
             </div>
 
             <div class="shop-item">
-                <div><strong>📄 درس (4): التורّث الحضاري والثقافي + الخرائط</strong></div>
-                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
-                    <button class="btn btn-audio" style="width:auto;" onclick="speakLesson(4)">🔊 قراءة صوتية</button>
-                    <button class="btn btn-green" style="width:auto;" onclick="openPdfLesson('التراث_والخرائط')">فتح/تحميل PDF 📥</button>
+                <div>
+                    <strong style="font-size: 1.1rem; color: var(--accent-yellow);">📄 درس (4): التراث الحضاري والثقافي + الخرائط</strong>
+                    <div class="lesson-details-box">
+                        <strong>📌 الشرح التفصيلي للدرس والأدوات:</strong><br>
+                        • المعالم الأثرية والمقدسات في مصر، فلسطين، والجزائر.<br>
+                        • تدريبات الخرائط الصماء لمعرفة الجبال، الهضاب، والأودية الجافة.
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px; width: 100%;">
+                    <button class="btn btn-audio" style="flex:1;" onclick="speakLesson(4)">🔊 قراءة صوتية</button>
+                    <button class="btn btn-green" style="flex:1;" onclick="openPdfLesson(4)">تحميل PDF الشامل 📥</button>
                 </div>
             </div>
         </div>
 
-        <!-- 4. قسم مراسلات الأصحاب باستخدام الـ ID -->
+        <!-- قسم مراسلات الأصحاب بأسماء المسجلين -->
         <div id="chat-section" class="card" style="display:none;">
-            <h3>💬 غرفة مراسلات الأصحاب (بواسطة الـ ID)</h3>
-            <p style="margin-bottom: 10px; color: #94a3b8;">تواصل مع أصحابك عبر كتابة الـ ID الخاص بصديقك والرسالة:</p>
-            
+            <h3>💬 غرفة مراسلات الأصحاب</h3>
+            <p style="margin-bottom: 10px; color: #94a3b8;">تواصل مع أصحابك عبر كتابة اسم صديقك المسجل في المنصة:</p>
             <div class="chat-box" id="chat-messages">
                 <div class="chat-msg"><strong>النظام:</strong> أهلاً بك في شات أصحاب King of الدروسات!</div>
             </div>
 
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <input type="text" id="friend-id-input" class="input-field" placeholder="ID الصديق" style="flex: 1; margin:0;">
+                <input type="text" id="friend-name-input" class="input-field" placeholder="اسم الصديق المسجل" style="flex: 1; margin:0;">
                 <input type="text" id="chat-msg-input" class="input-field" placeholder="اكتب رسالتك هنا..." style="flex: 2; margin:0;">
                 <button class="btn btn-blue" style="width: auto; margin:0;" onclick="sendChatMessage()">إرسال ✉️</button>
             </div>
         </div>
 
-        <!-- 5. متجر الجوائز والتفوق المطور -->
+        <!-- متجر الجوائز والتفوق -->
         <div id="shop-section" class="card" style="display:none;">
             <h3>🏆 متجر الجوائز والتفوق الشامل</h3>
-
-            <div class="shop-item">
-                <div>
-                    <strong>👑 اشتراك VIP الشهري</strong>
-                    <div style="font-size: 0.85rem; color: #94a3b8;">يفتح لك كافة الـ PDF والمميزات المتقدمة</div>
-                    <div style="font-weight:bold; color:var(--accent-blue);">السعر: 3000 نقطة</div>
-                </div>
-                <button class="btn" style="width:auto;" onclick="buyVip()">اشتراك 🔓</button>
-            </div>
-
-            <div class="shop-item">
+            <div class="shop-item" style="flex-direction:row; align-items:center;">
                 <div>
                     <strong>📜 شهادة "King of الدروسات" المعتمدة</strong>
-                    <div style="font-size: 0.85rem; color: #94a3b8;">شهادة تفوق رسمية تصدر خصيصاً باسمك ولقبك الملكي</div>
-                    <div style="font-weight:bold; color:var(--accent-yellow);">السعر: 5000 نقطة</div>
+                    <div style="font-size: 0.85rem; color: #94a3b8;">شهادة تفوق رسمية تصدر باسمك ولقبك الملكي</div>
                 </div>
                 <button class="btn" style="width:auto;" onclick="buyCertificate()">شراء الشهادة 🎓</button>
-            </div>
-
-            <div class="shop-item">
-                <div>
-                    <strong>🎨 تفعيل الثيم الملكي المطور</strong>
-                    <div style="font-weight:bold; color:var(--accent-green);">السعر: 1500 نقطة</div>
-                </div>
-                <button class="btn" style="width:auto;" onclick="alert('تم تفعيل الثيم الملكي بنجاح!')">تفعيل 🖌️</button>
-            </div>
-
-            <div class="shop-item">
-                <div>
-                    <strong>⭐ لقب ملكي إضافي (أسطورة الدراسات)</strong>
-                    <div style="font-weight:bold; color:var(--accent-yellow);">السعر: 2000 نقطة</div>
-                </div>
-                <button class="btn" style="width:auto;" onclick="alert('تم شراء اللقب بنجاح!')">شراء 🏅</button>
             </div>
         </div>
     </div>
 
     <script>
         let userPoints = parseInt(localStorage.getItem('martin_userPoints')) || 0;
-        let solvedCount = parseInt(localStorage.getItem('martin_solvedCount')) || 0;
         let isVip = localStorage.getItem('martin_isVip') === 'true';
-        let studentId = localStorage.getItem('martin_studentId') || 'ID-' + Math.floor(100000 + Math.random() * 900000);
-        localStorage.setItem('martin_studentId', studentId);
 
-        // الأكواد السرية الـ 200 المكونة من 10 أرقام (مخفية تماماً)
+        // الـ 200 كود السري المفعلين
         const validSecretCodes = [];
         for (let i = 1; i <= 200; i++) {
             let numStr = i.toString().padStart(6, '0');
             validSecretCodes.push(`2026${numStr}`);
         }
 
-        let currentOffIndex = 0;
-        let answeredOff = [];
-        let myBattleScore = 0;
-        let friendBattleScore = 0;
-        let battleTimeLeft = 1800;
-        let battleInterval;
-        let currentOnlineIndex = 0;
-        let localStream;
+        const lessonAudioTexts = {
+            1: "درس خصائص الوطن العربي. يقع الوطن العربي في قلب قارات العالم القديم ويشرف على بحار ومضائق هامة مثل قناة السويس ومضيق باب المندب وجبل طارق.",
+            2: "درس مناخ ونبات الوطن العربي. يتكون من ثلاثة أقاليم مناخية رئيسية هي إقليم البحر المتوسط والإقليم الصحراوي والإقليم المداري.",
+            3: "درس مشكلات بيئية وتحديات بالوطن العربي. يناقش مشكلات الجفاف والتصحر وتلوث البيئة وجهود الدول العربية في بناء المحميات.",
+            4: "درس التراث الحضاري والثقافي والخرائط. يتناول الآثار والمعالم التاريخية والتدريب الشامل على الخرائط الصماء."
+        };
 
-        const questionsDatabase = [
-            {
-                q: "من الأماكن المقدسة التي يقصدها السياح بدولة فلسطين:",
-                options: ["الكعبة المشرفة", "واحة عين صالح", "جبل توبقال", "كنيسة المهد"],
-                correct: 3,
-                exp: "كنيسة المهد تعد من أهم المعالم والأماكن المقدسة في فلسطين."
-            },
-            {
-                q: "من مظاهر شكل تضاريس الوطن العربي في دولة الجزائر:",
-                options: ["وادي الدواسر", "واحة سيوة", "واحة عين صالح", "وادي العلاقي"],
-                correct: 2,
-                exp: "واحة عين صالح تعتبر من التضاريس والواحات المعروفة بالجزائر."
-            }
-        ];
-
-        // نصوص الدروس للقراءة الصوتية والعرض المرئي
-        const lessonTexts = {
-            1: "درس خصائص الوطن العربي يوضح الموقع الجغرافي والفلكي وأهمية الوطن العربي الدينية والحضارية والاقتصادية مع التدريبات الكاملة والخرائط.",
-            2: "درس مناخ ونبات الوطن العربي يتناول العوامل المؤثرة في المناخ، وأقاليم البحر المتوسط والاقليم الصحراوي الحار والمداري وحشائش الاستبس والسافانا.",
-            3: "درس مشكلات بيئية وتحديات يتحدث عن مشكلة الجفاف والتصحر وتلوث الهواء وجهود الدول العربية في مواجهة التغير المناخي والسيول.",
-            4: "درس التراث الحضاري والثقافي للوطن العربي يوضح المعالم الأثرية، بالإضافة إلى التدريب الشامل على الخرائط الصماء وكيفية حلها."
+        const fullPdfContents = {
+            1: "مذكرة King of الدروسات - الدرس الأول: خصائص الوطن العربي\n\n- الموقع الجغرافي والفلكي والمضايق الاستراتيجية.\n- الأهمية الدينية والحضارية والاقتصادية.",
+            2: "مذكرة King of الدروسات - الدرس الثاني: مناخ ونبات الوطن العربي\n\n- الأقاليم المناخية والنبات الطبيعي والحيوانات البرية.",
+            3: "مذكرة King of الدروسات - الدرس الثالث: مشكلات بيئية وتحديات\n\n- أسباب التصحر والجفاف وتلوث البيئة وكيفية مواجهتها.",
+            4: "مذكرة King of الدروسات - الدرس الرابع: التراث الحضاري والخرائط\n\n- المعالم التراثية والتدريب على الخرائط الصماء."
         };
 
         window.onload = function() {
             const savedName = localStorage.getItem('martin_studentName');
-            const savedEmail = localStorage.getItem('martin_studentEmail');
-            const savedPass = localStorage.getItem('martin_studentPass');
-
-            if(savedName && savedEmail && savedPass) {
+            if(savedName) {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
                 document.getElementById('display-name').innerText = savedName;
-                document.getElementById('display-id').innerText = studentId;
                 updateStats();
-                loadOfflineQuestion();
             }
         };
 
         function startPlatform() {
-            const name = document.getElementById('student-name').value;
-            const email = document.getElementById('student-email').value;
-            const pass = document.getElementById('student-pass').value;
+            const name = document.getElementById('student-name').value.trim();
+            const email = document.getElementById('student-email').value.trim();
+            const pass = document.getElementById('student-pass').value.trim();
 
-            if (name && email && pass) {
-                localStorage.setItem('martin_studentName', name);
-                localStorage.setItem('martin_studentEmail', email);
-                localStorage.setItem('martin_studentPass', pass);
-
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('main-content').style.display = 'block';
-                document.getElementById('display-name').innerText = name;
-                document.getElementById('display-id').innerText = studentId;
-                updateStats();
-                loadOfflineQuestion();
-            } else {
-                alert("يرجى إدخال جميع بيانات الحساب!");
+            if (!name || !email || !pass) {
+                alert("يرجى إدخال جميع البيانات!");
+                return;
             }
-        }
 
-        function saveProgress() {
-            localStorage.setItem('martin_userPoints', userPoints);
-            localStorage.setItem('martin_solvedCount', solvedCount);
-            localStorage.setItem('martin_isVip', isVip);
+            let registeredUsers = JSON.parse(localStorage.getItem('martin_allUsers')) || [];
+            let existingUser = registeredUsers.find(u => u.name.toLowerCase() === name.toLowerCase());
+
+            if (existingUser && localStorage.getItem('martin_studentName') !== name) {
+                alert("⚠️ هذا الاسم مسجل مسبقاً! يرجى إضافة اسم أو رقم فريد.");
+                return;
+            } else if (!existingUser) {
+                registeredUsers.push({ name: name });
+                localStorage.setItem('martin_allUsers', JSON.stringify(registeredUsers));
+            }
+
+            localStorage.setItem('martin_studentName', name);
+            localStorage.setItem('martin_studentEmail', email);
+            localStorage.setItem('martin_studentPass', pass);
+
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('display-name').innerText = name;
+            updateStats();
         }
 
         function updateStats() {
             document.getElementById('points').innerText = userPoints + ' 🪙';
-            saveProgress();
+            localStorage.setItem('martin_userPoints', userPoints);
+            localStorage.setItem('martin_isVip', isVip);
         }
 
         function switchTab(tab) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('offline-section').style.display = 'none';
-            document.getElementById('online-section').style.display = 'none';
+            document.getElementById('videos-section').style.display = 'none';
             document.getElementById('maps-section').style.display = 'none';
             document.getElementById('chat-section').style.display = 'none';
             document.getElementById('shop-section').style.display = 'none';
 
-            if(tab === 'offline') {
-                document.getElementById('offline-section').style.display = 'block';
-                document.getElementById('tab-offline').classList.add('active');
-            } else if(tab === 'online') {
-                document.getElementById('online-section').style.display = 'block';
-                document.getElementById('tab-online').classList.add('active');
+            if(tab === 'videos') {
+                document.getElementById('videos-section').style.display = 'block';
+                document.getElementById('tab-videos').classList.add('active');
             } else if(tab === 'maps') {
                 document.getElementById('maps-section').style.display = 'block';
                 document.getElementById('tab-maps').classList.add('active');
@@ -616,9 +485,8 @@
             }
         }
 
-        // قراءة صوتية مع عرض النص المرئي لحظياً (الإملاء الصوتي المرئي)
         function speakLesson(lessonNum) {
-            const text = lessonTexts[lessonNum];
+            const text = lessonAudioTexts[lessonNum];
             const subtitleBox = document.getElementById('subtitle-display');
             
             if ('speechSynthesis' in window) {
@@ -626,271 +494,71 @@
                 let utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'ar-SA';
                 utterance.rate = 0.9;
-
-                // تحديث النص المرئي أثناء النطق
                 subtitleBox.innerText = `🔊 جاري القراءة: "${text}"`;
-
                 utterance.onend = function() {
                     subtitleBox.innerText = "✅ انتهت القراءة الصوتية للدرس بنجاح.";
                 };
-
                 window.speechSynthesis.speak(utterance);
             } else {
                 alert("متصفحك لا يدعم القراءة الصوتية.");
             }
         }
 
-        // فتح ملف الـ PDF الخاص بالدرس (يعمل بحرية للمشتركين أو يطلب تفعيل VIP)
-        function openPdfLesson(lessonName) {
+        function openPdfLesson(lessonNum) {
             if(isVip) {
-                // فتح ملف وهمي أو تنزيه ملف PDF مباشر للمستخدم
-                const pdfContent = `%PDF-1.4 مذكرات King of الدروسات الشاملة - درس: ${lessonName}`;
-                const blob = new Blob([pdfContent], { type: 'application/pdf' });
+                const pdfText = fullPdfContents[lessonNum];
+                const blob = new Blob([pdfText], { type: 'text/plain;charset=utf-8' });
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
-                link.download = `${lessonName}_King_Of_Dorosat.pdf`;
+                link.download = `Lesson_${lessonNum}_King_Of_Dorosat.txt`;
                 link.click();
-                alert(`📥 تم فتح وتحميل ملف الـ PDF الخاص بـ (${lessonName}) بنجاح!`);
+                alert(`📥 تم فتح وتحميل الشرح التفصيلي للدرس رقم (${lessonNum}) بنجاح!`);
             } else {
-                alert("🔒 هذا الـ PDF حصري لمشتركي الـ VIP أو أصحاب الكود السري! قم بتفعيل الكود من الأعلى أو الشراء من المتجر.");
+                alert("🔒 هذا الملف حصري لمشتركي الـ VIP أو أصحاب الكود السري!");
             }
+        }
+
+        function addPointsForWatching(pts) {
+            userPoints += pts;
+            updateStats();
+            alert(`🎉 مبروك! حصلت على ${pts} نقطة لمشاهدة فيديو الشرح!`);
         }
 
         function activateSecretCode() {
             const inputCode = document.getElementById('secret-code-input').value.trim();
-            let usedCodes = JSON.parse(localStorage.getItem('martin_usedCodes')) || [];
-
             if (validSecretCodes.includes(inputCode)) {
-                if (usedCodes.includes(inputCode)) {
-                    alert("عفواً، هذا الكود تم استخدامه من قبل!");
-                } else {
-                    usedCodes.push(inputCode);
-                    localStorage.setItem('martin_usedCodes', JSON.stringify(usedCodes));
-                    isVip = true;
-                    userPoints += 1000;
-                    saveProgress();
-                    updateStats();
-                    alert("🎉 مبروك يا King of الدروسات! تم تفعيل الكود السري بنجاح وفتح جميع الـ PDF والشهادات لمده شهر كامل!");
-                }
+                isVip = true;
+                userPoints += 1000;
+                updateStats();
+                alert("🎉 مبروك يا King of الدروسات! تم تفعيل الكود السري وفتح كافة المميزات!");
             } else {
                 alert("الكود السري غير صحيح!");
             }
         }
 
-        function loadOfflineQuestion() {
-            document.getElementById('explanation-off').style.display = 'none';
-            document.getElementById('next-btn-off').style.display = 'none';
-
-            if (answeredOff.length >= questionsDatabase.length) {
-                answeredOff = [];
-            }
-
-            let available = questionsDatabase.filter((_, idx) => !answeredOff.includes(idx));
-            let q = available[Math.floor(Math.random() * available.length)];
-            currentOffIndex = questionsDatabase.indexOf(q);
-
-            document.getElementById('q-num-off').innerText = `السؤال رقم ${answeredOff.length + 1}`;
-            document.getElementById('q-text-off').innerText = q.q;
-
-            const optsDiv = document.getElementById('options-off');
-            optsDiv.innerHTML = '';
-
-            q.options.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerText = opt;
-                btn.onclick = () => checkOfflineAnswer(idx, q.correct, q.exp, btn);
-                optsDiv.appendChild(btn);
-            });
-        }
-
-        function checkOfflineAnswer(selected, correct, exp, btn) {
-            const allBtns = document.querySelectorAll('#options-off .option-btn');
-            allBtns.forEach(b => b.disabled = true);
-
-            if (selected === correct) {
-                btn.classList.add('correct');
-                userPoints += 15;
-                solvedCount += 1;
-                updateStats();
-            } else {
-                btn.classList.add('wrong');
-                allBtns[correct].classList.add('correct');
-                document.getElementById('exp-text-off').innerText = exp;
-                document.getElementById('explanation-off').style.display = 'block';
-            }
-
-            answeredOff.push(currentOffIndex);
-            document.getElementById('next-btn-off').style.display = 'block';
-        }
-
-        function nextOfflineQuestion() {
-            loadOfflineQuestion();
-        }
-
-        function createRoom() {
-            const rCode = Math.floor(100000 + Math.random() * 900000);
-            document.getElementById('r-code').innerText = rCode;
-            document.getElementById('room-code-show').style.display = 'block';
-            alert(`تم إنشاء الغرفة بنجاح! رقم غرفتك هو: ${rCode}`);
-            startLiveRoom();
-        }
-
-        function joinRoom() {
-            const codeInput = document.getElementById('enter-room-input').value;
-            if(codeInput.length < 5) {
-                alert("برجاء إدخال رقم غرفة صحيح!");
-                return;
-            }
-            alert(`تم الانضمام للغرفة رقم ${codeInput} بنجاح!`);
-            startLiveRoom();
-        }
-
-        function startLiveRoom() {
-            document.getElementById('room-controls-box').style.display = 'none';
-            document.getElementById('live-battle-area').style.display = 'block';
-            initCamera();
-            startBattleTimer();
-            loadOnlineQuestion();
-        }
-
-        async function initCamera() {
-            try {
-                localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-                document.getElementById('localVideo').srcObject = localStream;
-            } catch(e) {
-                alert("يرجى السماح بصلاحيات الكاميرا والمايك للعمل داخل الغرفة التفاعلية.");
+        function sendChatMessage() {
+            const friendName = document.getElementById('friend-name-input').value.trim();
+            const msg = document.getElementById('chat-msg-input').value.trim();
+            if(friendName && msg) {
+                document.getElementById('chat-messages').innerHTML += `<div class="chat-msg"><strong>أنت (إلى ${friendName}):</strong> ${msg}</div>`;
+                document.getElementById('chat-msg-input').value = '';
             }
         }
 
-        function toggleMic() {
-            if(localStream) {
-                const track = localStream.getAudioTracks()[0];
-                track.enabled = !track.enabled;
-                alert(track.enabled ? "تم فتح المايك 🎙️" : "تم كتم المايك 🔇");
-            }
-        }
-
-        function toggleCam() {
-            if(localStream) {
-                const track = localStream.getVideoTracks()[0];
-                track.enabled = !track.enabled;
-                alert(track.enabled ? "تم فتح الكاميرا 📹" : "تم إيقاف الكاميرا 📷");
-            }
-        }
-
-        function startBattleTimer() {
-            battleInterval = setInterval(() => {
-                let m = Math.floor(battleTimeLeft / 60);
-                let s = battleTimeLeft % 60;
-                s = s < 10 ? '0' + s : s;
-                document.getElementById('battle-timer').innerText = `${m}:${s}`;
-
-                if(battleTimeLeft <= 0) {
-                    clearInterval(battleInterval);
-                    finishBattle();
-                }
-                battleTimeLeft--;
-            }, 1000);
-        }
-
-        function loadOnlineQuestion() {
-            document.getElementById('online-next-btn').style.display = 'none';
-            let q = questionsDatabase[currentOnlineIndex];
-
-            document.getElementById('online-q-title').innerText = `سؤال التحدي رقم ${currentOnlineIndex + 1}`;
-            document.getElementById('online-q-text').innerText = q.q;
-
-            const optsDiv = document.getElementById('online-options');
-            optsDiv.innerHTML = '';
-
-            q.options.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerText = opt;
-                btn.onclick = () => checkOnlineAnswer(idx, q.correct, btn);
-                optsDiv.appendChild(btn);
-            });
-        }
-
-        function checkOnlineAnswer(selected, correct, btn) {
-            const allBtns = document.querySelectorAll('#online-options .option-btn');
-            allBtns.forEach(b => b.disabled = true);
-
-            if(selected === correct) {
-                btn.classList.add('correct');
-                myBattleScore++;
-                document.getElementById('my-battle-score').innerText = myBattleScore;
-            } else {
-                btn.classList.add('wrong');
-                allBtns[correct].classList.add('correct');
-            }
-
-            document.getElementById('online-next-btn').style.display = 'block';
-        }
-
-        function nextOnlineQuestion() {
-            currentOnlineIndex++;
-            if(currentOnlineIndex >= questionsDatabase.length) currentOnlineIndex = 0;
-            loadOnlineQuestion();
-        }
-
-        function finishBattle() {
-            alert(`انتهت الـ 30 دقيقة الخاصة بالتحدي!\nنتيجتك: ${myBattleScore}\nنتيجة صديقك: ${friendBattleScore}`);
-            if(myBattleScore >= friendBattleScore) {
-                isVip = true;
-                userPoints += 500;
-                saveProgress();
-                alert("🎉 مبروك يا King of الدروسات! لقد فزت بالتحدي وحصلت على اشتراك شهر مجاني VIP ونقاط تفوق!");
-            } else {
-                alert("حاول مرة أخرى لتفوز باشتراك VIP!");
-            }
-        }
-
-        // زر التحميل الخاص بالمنصة كبرنامج مستقل على جهازك بدون كروم
         function downloadAppFile() {
-            const htmlContent = document.documentElement.outerHTML;
-            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const blob = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = 'King_Of_Dorosat_App.html';
             link.click();
-            alert("📥 تم تحميل المنصة كبرنامج مستقل على جهازك! يمكنك فتحه في أي وقت بدون جوجل كروم أو إنترنت.");
-        }
-
-        function sendChatMessage() {
-            const friendId = document.getElementById('friend-id-input').value.trim();
-            const msg = document.getElementById('chat-msg-input').value.trim();
-
-            if(friendId && msg) {
-                const chatBox = document.getElementById('chat-messages');
-                chatBox.innerHTML += `<div class="chat-msg"><strong>أنت (إلى ${friendId}):</strong> ${msg}</div>`;
-                document.getElementById('chat-msg-input').value = '';
-                alert(`✉️ تم إرسال الرسالة بنجاح إلى الأي دي: ${friendId}`);
-            } else {
-                alert("الرجاء إدخال ID الصديق وكتابة رسالة صحيحة!");
-            }
-        }
-
-        function buyVip() {
-            if(userPoints >= 3000) {
-                userPoints -= 3000;
-                isVip = true;
-                updateStats();
-                alert("🎉 مبروك! تم تفعيل اشتراك الـ VIP بنجاح.");
-            } else {
-                alert(`تحتاج إلى 3000 نقطة للاشتراك! رصيدك الحالي: ${userPoints}`);
-            }
         }
 
         function buyCertificate() {
             const studentName = localStorage.getItem('martin_studentName') || "King of الدروسات";
             if(isVip || userPoints >= 5000) {
-                if(!isVip && userPoints >= 5000) userPoints -= 5000;
-                updateStats();
-                alert(`📜 مبروك يا بطل الأبطال! تم إصدار شهادة التفوق الكبرى رسمياً باسم: (${studentName}) - ولقب [King of الدروسات] 👑!`);
+                alert(`📜 مبروك يا بطل! تم إصدار شهادة التفوق باسم: (${studentName}) 👑!`);
             } else {
-                alert(`تحتاج إلى 5000 نقطة أو تفعيل اشتراك الـ VIP للحصول على الشهادة المعتمدة!`);
+                alert(`تحتاج إلى 5000 نقطة أو تفعيل اشتراك الـ VIP للحصول على الشهادة!`);
             }
         }
     </script>
